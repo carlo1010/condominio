@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24.677" height="24.677" viewBox="0 0 24.677 24.677">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_44" data-name="Rectangle 44" width="24.677" height="24.677" transform="translate(0 0)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_14" data-name="Mask Group 14" clip-path="url(#clip-path)">
+    <g id="shopping-cart" transform="translate(0.018 0)">
+      <path id="Path_36" data-name="Path 36" d="M2.807,21.689H3.828A3.3,3.3,0,1,0,10,23.284a3.2,3.2,0,0,0-.425-1.6h4.106a3.3,3.3,0,1,0,6.169,1.6,3.2,3.2,0,0,0-.425-1.6h1.106a.872.872,0,0,0,0-1.744H3.679v-1.7H22.824a.862.862,0,0,0,.83-.638L26.547,7.032a.853.853,0,0,0-.149-.745.888.888,0,0,0-.681-.34H3.679V2.777a.872.872,0,0,0-1.744,0V20.8a.868.868,0,0,0,.872.893Zm12.615.489a1.564,1.564,0,1,1,2.212,2.212,1.593,1.593,0,0,1-2.212,0,1.554,1.554,0,0,1,0-2.212Zm-9.828,0a1.564,1.564,0,1,1,2.212,2.212,1.593,1.593,0,0,1-2.212,0,1.554,1.554,0,0,1,0-2.212ZM3.679,7.67h20.89l-2.425,8.85H3.679V7.67Z" transform="translate(-1.934 -1.905)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

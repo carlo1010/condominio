@@ -1,0 +1,28 @@
+<h2 mat-dialog-title style="color: gray">{{'products.PostYourQuestion'|translate}}
+  <button class="clos-btn" [mat-dialog-close]="true" aria-label="Close">x</button>
+</h2>
+<!--  
+  <div  mat-dialog-title class="flex que-sbmt">Your question is submitted <a href="javascript:void(0)"><span class="material-icons " [mat-dialog-close]="true" aria-label="Close">close</span></a> </div> -->
+<!-- <div class="cqa-search">
+  <input type="text" placeholder="Have a question? Find answer ">
+</div> -->
+<div class="cqa-qrite-que flex">
+  <h3 class="flex">{{'products.questionhere'|translate}}
+    <!-- <span class="material-icons">close</span> -->
+  </h3>
+  <textarea [(ngModel)]="question" name="question"></textarea>
+  <div class="error" *ngIf="error">{{'products.enteryourquestion'|translate}}</div>
+
+  <div class="rqite-btn">
+    <button style="color: white;background: #FB641B;  " type="button" mat-raised-button (click)="submit()"
+      [disabled]="(sandbox.postAnswerLoading$ | async)">
+      <mat-spinner diameter="25" color="primary" *ngIf="sandbox.postQuestionLoading$ | async">
+      </mat-spinner> <span>{{'products.Submit'|translate}}</span>
+    </button>
+    <button style="color:#FB641B" type="button" [mat-dialog-close]="true" mat-raised-button class="cancel"
+      (click)="close()">{{'products.Cancel'|translate}} </button>
+  </div>
+
+
+
+</div>

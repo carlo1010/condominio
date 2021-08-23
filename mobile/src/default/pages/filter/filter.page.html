@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" (click)="dismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-buttons>
+        <ion-title>{{'Filter'|translate}}</ion-title>
+        <ion-button slot="end" (click)="resetFilter()" color="dark">{{'Reset'|translate}}</ion-button>
+        <ion-button slot="end" color="primary" (click)="submit()">
+            {{'Apply'|translate}}</ion-button>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list class="ion-no-padding">
+        <ion-list-header>
+            <ion-label>{{'Price'|translate}}</ion-label>
+        </ion-list-header>
+        <div class="pricing">
+            <ion-item class="min" lines="none">
+                <ion-label>{{'Min-Price'|translate}}</ion-label>
+                <ion-input type="tel" disabled [(ngModel)]="knobValues.lower"></ion-input>
+            </ion-item>
+            <ion-item class="min" lines="none">
+                <ion-label>{{'Max-Price'|translate}}</ion-label>
+                <ion-input type="tel" disabled [(ngModel)]="knobValues.upper"></ion-input>
+            </ion-item>
+            <form [formGroup]="filterForm">
+                <ion-item>
+                    <ion-range [formControl]="priceFilter" (ionChange)="checkChanges(false)" dualKnobs="true"
+                        [(ngModel)]="knobValues" min="1" [max]="maxValue" [step]="maxValue/20" snaps="true"></ion-range>
+                </ion-item>
+            </form>
+        </div>
+    </ion-list>
+    <ion-list class="ion-no-padding">
+        <ion-radio-group>
+            <!-- <ion-list-header>
+                <ion-label>{{'Brand'|translate}}</ion-label>
+            </ion-list-header> -->
+
+            <ion-item class="custom-select" *ngIf="!(productsSandbox.manufacturerListLoading$|async)">
+                <ion-label>Brand</ion-label>
+                <ion-select [(ngModel)]="brandId" multiple="true" interface="=popover" placeholder="Select brand">
+                    <ion-select-option [value]="brand.manufacturerId"
+                        *ngFor="let brand of productsSandbox.manufacturerList$|async">{{brand.name}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item class="custom-select" *ngFor="let filter of filterLists">
+                <ion-label>{{filter.sectionName}}</ion-label>
+                <ion-select [(ngModel)]="filter.value" multiple="true" interface="=popover"
+                    placeholder="Select {{filter.sectionName}}">
+                    <ion-select-option [value]="data.itemName" *ngFor="let data of filter.sectionItem">{{data.itemName}}
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+
+        </ion-radio-group>
+        <div class="ion-padding custom-skeleton" *ngIf="(productsSandbox.manufacturerListLoading$|async)||
+        (productsSandbox.filterLoading$|async)">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </div>
+    </ion-list>
+
+</ion-content>

@@ -1,0 +1,104 @@
+<ion-app>
+  <ion-split-pane>
+    <ion-menu>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start" (click)="closeMenu()">
+            <ion-icon name="arrow-back"></ion-icon>
+          </ion-buttons>
+          <ion-title *ngIf="commonService.isAuthenticated()"
+            >{{ 'Hi' | translate }} ,
+            {{
+              (commonSandBox.profiledetails$ | async)
+                ? (commonSandBox.profiledetails$ | async).firstName
+                : ('User' | translate)
+            }}
+          </ion-title>
+          <ion-title
+            *ngIf="!commonService.isAuthenticated()"
+            (click)="gotoLogin(); closeMenu()"
+            >{{ 'Login' | translate }}
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content color="primary">
+        <ion-list class="side-menu ion-no-padding">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button="true" (click)="gotoHome()" color="primary">
+              <ion-label>
+                {{ 'Home' | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item
+              button="true"
+              color="primary"
+              *ngFor="
+                let categoryList of productsSandbox.categoryList$ | async;
+                let i = index
+              "
+              (click)="gotoProductList(categoryList)"
+              lines="none"
+            >
+              <ion-label>
+                {{ categoryList.name | titlecase }}
+              </ion-label>
+            </ion-item>
+            <hr class="divider" />
+            <ion-item
+              color="primary"
+              button="true"
+              (click)="goToPage('compare')"
+              *ngIf="productCtrlSandbox.getCompareListCount() > 0"
+            >
+              <ion-label>
+                {{ 'Compare' | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item color="primary" button="true" (click)="goToPage('order')">
+              <ion-label>
+                {{ 'My_Orders' | translate }}
+              </ion-label>
+            </ion-item>
+
+            <ion-item color="primary" button="true" (click)="goToPage('order/my-quotation')">
+              <ion-label>
+                {{ 'My_Quotation' | translate }}
+              </ion-label>
+            </ion-item>
+
+            <ion-item
+              color="primary"
+              button="true"
+              (click)="goToPage('account-setting')"
+            >
+              <ion-label>
+                {{ 'Account_Settings' | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item
+              (click)="goToPage('language-setting')"
+              color="primary"
+              button="true"
+            >
+              <ion-label>
+                {{ 'Language_Settings' | translate }}
+              </ion-label>
+            </ion-item>
+
+            <ion-item
+              button="true"
+              *ngIf="commonService.isAuthenticated()"
+              (click)="logout()"
+              color="primary"
+            >
+              <ion-label>
+                {{ 'Logout' | translate }}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

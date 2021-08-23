@@ -1,0 +1,215 @@
+ion-title {
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+  color: #ffffff;
+}
+ion-content {
+  .flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  form {
+    padding: 16px;
+    ion-item {
+      --padding-start: 0;
+      --padding-end: 0;
+      margin-bottom: 20px;
+      ion-input {
+        --padding-start: 10px;
+        --padding-top: 16px;
+        border-bottom: 1px solid #d2cdcd;
+      }
+      ion-select {
+        --padding-start: 10px;
+        --padding-top: 16px;
+        font-weight: 400;
+        border-bottom: 1px solid #d2cdcd;
+      }
+      &.rad {
+        margin-bottom: 0;
+      }
+      ion-textarea {
+        border: solid thin #ddd;
+        min-height: 100px;
+        padding: 10px;
+      }
+    }
+    ion-radio-group {
+      width: 100%;
+      ion-item {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .gst {
+    background: #f5f5f5;
+    padding: 10px 0px;
+    ion-input {
+      padding:0 10px 10px;
+      border-bottom: solid thin #ddd;
+      width: 200px;
+      margin-left: 40px;
+      --padding-start: 0;
+    }
+    ion-item {
+      ion-checkbox {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+  ion-item {
+    --background: transparent;
+    --inner-border-width: 0;
+    ion-checkbox {
+      margin-right: 10px;
+    }
+    ion-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: #222;
+    }
+  }
+  ion-button.cntu {
+    --border-radius: 2px;
+    --background: #00c6b6;
+    background: #00c6b6;
+    text-transform: none;
+    letter-spacing: 0;
+    border: 0;
+    --border: 0;
+    height: 40px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #fff;
+    margin: 0px 10px 20px;
+    width: calc(100% - 20px);
+  }
+}
+
+.customer-que {
+  margin: 5px;
+  background: #f7f7f7;
+  padding: 10px;
+  .ca-tit {
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: #000;
+      margin: 0;
+      width: calc(100% - 110px);
+    }
+    ion-button {
+      width: 102px;
+      height: 34px;
+      border: 0;
+      --border: 0;
+      background: white;
+      --background: white;
+      font-size: 12px;
+      font-weight: 400;
+      color: #000;
+      letter-spacing: 0;
+      border-radius: 0;
+      --border-radius: 0;
+      --padding-start: 0;
+      --padding-end: 0;
+    }
+  }
+  ion-input {
+    border: solid thin #ddd;
+    background: #fff;
+    height: 45px;
+    padidng: 0 10px;
+    margin: 15px 0;
+    font-size: 12px;
+    font-weight: 400;
+    color: #000;
+    margin: 10px 0;
+  }
+  .qa-row {
+    padding: 10px 0;
+    .qa-que {
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 0px;
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000000;
+        width: 20px;
+      }
+      p {
+        width: calc(100% - 20px);
+        font-size: 14px;
+        font-weight: normal;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+        line-height: 27px;
+      }
+    }
+    .qa-pro-rep {
+      h5 {
+        font-size: 12px;
+        font-weight: 400;
+        color: #939393;
+        margin: 0;
+      }
+      .qa-rep {
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 5px;
+        p {
+          font-size: 12px;
+          font-weight: 500;
+          color: #8d8d8d;
+          margin: 0 10px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          a {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4px;
+            color: #8d8d8d;
+            font-size: 18px;
+          }
+        }
+        a {
+          font-size: 13px;
+          font-weight: normal;
+          color: #1155ae;
+          padding: 0 10px 0 0;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .rev-content {
+    ion-button {
+      ackground: transparent;
+      --background: transparent;
+      border: 0;
+      --border: 0;
+      box-shadow: none;
+      --box-shadow: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: #15399B;
+      margin: 0;
+      --padding-start: 0;
+      --padding-end: 0;
+      text-transform: capitalize;
+      letter-spacing: 0;
+    }
+  }
+}
+.spin{
+  text-align: center;
+    margin-top: 20%;
+}

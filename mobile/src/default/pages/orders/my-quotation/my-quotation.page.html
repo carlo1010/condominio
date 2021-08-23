@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Quotation</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/dashboard"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngFor="let list of orderSandbox.quotationList$|async">
+    <h3>{{list.name}}</h3>
+
+
+    <div class="qtyRow">
+      <div class="qtyTitle">Qty</div>
+      <span>:</span>
+      <span class="qtyContent">{{list.quantity}}</span>
+    </div>
+
+    <div class="qtyRow">
+      <div class="qtyTitle">Qty Units</div>
+      <span>:</span>
+      <span class="qtyContent">{{list.quantityUnit}}</span>
+    </div>
+
+    <div class="qtyRow">
+      <div class="qtyTitle">Order Value</div>
+      <span>:</span>
+      <span class="qtyContent">{{list.orderValue}}</span>
+    </div>
+
+    <div class="qtyRow">
+      <div class="qtyTitle">Created Date</div>
+      <span>:</span>
+      <span class="qtyContent">{{list.createdDate |date:'dd/MM/yyyy'}}</span>
+    </div>
+  </ion-card>
+
+  <ion-infinite-scroll threshold="100px"
+  (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+</ion-content>

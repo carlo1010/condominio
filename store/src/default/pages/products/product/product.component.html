@@ -1,0 +1,440 @@
+
+    <div class="wrapper" *ngIf="(productControlSandbox.productAvailabilityLoading$ | async)">
+        <div class="overlay">
+            <div class="spinner-wrapper">
+                <app-spinner [isShow]="(productControlSandbox.productAvailabilityLoading$ | async)"></app-spinner>
+            </div>
+        </div>
+    </div>
+    
+    <div class="spinner-wrapper">
+        <app-spinner [isShow]="(productDetail.productDetailLoading$ | async)"></app-spinner>
+    </div>
+    
+    <div fxLayout="row wrap" class="wrap" *ngIf="!(productDetail.productDetailLoading$ | async)">
+        <div class="swiper-left">
+            <div class="flex sl-product" fxFlex="100">
+                <div class="small-carousel">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div *ngFor="let list of (productDetail.productDetails$ | async)?.productImage"
+                                class="swiper-slide">
+                                <mat-card (click)="selectImage(list)" class="p-1 img-side"
+                                    [ngClass]="{ 'active-img': image == (imagePath + '?path=' + list.containerName + '&name=' + list.image + '&width=660&height=660') }">
+                                    <img [src]="imagePath + '?path=' + list.containerName + '&name=' + list.image + '&width=660&height=660'"
+                                        class="swiper-lazy" />
+                                </mat-card>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                <mat-card class="product-image">
+                    <!-- <button mat-icon-button (click)="openZoomViewer()">
+                        <mat-icon>fullscreen</mat-icon>
+                    </button> -->
+                    <!-- <ngx-img-zoom
+  [zoomImageSrc]="image"
+  [previewImageSrc]="image"
+  [imgStyle]="'width:390px; height:390px;'"
+  [resultStyle]="'width:824px; height:824px; background-repeat: no-repeat; z-index: 2; position:absolute;-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); top: 0;left: 100%;'"
+  [lensStyle]="'width:10px; height:10px'"
+  [enableZoom]="enableZoom"
+  [containerStyle]=""
+></ngx-img-zoom> -->
+
+                    <div *ngIf="!isLoading" class="imagespinner"  >
+                             <!-- <div style="display: flex; justify-content: center;"  > -->
+                        <img width="70px" height="70px"  src="assets/images/others/spurt-2.1-v1.gif"/>
+                             <!-- </div> -->
+                     </div>
+                    <img   (load)="loading()" *ngIf="image" [src]="image" (click)="productZoom()" />
+                        
+                </mat-card>
+            </div>
+            <ul class="product-left-links flex">
+                <li><a style="cursor:pointer ;" (click)="scrollTo('description')" [ngClass]="{'active': activeDesc}">{{'products.Description'|translate}}</a></li>
+                <li><a style="cursor:pointer ;" (click)="scrollTo('specifications')" [ngClass]="{'active': activeSpecification}">{{'products.Specifications'|translate}}</a></li>
+
+                <!-- <li><a style="cursor:pointer ;" (click)="scrollTo('frequent')" [ngClass]="{'active': activeFreq}"  >Frequently Bought Together</a></li> -->
+                <li><a style="cursor:pointer ;" (click)="scrollTo('reviews')" [ngClass]="{'active': activeReview}">{{'products.Review'|translate}}</a></li>
+                <li><a style="cursor:pointer ;" (click)="scrollTo('qa')" [ngClass]="{'active': activeQa}">{{'products.CustomerQuestionsAnswer'|translate}}</a></li>
+            </ul>
+            <div id ="description" class="">
+                <div class="prd-detail-cnt description-content">
+                    <h3>{{'products.Description'|translate}}</h3>
+                    <p class="lh" [innerHtml]='(productDetail.productDetails$ | async)?.description | safeHtml'></p>
+                </div>
+            </div>
+
+            <div id="specifications" class="review">
+                <h3>{{'products.Specifications'|translate}}</h3>
+                <div class="full-desc lh">
+                    <app-specification-controls [attribute]="(productDetail.productDetails$ | async)?.productAttributes">
+            
+                    </app-specification-controls>
+                </div>
+                    <!-- Review -->
+            </div>
+
+            <div id="reviews" class="review">
+                <h3>{{'products.Review'|translate}}</h3>
+                <div class="full-desc lh">
+                    <app-review-controls [ratingsList]="(productDetail.productRating$ | async)">
+                    </app-review-controls>
+                </div>
+                    <!-- Review -->
+            </div>
+
+            <div id="qa" class="">
+                <div class="prd-detail-cnt">
+                    <!-- Review -->
+
+                        <app-controls-questions [questionList]="(productDetail.questionList$ | async)"
+                                                [productDetails]="(productDetail.productDetails$ | async)"
+                                                [questionLoading]="(productDetail.questionListLoading$ | async)"
+                                                [questionLoaded]="(productDetail.questionListLoaded$ | async)">
+                        </app-controls-questions>
+
+                        <!-- Question -->
+
+                    </div>
+            </div>
+
+
+
+        </div>
+        <!---->
+        <div class="product-right">
+
+
+            <div #zoomViewer fxShow="false" fxShow.gt-md>
+                <mat-card class="zoom-viewer mat-elevation-z18" [ngStyle]="{'background-image': 'url(' + zoomImage + ')'}">
+                </mat-card>
+            </div>
+
+
+
+            <!--<p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.Category[0]">Category :-->
+                <!--{{(productDetail.productDetails$ | async)?.Category[0].categoryName}}</p>-->
+
+            <p class="sku">SKU:{{(productDetail.productDetails$|async)?.skuName}}</p>
+
+            <h2>{{(productDetail.productDetails$ | async)?.name}}</h2>
+            <!-- <p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.skuName">SKU:
+                {{(productDetail.productDetails$ | async)?.skuName}} </p> -->
+             <div *ngIf="(productDetail.productDetails$| async)?.vendorId > 0">
+            <p *ngIf="user" class="seller">Seller : <a  
+                style="cursor: pointer"
+                [routerLink]="['/vendor-detail/detail/' + (productDetail.productDetails$| async)?.vendorPrefixId]"
+                [queryParams]="{vendorId: (productDetail.productDetails$| async)?.vendorId}"
+                routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}"> {{(productDetail.productDetails$ | async)?.vendorName}}</a></p>
+               
+              </div>
+            <ng-container *ngIf="!(productDetail.productDetails$ | async)?.isAvailable">
+                <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted avlamt-comp">
+                    <div class="avllft">
+                        <p class="flex avl"> {{'products.NotAvailable'|translate}} </p>
+                    </div>
+                </div>
+            </ng-container>
+
+
+            <ng-container>
+
+                <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted avlamt-comp">
+                    <div class="avllft">
+                        <ng-container *ngIf="(productDetail.productDetails$ | async)?.isAvailable">
+
+                            <p class="flex avl" *ngIf="(productDetail.productDetails$ | async)?.stockStatus === 'inStock'">
+                                <img src="assets/img/tick-green-sm.svg"> {{'products.Available'|translate}} </p>
+
+                            <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted">
+                                <div class="flex amtlt">
+                                    <h3>
+                                        <ng-container *ngIf="templateHidden;else noOptionsselected">
+                                            <ng-container
+                                                *ngIf="(((productDetail.productDetails$ | async)?.flag)=='')&&(((productDetail.productDetails$ | async)?.pricerefer) === '');else one">
+                                                <ng-container
+                                                    *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
+                                                    {{calculatePrice(tireBasePrice.toFixed(2),
+                                                    (productDetail.productDetails$ | async)?.taxType,
+                                                    (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                    (productDetail.symbolSetting$ | async)}}
+                                                </ng-container>
+
+                                                <ng-template #normal>
+                                                    {{calculatePrice(productPriceTag.toFixed(2),
+                                                    (productDetail.productDetails$ | async)?.taxType,
+                                                    (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                    (productDetail.symbolSetting$ | async)}}
+                                                </ng-template>
+
+                                            </ng-container>
+
+                                            <ng-template #one>
+                                                <ng-container *ngIf="((productDetail.productDetails$ | async)?.flag)===0">
+                                                    <ng-container
+                                                        *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
+                                                        {{calculatePrice(tireBasePrice.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-container>
+
+                                                    <ng-template #normal>
+                                                        {{calculatePrice(productPriceTag.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-template>
+                                                </ng-container>
+                                                <ng-container *ngIf="((productDetail.productDetails$ | async)?.flag)===1">
+
+                                                    <ng-container
+                                                        *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
+                                                        {{calculatePrice(tireBasePrice.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-container>
+
+                                                    <ng-template #normal>
+                                                        {{calculatePrice(productPriceTag.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-template>
+                                                </ng-container>
+
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-template #noOptionsselected>
+                                            <ng-container
+                                                *ngIf="(((productDetail.productDetails$ | async)?.flag)=='')&&(((productDetail.productDetails$ | async)?.pricerefer) === '');else one">
+                                                <ng-container
+                                                    *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
+                                                    {{calculatePrice(tireBasePrice, (productDetail.productDetails$ |
+                                                    async)?.taxType, (productDetail.productDetails$ | async)?.taxValue) |
+                                                    currencysymbol: (productDetail.symbolSetting$ | async)}}
+                                                </ng-container>
+
+                                                <ng-template #normal>
+                                                    {{calculatePrice(productPriceTag.toFixed(2),
+                                                    (productDetail.productDetails$ | async)?.taxType,
+                                                    (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                    (productDetail.symbolSetting$ | async)}}
+                                                </ng-template>
+                                            </ng-container>
+
+                                            <ng-template #one>
+                                                <ng-container *ngIf="((productDetail.productDetails$ | async)?.flag)===0">
+                                                    <ng-container
+                                                        *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
+                                                        {{calculatePrice(tireBasePrice.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-container>
+
+                                                    <ng-template #normal>
+                                                        {{calculatePrice(productPriceTag.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-template>
+
+                                                </ng-container>
+
+                                                <ng-container *ngIf="((productDetail.productDetails$ | async)?.flag)===1">
+                                                    <ng-container
+                                                        *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
+                                                        {{calculatePrice(tireBasePrice.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-container>
+
+                                                    <ng-template #normal>
+                                                        {{calculatePrice(productPriceTag.toFixed(2),
+                                                        (productDetail.productDetails$ | async)?.taxType,
+                                                        (productDetail.productDetails$ | async)?.taxValue) | currencysymbol:
+                                                        (productDetail.symbolSetting$ | async)}}
+                                                    </ng-template>
+
+                                                </ng-container>
+
+                                            </ng-template>
+                                        </ng-template>
+                                    </h3>
+                                    <span *ngIf="(productDetail.productDetails$ | async)?.discount">
+                                        <del>{{calculatePrice((productDetail.productDetails$ | async)?.price,
+                                            (productDetail.productDetails$ | async)?.taxType, (productDetail.productDetails$
+                                            | async)?.taxValue) | currencysymbol: (productDetail.symbolSetting$ |
+                                            async)}}</del></span>
+                                    <p *ngIf="(productDetail.productDetails$ | async)?.discount">
+                                        {{(productDetail.productDetails$ | async)?.discount}}% Off</p>
+                                </div>
+                                <div class="quan-id flex">
+                                    <span class="tt">{{'products.Quantity'|translate}}:</span>
+                                    <div class="id-rw flex">
+                                        <button mat-icon-button matTooltip="Remove" (click)="changeCount('remove')">
+                                            <mat-icon>remove</mat-icon>
+                                        </button>
+                                        <span> {{quantity}} </span>
+                                        <button mat-icon-button matTooltip="Add" (click)="changeCount('add')">
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-0" *ngIf="product.rating > 0">
+                                <app-mat-star-rating [rating]="(productDetail.productDetails$ | async)?.rating"  [reviewCount]="(productDetail.productDetails$ | async)?.reviewCount" [ratingCount]="(productDetail.productDetails$ | async)?.ratingCount"></app-mat-star-rating>
+
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!--lft-->
+                    <div class="avlrht flex" *ngIf="(productDetail.productDetails$ | async) as details">
+                        <!-- <ng-container *ngIf="user && details.quotationAvailable === 1">
+                            <button  (click)="makeQuatation(details)" style="cursor: pointer">Make Quotation</button>
+                        </ng-container> -->
+                        <!-- <div class="flex cmp-nme" *ngIf="(productDetail.productDetails$| async)?.vendorId > 0"
+                            style="cursor: pointer"
+                            [routerLink]="['/vendor-detail/detail/' + (productDetail.productDetails$| async)?.vendorPrefixId]"
+                            [queryParams]="{vendorId: (productDetail.productDetails$| async)?.vendorId}"
+                            routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}"> -->
+                            <!-- <img *ngIf="(productDetail.productDetails$| async)?.companyLogo"
+                                [src]="imagePath+ '?path=' + (productDetail.productDetails$| async)?.companyLogoPath + '&name=' + (productDetail.productDetails$| async)?.companyLogo + '&width=260&height=260'"
+                                onError="this.src='/assets/images/default_image.png';"> -->
+                            <!-- <div class="ven-profile" *ngIf="!(productDetail.productDetails$| async)?.companyLogo"> -->
+                              
+
+                            <!-- </div> -->
+
+
+                        <!-- </div> -->
+                    </div>
+                    <!--rht-->
+                </div>
+                <div class="avl-opt" *ngIf="(productDetail.productDetails$ | async)?.hasTirePrice == 1">
+                    <ng-container
+                        *ngIf="(productDetail.productDetails$ | async)?.isSimplified == 0 && (productDetail.productDetails$ | async)?.variantTirePrice.length > 0">
+                        <label class="trigger">
+                            <input type="checkbox" class="checkbox checkbox--red" />{{'products.TirePriceChart'|translate}}
+                            <span class="msg">
+                                <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px"
+                                    width="100%">
+                                    <tr>
+                                        <th width="100px">{{'products.Quantity'|translate}}</th>
+                                        <th>{{'products.Price'|translate}}</th>
+                                    </tr>
+                                    <tr *ngFor="let list of (productDetail.productDetails$ | async)?.variantTirePrice">
+                                        <td>{{list.quantity}}</td>
+                                        <td>{{currency.symbol}}{{list.quantity * list.price}} (per unit =
+                                            {{currency.symbol}}{{list.price}})</td>
+                                    </tr>
+                                </table>
+                            </span>
+                        </label>
+                    </ng-container>
+
+                    <ng-container *ngIf="(productDetail.productDetails$ | async)?.isSimplified != 0">
+                        <label class="trigger">
+                            <input type="checkbox" class="checkbox checkbox--red" style="cursor: pointer;" /> {{'products.TirePriceChart'|translate}}                            <span class="msg">
+                                <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px"
+                                    width="100%">
+                                    <tr>
+                                        <th width="100px">{{'products.Quantity'|translate}}</th>
+                                        <th>{{'products.Price'|translate}}</th>
+                                    </tr>
+                                    <tr *ngFor="let list of (productDetail.productDetails$ | async)?.productTirePrices">
+                                        <td>{{list.quantity}}</td>
+                                        <td>{{currency.symbol}}{{list.quantity * list.price}} (per unit =
+                                            {{currency.symbol}}{{list.price}})</td>
+                                    </tr>
+
+                                </table>
+                            </span>
+                        </label>
+                    </ng-container>
+
+                </div>
+                <div class="text-muted chk-shp" *ngIf="(productDetail.productDetails$ | async)?.pincodeBasedDelivery === 1">
+                    <p>{{'products.CheckLocation'|translate}}</p>
+                    <div class="flex csd">
+                        <div class="csd-inp"  >
+                            <input type="text"   #pin placeholder="Enter a pin-code eg. 600034"
+                                (keyup)="getPincode(pin.value)" [ngClass]="{'validation-border-color':pin.value === '' && check === true}" >
+                            <button (click)="checkAvailability()" style="cursor:pointer;">Check</button>
+                        </div>
+                        <div class="flex csd-avl"
+                            *ngIf="(productControlSandbox.productAvailabilityData$ | async)?.status === 1 && pinCode && checkPinCode === true">
+                            <img src="assets/img/delivery-truck.svg">
+                            {{'products.DeliveryServiceAvailable'|translate}}
+                        </div>
+                        <div class="flex csd-avl"
+                            *ngIf="(productControlSandbox.productAvailabilityData$ | async)?.status === 0 && pinCode && checkPinCode === true">
+                            <img src="assets/images/close-red.svg">
+                            {{'products.DeliveryServiceNotAvailable'|translate}}
+                        </div>
+                    </div>
+                </div>
+
+            </ng-container>
+
+            <ng-container  *ngIf="(productDetail.productDetails$ | async)?.productVariantList  && (productDetail.productDetails$ | async)?.productVariantList.length > 0">
+
+                <!-- options -->
+                <app-controls-variant [variantDetails]="variantDetails" (changeVariants)="changeVariant($event)"
+                                      [selectedVariant]="(productDetail.productDetails$ | async)?.selectedVariant"
+                                      [variantList]="(productDetail.productDetails$ | async)?.productVariantList">
+                </app-controls-variant>
+
+                <!-- options -->
+
+            </ng-container>
+     
+
+            <ng-container *ngIf="(productDetail.productDetails$ | async)?.isAvailable">
+                <app-controls-product-detail style="margin-bottom: 15px;" [product]="productDetails" [taxValue]="taxValue" [taxType]="taxType"[productPrice]="productPrice"
+                                             [show]="(productControlSandbox.productAvailabilityData$ | async)?.status === 1 && pinCode && checkPinCode === true && (productDetail.productDetails$ | async)?.isAvailable"
+                                             [type]="'detail'" [totalPrice]=totalPrice [optionValueArray]=selectedOptionsName
+                                             [optionNameSelected]=optionNameSelected [cartOptionValueArray]=cartOptionValueArray
+                                             (emptyDecorator)='emptyOutputDecorator($event)' [selectedOptions]="selectedOptions"
+                                             [quantity]="quantity">
+                </app-controls-product-detail>
+                <!-- <div fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" class="swiper-btn">
+                    <button class="flex ofs"> Out of Stock </button>
+                <button class="flex byn"> Order Now </button>
+                </div> -->
+            </ng-container>
+
+            <!-- <div class="text-muted chk-shp">
+                <p>Check Shipping & delivery to your location</p>
+                <div class="flex csd">
+                    <div class="csd-inp">
+                        <input type="text" placeholder="Enter a pin-code eg. 600034">
+                        <button>Check</button>
+                    </div>
+                    <div class="flex csd-avl">
+                        <img src="assets/img/delivery-truck.svg">
+                        Delivery Service Available
+                    </div>
+                </div>
+            </div> -->
+
+
+
+    
+        </div>
+
+    </div>
+    
+    <ng-container>
+     
+    <div class="products-tabs justin">
+        <h3 class="re-prod-head">{{'products.RelatedProducts'|translate}}</h3>
+                <app-related-products style="width: 20%;" [products]="(productDetail.relatedProducts$ | async)" [productId]="productId"></app-related-products>
+    </div>
+    </ng-container>

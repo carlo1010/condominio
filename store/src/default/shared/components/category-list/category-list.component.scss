@@ -1,0 +1,28 @@
+.category{
+  .active{
+    background: none;
+    color: black;
+    font-weight: 500;
+  }
+}
+.mat-expansion-panel{
+  display: unset;
+}
+.activeColor{
+  color: #689f38; 
+}
+.mat-menu-item {
+  // line-height: 18px;
+  // margin-bottom: 7px;
+  background: none !important;
+  &:hover {
+    background: transparent !important;
+  }
+}
+.background{
+
+  background: none !important;
+  &:hover {
+    background: transparent !important;
+  }
+}

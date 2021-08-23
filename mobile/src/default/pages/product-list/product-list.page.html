@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ pageTitle }}</ion-title>
+    <ion-buttons (click)="gotoCart()" class="notification" slot="end">
+      <ion-icon mode="ios" name="cart"></ion-icon>
+      <ion-badge mode="ios">{{productCtrlSandbox.cartListCount$ | async}}</ion-badge>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar (click)="gotoSearch()">
+    <ion-searchbar id="input" [placeholder]="'Search' | translate" disabled="true" mode="ios"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content> </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="product-list">
+    <ion-row>
+      <ion-col size="6" *ngFor="let productList of productsSandbox.productList$ | async" class="ion-no-padding">
+        <ion-card (click)="openProductDetail(productList.productId, productList.productSlug)">
+          <ion-chip *ngIf="productList.discount > 0">
+            <ion-label>{{ productList.discount }} %</ion-label>
+          </ion-chip>
+          <div class="image-canvas">
+            <img [src]="
+                imageResizeUrl +
+                'width=180&height=180&path=' +
+                productList.image.containerName +
+                '&name=' +
+                productList.image.image
+              " (load)="imageLoadedEvent(productList.productId)"
+              onError="this.src='/assets/images/Load icon Products.png';"
+              [hidden]="!imageLoaded[productList.productId]" />
+            <img src="assets/images/Load icon Products.png" [hidden]="imageLoaded[productList.productId]" />
+          </div>
+          <hr />
+          <p>{{ productList.name }}</p>
+
+          <h6>
+            {{
+              calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                | currencySymbol: (commonSandbox.appDetails$ | async)
+            }}
+            <span *ngIf="productList.pricerefer">
+              <del>
+                {{
+                  calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}</del></span>
+          </h6>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!--SKELETON LOADING START HERE-->
+    <ion-row *ngIf="
+        (productsSandbox.productListLoading$ | async)
+      ">
+      <ion-col size="6" *ngFor="let loading of [1, 2, 3, 4]" class="ion-no-padding">
+        <ion-card>
+          <div class="image-canvas">
+            <img src="assets/images/Load icon Products.png" />
+          </div>
+          <hr />
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!--SKELETON LOADING END HERE-->
+  </div>
+
+  <!-- fab placed to the bottom end -->
+  <!-- fab placed to the bottom end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="filter-icon" color="primary" (click)="applyFilter()"
+      [disabled]="productsSandbox.productListLoading$ | async">
+      <ion-icon name="funnel" mode="ios"></ion-icon>
+      <ion-badge color="primary" mode="ios" *ngIf="filterCounts>0">
+        {{filterCounts}}
+      </ion-badge>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="no-data" *ngIf="
+      !(productsSandbox.productListLoading$ | async) &&
+      (productsSandbox.productList$ | async)?.length === 0
+    ">
+    <h1>{{'No_Data_Found'|translate}}</h1>
+    <ion-button color="secondary" (click)="backHome()">{{'Back_to_Home'|translate}}</ion-button>
+  </div>
+  <ion-infinite-scroll threshold="100px" [disabled]="!(productsSandbox.productListMoreItems$ | async)"
+    (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

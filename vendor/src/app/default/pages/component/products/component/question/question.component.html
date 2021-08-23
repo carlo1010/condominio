@@ -1,0 +1,124 @@
+<div style="margin: 0 ;" class="row products-section products-sub-section">
+  <div class="col-12 ">
+    <!-- add button -->
+    <div class="breadcrumbs-row" *ngIf="(productSandbox.productDetails$ | async) as details">
+      <div class="flex card prod-dtl">
+        <img *ngIf="details.productImage"
+          [src]="imageUrl + '?path=' + details.productImage[0].containerName + '&name=' + details.productImage[0].image + '&width=50&height=50'"
+          onError="this.src='/assets/error-images/Load-icon-Products.png';">
+        <!-- <img *ngIf="!details.productImage" src="/assets/imgs/profile-pic.png"> -->
+        <h5 class="prod-title" style="color: #1C5ED9;">{{details.name}}</h5>
+        <h5>Sku Number:
+          <span style="color: #1C5ED9;">{{details.sku}}</span>
+        </h5>
+        <div class="bc-col-btn right add-btn move ">
+          <button style="background: #1C5ED9;" class="btn" (click)="addQuestion()" (click)="addQuestion()">
+            <img  src="assets/imgs/add-white-ico.png">Add Question
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- add button -->
+  </div>
+
+  <div style="background: white;" class="flex product-wrap example-full-width">
+
+    <!-- add question form -->
+    <div class="adp-row" *ngIf="isquestion">
+      <button class="close" (click)="remove()"><img src="assets/imgs/close.svg"> </button>
+
+      <div class="flex adp-innr-row">
+        <div class="adp-innr-rht">
+          <form [formGroup]="addQuestionForm">
+            <div class="fg-row2 flex" style="margin-bottom: 30px;">
+              <div class="text-grp">
+                <p>Post Your Question</p>
+                <textarea formControlName="question" rows="3" class="form-control"></textarea>
+                <div class="error" *ngIf="addQuestionForm.get('question').hasError('required') && submitted">
+                  Question is required
+                </div>
+              </div>
+            </div>
+            <div class="fg-row2 flex">
+              <div class="text-grp">
+                <p>Post Your Answer</p>
+                <textarea formControlName="answer" rows="3" class="form-control"></textarea>
+                <div class="error" *ngIf="addQuestionForm.get('answer').hasError('required') && submitted">
+                  Answer is required
+                </div>
+              </div>
+            </div>
+            <div class="btns">
+              <button class="save" (click)="submit()" style="background: #1C5ED9; font-weight: 700;">Post
+
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <!-- add question form -->
+
+
+    <div class="container-fluid" *ngIf="!isquestion">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Questions</th>
+              <th>No of Answer</th>
+              <th>Created By</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of productSandbox.getquestionList$ | async">
+              <td style="cursor: pointer; text-decoration: underline;" (click)="openModal(data)">
+                {{data.question}}</td>
+              <td>{{data.answerCount}}</td>
+              <td>{{data.postedBy.firstName}}</td>
+              <td class="btn-action">
+                <i [ngbPopover]="deleteContent" placement="left" #deletePop="ngbPopover"
+                  style="margin-left: -2px; cursor: pointer" class="fas fa-trash globe_icon">
+                  <ng-template #deleteContent>
+                    <div class="style">
+                      <div class="modal-header">
+                        <h6 class="modal-title" >
+                          Do you want to delete
+                        </h6>
+                      </div>
+
+                      <div class="modal-footer" style="margin-right: 23%;">
+                        <button type="button" class="btn btn-danger" (click)="deletePop.close()" data-dismiss="modal">
+                          No
+                        </button>
+                        <button type="button" class="btn btn-success" (click)="deleteQuestion(data.questionId)"
+                          data-dismiss="modal">
+                          Yes
+                        </button>
+                      </div>
+                    </div>
+                  </ng-template>
+                </i>
+                <span>
+                  <label class="switch">
+                    <input type="checkbox" (change)="changeStatus($event.target.checked, data.questionId)" [checked]="data.isActive === 1">
+                    <span class="slider toggle-slide"></span>
+                  </label>
+                </span>
+
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <div class="no_data"
+          *ngIf="(productSandbox.getquestionList$ | async)?.length == 0 && (productSandbox.getquestionList$ | async)">
+          <p>data not found</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

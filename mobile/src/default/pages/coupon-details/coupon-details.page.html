@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="modalCtrl.dismiss()">
+      <button class="ripple"> <img src="assets/images/close.svg"> </button>
+    </ion-buttons>
+    <ion-title> Coupon Discount Details </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="productList && productList.length > 0">
+    <div class="cdd-row" *ngFor="let product of productList">
+
+      <h3> {{product.productName}} </h3>
+      <ul class="flex">
+        <li class="flex"> Qty : <span>{{product.quantity}}</span> </li>
+        <li class="flex"> Discount Amount : <span>{{product.discountAmount | currencySymbol: (commonSandbox.appDetails$ | async) }}</span> </li>
+      </ul>
+
+    </div>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,13 @@
+ion-header {
+  ion-toolbar {
+    ion-button {
+      --background: transparent;
+      --background-activated: transparent;
+      --color: var(--ion-color-primary-contrast);
+      --color-activated: var(--ion-color-primary-contrast);
+    }
+    ion-searchbar {
+      --box-shadow: none;
+    }
+  }
+}

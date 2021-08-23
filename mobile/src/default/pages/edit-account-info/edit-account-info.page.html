@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{'Account_Information'|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="profileForm" #documentProfileForm="ngForm" (ngSubmit)="submit()">
+    <!--Name-->
+    <ion-item [class.error]="submitted && fields['firstName'].errors">
+      <ion-label position="stacked">
+        {{'Name'|translate}}
+      </ion-label>
+      <ion-icon slot="end" name="person"></ion-icon>
+      <ion-input formControlName="firstName"> </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields['firstName'].errors" class="invalid-feedback">
+      <div *ngIf="fields['firstName'].errors.required">{{'Name_is_required'|translate}}</div>
+    </div>
+    <ion-item style="display: none">
+      <ion-label position="stacked">
+        {{'Name'|translate}}
+      </ion-label>
+      <ion-icon slot="end" name="person"></ion-icon>
+      <ion-input formControlName="lastName"> </ion-input>
+    </ion-item>
+    <!--Email-->
+    <ion-item [class.error]="submitted && fields['email'].errors">
+      <ion-label position="stacked">
+        {{'Email'|translate}}
+      </ion-label>
+      <ion-icon slot="end" name="mail"></ion-icon>
+      <ion-input formControlName="email"> </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields['email'].errors" class="invalid-feedback">
+      <div *ngIf="fields['email'].errors.required">{{'Email_is_required'|translate}}</div>
+      <div *ngIf="fields['email'].errors.email">
+        {{'Please_enter_a_valid_Email_Address'|translate}}
+      </div>
+    </div>
+    <!--Phone Number-->
+    <ion-item [class.error]="submitted && fields['mobile'].errors">
+      <ion-label position="stacked">
+        {{'Phone_Number'|translate}}
+      </ion-label>
+      <ion-icon slot="end" name="phone-portrait"></ion-icon>
+      <ion-input type="tel" maxlength="15" formControlName="mobile"> </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields['mobile'].errors" class="invalid-feedback">
+      <div *ngIf="fields['mobile'].errors.required">
+        {{'Phone_Number_is_required'|translate}}
+      </div>
+
+      <div *ngIf="fields['mobile'].errors.minlength || fields['mobile'].errors.maxlength">
+        {{ 'Mobile number should be between 8-15 digits' | translate }}
+      </div>
+      <!-- <div *ngIf="fields['mobile'].errors.minlength">
+        {{'Must_Require_8_Digits'|translate}}
+      </div>
+      <div *ngIf="fields['mobile'].errors.maxlength">
+        {{'Mobile_Number_cannot_exceed_more_than_15_digits'|translate}}
+      </div> -->
+    </div>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="!(commonSandbox.profileUpdateLoading$ | async)" (click)="documentProfileForm.ngSubmit.emit()"
+    type="submit" expand="full" color="secondary">
+    {{'Save'|translate}}
+  </ion-button>
+  <ion-button *ngIf="commonSandbox.profileUpdateLoading$ | async" type="button" expand="full" color="secondary">
+    <ion-spinner name="dots"></ion-spinner>
+  </ion-button>
+</ion-footer>

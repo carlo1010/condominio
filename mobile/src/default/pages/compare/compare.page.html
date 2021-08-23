@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'Compare_Product' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="compare-count">
+    <ion-title>{{ 'Compare_Product' | translate }} :
+      {{ (productCtrlSandbox.compareList$ | async)?.length }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="!(productCtrlSandbox.compareListLoading$ | async); else showLoader">
+    <ion-list *ngIf="productCtrlSandbox.compareList$ | async as items">
+      <ng-container *ngIf="items.length > 0; else nodata">
+        <ion-grid fixed>
+          <ion-row class="head">
+            <ion-col size="3"></ion-col>
+            <ion-col size="4.5" *ngFor="let item of items" (click)="productCtrlSandbox.removeProduct(item.productId)">
+              <ion-icon name="close"></ion-icon> {{ 'Remove' | translate }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="data">
+            <ion-col size="3">
+              {{ 'Product_Info' | translate }}
+            </ion-col>
+            <ion-col size="4.5" *ngFor="let item of items">
+              <h1>
+                {{ item.name }}
+              </h1>
+              <h1 class="price">
+                {{
+                  item.price
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+              </h1>
+              <ion-img [src]="
+                  imageResizeUrl +
+                  'width=80&height=80&path=' +
+                  item.productImage.containerName +
+                  '&name=' +
+                  item.productImage.image
+                "></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row class="data">
+            <ion-col size="3">{{ 'Brand' | translate }}</ion-col>
+            <ion-col size="4.5" *ngFor="let item of items">
+              {{ item.manufacturerName }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="data">
+            <ion-col size="3">{{ 'Summary' | translate }}</ion-col>
+            <ion-col size="4.5" *ngFor="let item of items">
+              <div [innerHTML]="item.description"></div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="data">
+            <ion-col size="3">{{ 'Rating' | translate }}</ion-col>
+            <ion-col size="4.5" *ngFor="let item of items">
+              <div class="rating">
+                <rating class="compare-rates" [(ngModel)]="item.rating" size="5" readonly="true">
+                </rating>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="data" class="ion-no-padding">
+            <ion-col size="3" class="ion-no-padding"></ion-col>
+            <ion-col size="4.5" class="ion-no-padding" *ngFor="let item of items">
+              {{item.productSlug}}
+              <ion-button (click)="openProductDetail(item.productSlug, item.productId)" class="cart-button"
+                color="dark">
+                {{ 'View_Detail' | translate }}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
+      <ng-template #nodata>
+        <div class="no-data">
+          <p>No data</p>
+          <ion-button color="secondary" (click)="openDashboard()">
+            Home
+          </ion-button>
+        </div>
+      </ng-template>
+    </ion-list>
+  </ng-container>
+  <ng-template #showLoader>
+    <ion-icon class="loader-ripple" src="assets/icon/ripple.svg"></ion-icon>
+  </ng-template>
+</ion-content>

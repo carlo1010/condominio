@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'Wishlist' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row
+      *ngFor="let list of productCtrlSandbox.wishList$ | async"
+      class="ion-no-padding"
+    >
+      <div
+        *ngIf="
+          (productCtrlSandbox.removingWishListLoading$ | async) &&
+          deletingItem === list.productId
+        "
+        class="loading-container"
+      ></div>
+      <ion-col size="4" class="color-border ion-no-padding">
+        <div class="image-canvas">
+          <img
+            [src]="
+              imageResizeUrl +
+              'width=90&height=90&path=' +
+              list.productImage[0].containerName +
+              '&name=' +
+              list.productImage[0].image
+            "
+            onError="this.src='/assets/images/Load icon Products.png';"
+          />
+        </div>
+      </ion-col>
+      <ion-col size="8" class="item-detail">
+        <p class="title">{{ list.name }}</p>
+        <div class="amount">
+          <p>
+            {{
+              list.price | currencySymbol: (commonSandbox.appDetails$ | async)
+            }}
+            <span *ngIf="list.pricerefer">
+              <del>
+                {{
+                  list.pricerefer
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}</del
+              ></span
+            >
+          </p>
+
+          <div class="footer-button">
+            <ion-button
+              (click)="removeItem(list.productId)"
+              fill="none"
+              class="remove-btn"
+            >
+              {{ 'Remove' | translate }}
+            </ion-button>
+
+            <ion-button
+              color="secondary"
+              (click)="addToCart(list.productId,list.productSlug)"
+            >
+              {{ 'Add_To_Cart' | translate }}
+            </ion-button>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!--SKELETON LOADING START HERE-->
+    <div
+      *ngIf="
+        (productCtrlSandbox.wishListLoading$ | async) &&
+        (!(productCtrlSandbox.wishList$ | async) ||
+          (productCtrlSandbox.wishList$ | async)?.length === 0)
+      "
+    >
+      <ion-row *ngFor="let list of [1, 2, 3, 4]" class="ion-no-padding">
+        <ion-col size="4" class="color-border ion-no-padding">
+          <div class="image-canvas">
+            <img src="assets/images/Load icon Products.png" />
+          </div>
+        </ion-col>
+        <ion-col size="8" class="item-detail">
+          <div class="list-dtl">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <div class="ad-r-rm">
+              <ion-button color="secondary">
+                <ion-skeleton-text
+                  animated
+                  style="width:6rem"
+                ></ion-skeleton-text>
+              </ion-button>
+            </div>
+          </div>
+          <div class="amount"></div>
+        </ion-col>
+      </ion-row>
+    </div>
+    <!--SKELETON LOADING END HERE-->
+  </ion-grid>
+  <div
+    class="empty-cart"
+    *ngIf="
+      !(productCtrlSandbox.wishListLoading$ | async) &&
+      (!(productCtrlSandbox.wishList$ | async) ||
+        (productCtrlSandbox.wishList$ | async)?.length === 0)
+    "
+  >
+    <ion-icon icon="assets/icon/shopping-bag.svg"></ion-icon>
+    <p>{{ 'Your_Wish_List_is_empty' | translate }}</p>
+    <ion-button (click)="gotoHome()">{{
+      'Continue_Shopping' | translate
+    }}</ion-button>
+  </div>
+  <ion-infinite-scroll
+    threshold="100px"
+    [disabled]="!(productCtrlSandbox.wishListMoreItems$ | async)"
+    (ionInfinite)="doInfinite($event)"
+  >
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -1,0 +1,28 @@
+ion-item {
+  --highlight-color-focused: transparent;
+  --highlight-color-invalid: transparent;
+  --highlight-color-valid: transparent;
+}
+.error {
+  border-bottom: solid thin var(--ion-color-danger);
+  --border-color: var(--ion-color-danger);
+  --highlight-color-focused: transparent;
+  --highlight-color-invalid: transparent;
+  --highlight-color-valid: transparent;
+}
+
+ion-label {
+  font-family: 'Rubik', sans-serif;
+}
+
+ion-input {
+  font-family: 'Rubik', sans-serif;
+}
+ion-radio-group {
+  width: 100%;
+  display: inline-block;
+  ion-item {
+    width: 50%;
+    display: inline-block;
+  }
+}

@@ -1,0 +1,44 @@
+<!-- <ion-content class="ion-padding">
+    <ion-textarea rows="4" [(ngModel)]="feedback" placeholder="Enter your review here...">
+
+    </ion-textarea>
+    <div class="footer-btns">
+        <ion-button (click)="dismiss()" fill="none">
+            {{'cancel'|translate}}
+        </ion-button>
+        <ion-button [disabled]="!feedback" (click)="submit()" color="dark">
+            {{'submit'|translate}}
+        </ion-button>
+    </div>
+
+</ion-content> -->
+
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <button (click)="dismiss()" class="back-btn"> <ion-icon name="arrow-round-back"></ion-icon> </button>
+      </ion-buttons>
+  
+      <ion-title> Product Review </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+
+    <h2>Overall Rating </h2>
+    <rating class="my-rates" [(ngModel)]="detail.rating" size="5">
+    </rating>
+  
+    <h2>Let us know your likes & dislikes about this product</h2>
+  
+    <textarea rows="8" [(ngModel)]="feedback"></textarea>
+  
+    <div class="flex review-btn">
+      <button *ngIf="!(orderSandbox.postRatingLoading$|async)" class="ripple" [disabled]="!feedback" (click)="submit()">{{'submit'|translate}}</button>
+      <button class="ripple load" *ngIf="(orderSandbox.postRatingLoading$|async)">
+        <ion-spinner color="light" name="dots"></ion-spinner>
+      </button>
+      
+    </div>
+  
+  </ion-content>

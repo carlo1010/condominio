@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title> {{ 'My_Profile' | translate }}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="profl-img">
+    <ion-button class="edit-btn" shape="round" *ngIf="isEdit" (click)="editFormSubmit()">
+      <ion-icon name="create"></ion-icon>
+      {{ 'Edit' | translate }}
+    </ion-button>
+    <img (click)="uploadProfile()" [src]="
+        image
+          ? getUrl(image)
+          : imageResizeUrl +
+            'width=50&height=50&path=' +
+            (commonSandbox.profiledetails$ | async)?.avatarPath +
+            '&name=' +
+            (commonSandbox.profiledetails$ | async)?.avatar
+      " onError="this.src='/assets/images/no-profile.png';" />
+    <h3>{{ (commonSandbox.profiledetails$ | async)?.firstName }}</h3>
+    <p>{{ (commonSandbox.profiledetails$ | async)?.username }}</p>
+  </div>
+
+  <form [formGroup]="profileForm" (ngSubmit)="editFormSubmit()">
+    <!-- First Name-->
+    <ion-item [class.error]="submitted && fields.firstName.errors">
+      <ion-label position="stacked">
+        {{ 'First_name' | translate }}
+      </ion-label>
+      <ion-icon slot="end" name="person"></ion-icon>
+      <ion-input formControlName="firstName" [disableControl]="isEdit">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields.firstName.errors" class="invalid-feedback">
+      <div *ngIf="fields.firstName.errors.required">
+        {{ 'First_name_is_required' | translate }}
+      </div>
+    </div>
+    <!--Last Name-->
+    <ion-item [class.error]="submitted && fields.lastName.errors">
+      <ion-label position="stacked">
+        {{ 'Last_name'|translate }}
+      </ion-label>
+      <ion-icon slot="end" name="person"></ion-icon>
+      <ion-input formControlName="lastName" [disableControl]="isEdit">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields.lastName.errors" class="invalid-feedback">
+      <div *ngIf="fields.firstName.errors.required">
+        {{ 'Last_name_is_required' | translate }}
+      </div>
+    </div>
+    <!--Email-->
+    <ion-item [class.error]="submitted && fields.email.errors">
+      <ion-label position="stacked">
+        {{ 'Email' | translate }}
+      </ion-label>
+      <ion-icon slot="end" name="mail"></ion-icon>
+      <ion-input formControlName="email" [disableControl]="isEdit"> </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields.email.errors" class="invalid-feedback">
+      <div *ngIf="fields.email.errors.required">
+        {{ 'Email_is_required' | translate }}
+      </div>
+      <div *ngIf="fields.email.errors.email">
+        {{ 'Enter_a_valid_email_address' | translate }}
+      </div>
+    </div>
+    <!--Phone Number-->
+    <ion-item [class.error]="submitted && fields.mobile.errors">
+      <ion-label position="stacked">
+        {{ 'Phone_Number' | translate }}
+      </ion-label>
+      <ion-icon slot="end" name="phone-portrait"></ion-icon>
+      <ion-input type="tel" maxlength="15" formControlName="mobile" [disableControl]="isEdit">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields['mobile'].errors" class="invalid-feedback">
+      <div *ngIf="fields['mobile'].errors.required">
+        {{ 'Phone_Number_is_required' | translate }}
+      </div>
+      <!-- <div *ngIf="fields['mobile'].errors.minlength">
+        {{ 'Must_Required_10_Digits' | translate }}
+      </div> -->
+      <div *ngIf="fields['mobile'].errors.minlength || fields['mobile'].errors.maxlength">
+        {{ 'Mobile number should be between 8-15 digits' | translate }}
+      </div>
+    </div>
+
+    <ion-button [hidden]="isEdit" expand="full" type="submit" color="secondary">{{ 'Save' | translate }}</ion-button>
+  </form>
+</ion-content>

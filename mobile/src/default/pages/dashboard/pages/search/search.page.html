@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'Search'|translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon (click)="dismiss()" name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      (ionChange)="search($event)"
+      debounce="250"
+      [placeholder]="'Search_for_products'|translate"
+      mode="ios"
+      animated
+    >
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<p>Categories</p>-->
+  <h6
+    *ngIf="
+      (productsSandbox.searchProductLoaded$ | async) &&
+      !(productsSandbox.searchProductLoading$ | async) &&
+      searchValue
+    "
+  >
+    {{'Showing_result_for'|translate}} "{{ searchValue }}"
+  </h6>
+  <ion-spinner
+    *ngIf="productsSandbox.searchProductLoading$ | async"
+    name="lines"
+  ></ion-spinner>
+  <div
+    *ngIf="
+      !(productsSandbox.searchProductLoaded$ | async) &&
+      (!(productsSandbox.searchProductList$ | async) ||
+        (productsSandbox.searchProductList$ | async)?.length === 0)
+    "
+  >
+    <ion-list
+      (click)="gotoProductList(category)"
+      *ngFor="let category of productsSandbox.categoryList$ | async"
+    >
+      <ion-icon name="trending-up"></ion-icon>
+      {{ category.name }}
+    </ion-list>
+  </div>
+
+  <ion-list
+    (click)="gotoProductDetail(list.productId, list.productSlug)"
+    *ngFor="let list of productsSandbox.searchProductList$ | async"
+  >
+    <ion-icon name="search"></ion-icon>
+    {{ list.name }}
+  </ion-list>
+</ion-content>

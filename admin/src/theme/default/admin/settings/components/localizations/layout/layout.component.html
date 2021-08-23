@@ -1,0 +1,102 @@
+<div class="setup-wrapper">
+     <div  class="setup-header flex">
+        <h3 *ngIf="router.url === '/settings/local/countries/list'">{{'Settings.Local.Country.CountriesList' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/zone/list'">{{'Settings.Local.Zone.ZoneList' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/delivery-location/list'">{{'Settings.Local.Location.LocationList' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/language'">{{'Settings.Local.Language.LanguagesList' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/currency'">{{'Settings.Local.Currency.SettingsLocalizationCurrenciesPath' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/tax'">{{'Settings.Local.Tax.SettingsLocalizationTaxPath' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/order-status'">{{'Settings.Local.Orderstatus.Settingspath' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/stock-status'">{{'Settings.Local.StockStatus.Settingspath' | translate}}</h3>
+        <h3 *ngIf="router.url === '/settings/local/emailtemp/list'">{{'Settings.Local.Emailtemplate.EmailTemplate' | translate}}</h3>
+        <div class="back-button-settings">
+            <button  class="coc" routerLink="/settings"> <<Back </button>
+        </div> 
+    </div> 
+    
+<div class="setup-container localization-container">
+<div class="card ap-general ap-info">
+<div class="localize-tab  ap-body">
+    <ngb-tabset>
+        <ngb-tab>
+            <ng-template ngbTabTitle >
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/countries']"  [appHideIfUnauthorized]="'list-country'">Country</button>
+            </ng-template>
+        
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'zone'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/zone']"  [appHideIfUnauthorized]="'list-zone'">Zone</button>
+            </ng-template>
+            <ng-template ngbTabContent>
+               
+         
+            </ng-template>
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Delivery Location'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/delivery-location']" >Delivery Location</button>
+            </ng-template>
+          
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Language'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/language']"  [appHideIfUnauthorized]="'list-language'">Language</button>
+            </ng-template>
+          
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Currency'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/currency']"  [appHideIfUnauthorized]="'list-currency'">Currency</button>
+            </ng-template>
+           
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Tax'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/tax']" class="tablinks" [appHideIfUnauthorized]="'list-tax'">Tax</button>
+            </ng-template>
+          
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Order Status'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/order-status']" class="tablinks" [appHideIfUnauthorized]="'list-order-status'">Order Status</button>
+            </ng-template>
+         
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Stock Status'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/stock-status']"  [appHideIfUnauthorized]="'list-stock-status'">Stock Status</button>
+            </ng-template>
+         
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Email Template'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/emailtemp']" class="tablinks" [appHideIfUnauthorized]="'list-email-template'">Email Template</button>
+            </ng-template>
+           
+         </ngb-tab>
+    
+    </ngb-tabset>
+   
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/countries']" class="tablinks" [appHideIfUnauthorized]="'list-country'">Country</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/zone']" class="tablinks" [appHideIfUnauthorized]="'list-zone'">Zone</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/delivery-location']" class="tablinks">Delivery Location</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/language']" class="tablinks" [appHideIfUnauthorized]="'list-language'">Language</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/currency']" class="tablinks" [appHideIfUnauthorized]="'list-currency'">Currency</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/tax']" class="tablinks" [appHideIfUnauthorized]="'list-tax'">Tax</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/order-status']" class="tablinks" [appHideIfUnauthorized]="'list-order-status'">Order Status</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/stock-status']" class="tablinks" [appHideIfUnauthorized]="'list-stock-status'">Stock Status</button> -->
+    <!-- <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/emailtemp']" class="tablinks" [appHideIfUnauthorized]="'list-email-template'">Email Template</button> -->
+</div>
+</div>
+</div>
+</div>
+<router-outlet></router-outlet>

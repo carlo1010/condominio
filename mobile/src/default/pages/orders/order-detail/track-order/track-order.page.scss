@@ -1,0 +1,92 @@
+ion-title {
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  font-family: 'Rubik', sans-serif;
+}
+.back-btn {
+  background: transparent;
+  color: #fff;
+  font-size: 1.5rem;
+  outline: none;
+}
+ion-content {
+  .order-heading {
+    justify-content: flex-start;
+    align-items: center;
+    img{
+      width: 55px;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 500;
+      color: #000;
+      padding-left: 10px;
+    }
+  }
+  
+  .order-status {
+    padding: 40px 20px 20px;
+    .os-row {
+      position: relative;
+      padding-left: 30px;
+      padding-bottom: 20px;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 9px;
+        top: 18px;
+        width: 2px;
+        height: calc(100% - 18px);
+        border-left: dashed 2px #B4B4B4;
+      }
+      .os-img {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .os-col {
+        h4 {
+          font-size: 15px;
+          font-weight: 400;
+          color: #222;
+          margin: 0 0 5px;
+        }
+        p {
+          font-size: 12px;
+          font-weight: 400;
+          color: #7da77c;
+        }
+      }
+      &.os-completed {
+        .os-col {
+          h4 {
+            font-weight: 500;
+            color: #088f05;
+          }
+        }
+      }
+      &.os-last::before {
+        display: none;
+      }
+      .track-id {
+        h5 {
+          font-size: 14px;
+          font-weight: 500;
+          color: #222;
+          margin: 10px 0 5px;
+          line-height: 17px;
+        }
+        a {
+          display: block;
+          border-radius: 8px;
+          background: #fff3c3;
+          padding: 4px 6px;
+          font-size: 12px;
+          font-weight: 400;
+          color: #222;
+        }
+      }
+    }
+  }
+}

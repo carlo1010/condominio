@@ -1,0 +1,70 @@
+<!--REACTIVE FORM-->
+<form novalidate [formGroup]="pianoForm">
+
+    <div class="row products-section">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)">Condominio</a></li>
+                        <li> {{updatePianoId ? 'Aggiorna Piano' : 'Aggiungi Piano' }}</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" type="submit" (click)="onSubmits()"><img
+                            src="assets/img/tick-round-white.png"> {{'catalog.categories.Save'| translate}}
+                    </button>
+                    <button class="btn btn-cancel" (click)='cancel()'><img
+                            src="assets/img/close-white-ico.png"> {{'catalog.categories.Cancel'| translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span> {{'catalog.product.General'| translate}}
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Num Piano<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="Numero del Piano" formControlName="numPiano" [ngClass]="{'validationcolor':pianoForm.get('numPiano').hasError('required') && pianoForm.get('numPiano').touched && submitted}">
+                        <div class="validation-error" *ngIf="pianoForm.get('numPiano').hasError('required') && pianoForm.get('numPiano').touched && submitted">
+                            {{'catalog.Error.BrandNameRequired'| translate}}
+                        </div>
+                        <div class="validation-error" *ngIf="pianoForm.get('name').hasError('maxlength')">
+                            Must be max 64 chracters long
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Ordinamento<sup>*</sup></label>
+                        <input type="text" appOnlyNumber class="form-control" placeholder="sortOrder" formControlName="sortOrder" [ngClass]="{'validationcolor':pianoForm.get('sortOrder').hasError('required') && pianoForm.get('sortOrder').touched && submitted}">
+                        <div class="validation-error" *ngIf="pianoForm.get('sortOrder').hasError('required') && pianoForm.get('sortOrder').touched && submitted">
+                            {{'catalog.Error.SortOrderRequired'| translate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label> Stato<sup>*</sup></label>
+                        <select class="form-control custom-select" formControlName="status" placeholder="status" [ngClass]="{'validationcolor':!pianoForm.get('status').valid && !pianoForm.get('status').untouched && submitted}">
+                            <option value=''>- -Seleziona Stato- -</option>
+                            <option value="1">Attivo</option>
+                            <option value="0">in-Attivo</option>
+                        </select>
+                        <div class="validation-error" *ngIf="pianoForm.get('status').hasError('required') && pianoForm.get('status').touched && submitted">
+                            {{'catalog.Error.StatusRequired'| translate}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

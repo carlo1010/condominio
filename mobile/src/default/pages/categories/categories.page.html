@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ pageTitle |titlecase }}</ion-title>
+  
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-slides mode="ios" pager="false" [options]="slideOpts">
+    <ion-slide *ngFor="let banner of productsSandbox.bannerList$ | async">
+      <img
+        [src]="
+          imageResizeUrl +
+          'width=600&height=200&path=' +
+          banner.imagePath +
+          '&name=' +
+          banner.image
+        "
+        (load)="bannerImageLoadedEvent()"
+        [hidden]="!bannerImageLoaded"
+      />
+      <img
+        src="assets/images/Load icon Banner.png"
+        [hidden]="bannerImageLoaded"
+      />
+    </ion-slide>
+  </ion-slides>
+  <ion-list
+    *ngFor="let subCategories of productsSandbox.subCategoryList$ | async"
+  >
+    <ion-list-header (click)="showChildren(subCategories)">
+      {{ subCategories.name | titlecase }}
+      <div *ngIf="subCategories.children.length > 0">
+        <ion-icon
+          *ngIf="selectedCategory == subCategories.categoryId"
+          name="arrow-dropdown"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="selectedCategory != subCategories.categoryId"
+          name="arrow-dropright"
+        ></ion-icon>
+      </div>
+    </ion-list-header>
+    <hr />
+    <div *ngIf="selectedCategory == subCategories.categoryId">
+      <p
+        *ngFor="let category of subCategories.children"
+        (click)="openProductList(category)"
+      >
+        {{ category.name |titlecase }}
+      </p>
+      <hr />
+    </div>
+  </ion-list>
+</ion-content>

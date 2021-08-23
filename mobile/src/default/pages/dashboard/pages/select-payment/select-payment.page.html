@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'Payment_Information'|translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="dashboard/select-address"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-progress-bar *ngIf="productCtrlSandbox.paymentOptionsLoading$ | async" reversed="true" type="indeterminate">
+  </ion-progress-bar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="amt-paid flex" *ngIf="productCtrlSandbox.totalCartPrice$ | async  as total">
+    <h3>Amount to be paid</h3>
+    <h2>
+      {{ (total - (couponDiscountAmount>0?couponDiscountAmount:0 + giftCardAmount>0?giftCardAmount:0 )) | currencySymbol: (commonSandbox.appDetails$ | async)}}
+    </h2>
+  </div>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label [class.error]="errorMessage"><span>{{ errorMessage }}</span> {{'Payment_method'|translate}}</ion-label>
+    </ion-list-header>
+    <ng-container *ngIf="
+        (productCtrlSandbox.paymentOptions$ | async)?.length > 0;
+        else notLoaded
+      ">
+      <div class="payment-btn" *ngFor="let item of productCtrlSandbox.paymentOptions$ | async"
+        (click)="selectPaymentMethod(item.id)">
+        <ion-icon slot="start" [class.selected]="selectedPaymentType == item.id" [name]="
+            selectedPaymentType == item.id
+              ? 'radio-button-on'
+              : 'radio-button-off'
+          "></ion-icon>
+        <ion-img slot="start" [src]="
+            imageResizeUrl +
+            'width=100&height=50&path=' +
+            item.pluginAvatarPath +
+            '&name=' +
+            item.pluginAvatar
+          " [alt]="item.pluginName"></ion-img>
+      </div>
+    </ng-container>
+    <ng-template #notLoaded> </ng-template>
+  </ion-list>
+
+</ion-content>
+
+
+<ion-footer>
+
+  <ion-button *ngIf="!(productCtrlSandbox.checkoutLoading$ | async)" color="secondary" (click)="proceedToPay()">
+    Proceed for Payment
+  </ion-button>
+  <ion-button *ngIf="productCtrlSandbox.checkoutLoading$ | async" color="secondary">
+    <ion-spinner name="dots"></ion-spinner>
+  </ion-button>
+
+</ion-footer>

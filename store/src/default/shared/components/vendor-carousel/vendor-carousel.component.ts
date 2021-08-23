@@ -1,0 +1,225 @@
+/*
+ * spurtcommerce
+ * version 4.5
+ * http://www.spurtcommerce.com
+ *
+ * Copyright (c) 2021 piccosoft ltd
+ * Author piccosoft ltd <support@piccosoft.com>
+ * Licensed under the MIT license.
+ */
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  PLATFORM_ID,
+  Inject
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfigService } from '../../../../core/service/config.service';
+import { ListsSandbox } from '../../../../core/lists/lists.sandbox';
+import { MatDialog } from '@angular/material/dialog';
+import { isPlatformBrowser } from '@angular/common';
+import { ProductControlSandbox } from '../../../../core/product-control/product-control.sandbox';
+import { WishlistSandbox } from '../../../../core/wishlist/wishlist.sandbox';
+
+
+@Component({
+  selector: 'app-vendor-carousel',
+  templateUrl: './vendor-carousel.component.html',
+  styleUrls: ['./vendor-carousel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+
+export class VendorCarouselComponent implements OnInit, AfterViewInit {
+
+  @Input() products: any;
+  @Input() productType: any;
+  public config: SwiperConfigInterface = {};
+  // public todaysConfig: SwiperConfigInterface = {};
+  // public featureConfig: SwiperConfigInterface = {};
+
+  public imagePath: string;
+  public currentRate = 2;
+  public discountPrice = 20;
+  public fiftyPercent = 50;
+  public productss: any = [];
+
+  public currentUser: any;
+
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    public listSandbox: ListsSandbox,
+    public controlSandbox: ProductControlSandbox,
+    public wishlistSandbox: WishlistSandbox,
+    public snackBar: MatSnackBar,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private configService: ConfigService
+  ) { }
+
+
+  ngOnInit() {
+
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.currentUser = JSON.parse(localStorage.getItem('storeUser'));
+    }
+
+    // this.getWishList();
+
+    this.imagePath = this.configService.getImageUrl();
+  }
+
+  getWishList() {
+    const params: any = {};
+    params.limit = 10;
+    params.offset = '';
+    this.wishlistSandbox.getWishlist(params);
+  }
+
+
+  ngAfterViewInit() {
+    if (this.productType === 'today deals') {
+      this.config = {
+        observer: true,
+        slidesPerView: 4,
+        spaceBetween: 14,
+        keyboard: true,
+        navigation: true,
+        pagination: false,
+        grabCursor: true,
+        autoplay: false,
+        speed: 900,
+        effect: 'slide',
+        breakpoints: {
+          510: {
+            slidesPerView: 1
+          },
+          850: {
+            slidesPerView: 2
+          },
+          1100: {
+            slidesPerView: 3
+          },
+          1280: {
+            slidesPerView: 3
+          },
+          1500: {
+            slidesPerView: 4
+          }
+        }
+      };
+    }
+    if (this.productType === 'feature product') {
+      this.config = {
+        observer: true,
+        slidesPerView: 3,
+        spaceBetween: 14,
+        keyboard: true,
+        navigation: true,
+        pagination: false,
+        grabCursor: true,
+        autoplay: false,
+        speed: 900,
+        effect: 'slide',
+        breakpoints: {
+          510: {
+            slidesPerView: 1
+          },
+          850: {
+            slidesPerView: 2
+          },
+          1100: {
+            slidesPerView: 3
+          },
+          1280: {
+            slidesPerView: 3
+          },
+          1300: {
+            slidesPerView: 3
+          },
+          1500: {
+            slidesPerView: 4
+          }
+        }
+      };
+    }
+    if (this.productType === 'vendor slider') {
+      this.config = {
+        observer: true,
+        slidesPerView: 4,
+        spaceBetween: 14,
+        keyboard: true,
+        navigation: true,
+        pagination: false,
+        grabCursor: true,
+        autoplay: false,
+        speed: 900,
+        effect: 'slide',
+        breakpoints: {
+          510: {
+            slidesPerView: 1
+          },
+          850: {
+            slidesPerView: 2
+          },
+          1100: {
+            slidesPerView: 3
+          },
+          1280: {
+            slidesPerView: 3
+          },
+          1500: {
+            slidesPerView: 4
+          }
+        }
+      };
+    }
+  }
+
+  calculatePrice(price: number, taxType: number, taxValue: number) {
+    switch (taxType) {
+      case 1:
+        const priceWithOutTax = +price + taxValue;
+        return Math.round(priceWithOutTax);
+      case 2:
+        const percentToAmount = price * (taxValue / 100);
+        const priceWithTax = +price + percentToAmount;
+        return Math.round(priceWithTax);
+      default:
+        return price;
+    }
+  }
+
+  public getFeaturedList() {
+    const params: any = {};
+    params.limit = '';
+    params.offset = 0;
+    params.keyword = '';
+    params.sku = '';
+    this.listSandbox.getFeaturedList(params);
+  }
+
+  public getTodayDealList() {
+    const params: any = {};
+    params.limit = 0;
+    params.offset = 0;
+    params.keyword = '';
+    params.sku = '';
+    this.listSandbox.getTodayDealList(params);
+  }
+
+  public getVendorList() {
+    const params: any = {};
+    params.limit = '';
+    params.offset = 0;
+    params.keyword = '';
+    params.sku = '';
+    //this.listSandbox.getVendorList(params);
+  }
+
+}

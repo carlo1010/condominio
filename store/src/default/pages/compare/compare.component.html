@@ -1,0 +1,131 @@
+
+    <!-- <h3 class="cpr-tit">{{'comapre.ComapreProduct'|translate}}</h3> -->
+    <div class="compare-wrap">
+
+
+        <div class="table-responsive" *ngIf="(compareSandbox.compareList$ | async)?.length > 0">
+
+            <table>
+                <!-- <tr>
+            <th width="20%"> <a href="javascript:void(0)" (click)="removeAll()">{{'comapre.RemoveAll'|translate}}</a> </th>
+            <th width="30%" *ngFor="let product of compareSandbox.compareList$ | async"> <a href="javascript:void(0)" (click)="removeProduct(product)">x {{'comapre.Remove'|translate}}</a> </th>
+        </tr> -->
+                <tr>
+                    <td style="width: 20%;">
+                        <!-- <h3>{{(compareSandbox.compareList$ | async)?.length}}</h3> -->
+                        <h3 class="td-tit">{{'comapre.Product'|translate}}</h3>
+                        <!-- <p>{{'comapre.Compare'|translate}}</p> -->
+                    </td>
+                    <td *ngFor="let product of compareSandbox.compareList$ | async" [ngClass]="{'table-responsive-width': (compareSandbox.compareList$ | async)?.length ===3} " >
+
+                        <div class="prd-img"> <img
+                                [src]="imagePath + '?path=' + product.productImage.containerName + '&name=' + product.productImage.image + '&width=280&height=380'"
+                                onError="this.src='/assets/images/default_image.png';"><button class="close-prod"
+                                (click)="removeProduct(product)"><img src="assets/img/close.svg"></button> </div>
+                    </td>
+                </tr>
+                <tr >
+                    <td>
+                        <h3 class="td-tit">{{'comapre.Name'|translate}}</h3>
+                    </td>
+                    <td class="td-cont" *ngFor="let product of compareSandbox.compareList$ | async">
+                        {{product.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="td-tit">{{'comapre.price'|translate}}</h3>
+                    </td>
+                    <td  *ngFor="let product of compareSandbox.compareList$ | async">
+                        <p class="td-cont">
+                            <ng-container *ngIf="(product.flag == '' && product.pricerefer == '');else one">
+                                {{product.price | currencysymbol: (listSandbox.symbolSetting$ | async)}}</ng-container>
+                            <ng-template #one>
+                                <span *ngIf="product.flag === 0">{{product.pricerefer | currencysymbol:
+                                    (listSandbox.symbolSetting$ | async)}}</span>
+                                <span *ngIf="product.flag === 1"><del class="del">{{product.price | currencysymbol:
+                                        (listSandbox.symbolSetting$ | async)}}</del> {{product.pricerefer |
+                                    currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                            </ng-template>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <!-- product.rating -->
+                    <td>
+                        <h3 class="td-tit">{{'comapre.Rating'|translate}} / {{'comapre.Review'|translate}}</h3>
+                    </td>
+                    <td  style="text-align:center;" *ngFor="let product of compareSandbox.compareList$ | async">
+                        <!-- <app-mat-star-rating    [rating]="product.rating" [reviewCount]="product.reviewCount" [ratingCount]="product.ratingCount"></app-mat-star-rating> -->
+                        <div style="display: inline-flex;" class="ratings flex" *ngIf="product?.rating">
+                            <!--<mat-icon *ngFor="let star of stars; let i=index;" class="mat-icon-xs" (click)="rate(i)">{{star}}</mat-icon>-->
+                           <div class="star flex" ><p> {{product.rating|number}}</p>  <span class="material-icons">grade</span></div>
+                           <span *ngIf="product.ratingCount && product.reviewCount > 0">{{product.ratingCount|number}} {{'rating.Ratings'|translate}} & {{product.reviewCount|number}} {{'rating.Reviews'|translate}}</span> 
+                           <!-- <p>76 Ratings &amp; 67 Reviews</p> -->
+                       </div>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>
+                        <h3 class="td-tit">{{'comapre.Brand'|translate}}</h3>
+                    </td>
+
+                    <td *ngFor="let product of compareSandbox.compareList$ | async">
+                        <h5 class="prd-price">{{product.manufacturerName}}</h5>
+
+                    </td>
+
+                </tr> -->
+                <!-- <tr>
+                    <td>
+                        <h3 class="td-tit">Model</h3>
+                    </td>
+                    <td>
+                        <p class="td-tit">product 16</p>
+                    </td>
+
+                </tr> -->
+                <tr>
+                    <td>
+                        <h3 class="td-tit">{{'comapre.Description'|translate}}</h3>
+                    </td>
+                    <td *ngFor="let product of compareSandbox.compareList$ | async">
+                        <p [innerHtml]="product.description"></p>
+                    </td>
+                </tr>
+              
+                <tr class="cart-tr">
+                    <td>
+                        <h3 class="td-tit">{{'comapre.Action'|translate}}</h3>
+                    </td>
+                    <td *ngFor="let product of compareSandbox.compareList$ | async">
+                       <a href="javascript:void(0)" (click)="addToCart(product)" class="cart">
+                                {{'comapre.AddToCart'|translate}} </a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+    </div>
+    <!-- </div> -->
+    
+    
+    <div class="no-product-compare"
+    *ngIf="(compareSandbox.compareList$ | async)?.length === 0 && !(compareSandbox.compareAdding$ | async)">
+    
+    <p><img src="assets/images/no-compare.png"></p>
+    <p>{{'comapre.NoCompareProducts'|translate}}</p>
+    
+    </div>
+    <div class="no-product-compare" *ngIf="compareSandbox.compareAdding$ | async">
+
+    
+    <app-spinner [isShow]="compareSandbox.compareAdding$ | async"></app-spinner>
+    
+    </div>
+
+    <!-- </div> -->
+
+

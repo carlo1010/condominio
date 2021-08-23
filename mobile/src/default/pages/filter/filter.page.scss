@@ -1,0 +1,54 @@
+ion-toolbar {
+  ion-buttons {
+    padding: 0 8px;
+    font-size: 2rem;
+  }
+  ion-button {
+    --box-shadow: none;
+  }
+}
+
+ion-input {
+  font-family: 'Rubik', sans-serif;
+  font-size: 12px;
+}
+
+ion-list {
+  ion-list-header {
+    background: #f6f6f6;
+    font-size: 14px;
+  }
+  ion-label {
+    font-family: 'Rubik', sans-serif;
+    font-size: 12px;
+  }
+  .pricing {
+    width: 100%;
+    display: inline-block;
+    padding-top: 1rem;
+    .min {
+      width: 50%;
+      display: inline-block;
+      ion-label {
+        padding-right: 5px;
+        font-family: 'Rubik', sans-serif;
+      }
+      ion-input {
+        border: 2px solid #cccccc;
+      }
+      ion-range {
+
+      }
+    }
+  }
+  ion-skeleton-text{
+    margin: 12px;
+  }
+
+}
+
+.custom-select{
+  ion-select{
+    width: 100%;
+  }
+}

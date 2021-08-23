@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'My_Orders'|translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="delivery-wrap">
+
+
+    <ion-list>
+
+      <ion-card class="flex" *ngFor="let list of orderSandbox.myOrderList$ | async"
+        (click)="viewDetail(list.orderProductId,list.cancelRequest,list.cancelRequestStatus)">
+
+        <div class="yo-img">
+          <img [src]="
+                imageResizeUrl +
+                'width=120&height=100&path=' +
+                list.containerName +
+                '&name=' +
+                list.image
+              " onError="this.src='/assets/images/Load icon Products.png';"
+            (load)="isOrderImageLoadedEvent(list.orderProductId)" [hidden]="!orderImageLoaded[list.orderProductId]" />
+        </div>
+
+        <div class="yo-content">
+          <h3>{{ list.name }}</h3>
+          <p *ngIf="list.cancelRequest == 0" [ngStyle]="{'color': list.orderStatusColorCode}">{{ list.orderStatusName }}
+          </p>
+          <ng-container *ngIf="list.cancelRequest > 0">
+            <p *ngIf="!list.cancelRequestStatus" class="flex">
+              Your cancel request is pending
+            </p>
+            <p *ngIf="list.cancelRequestStatus === 1" class="flex" style="color: red;">
+              Your order is cancelled
+            </p>
+            <p *ngIf="list.cancelRequestStatus === 2" class="flex">
+              Your cancel request is rejected
+            </p>
+          </ng-container>
+          <p>{{ list.createdDate | date : 'd MMM y' }}</p>
+        </div>
+
+        <div class="yo-lnk"> <img src="assets/images/arrow-rht-sm.svg"> </div>
+
+      </ion-card>
+
+      <!-- <ion-card class="flex">
+
+        <div class="yo-img"> <img src="assets/images/products-img2.svg"> </div>
+
+        <div class="yo-content">
+          <h3>Raymond Glass</h3>
+          <p>Delivered 17nov 2019</p>
+        </div>
+
+        <div class="yo-lnk"> <img src="assets/images/arrow-rht-sm.svg"> </div>
+
+      </ion-card>
+
+      <ion-card class="flex">
+
+        <div class="flex card-head" [routerLink]="['/current-orders']">
+
+          <div class="yo-img"> <img src="assets/images/products-img3.svg"> </div>
+
+          <div class="yo-content current-orders">
+            <h3>Puma Sports Jacket</h3>
+            <div class="yo-cnt-btm">
+              <p>Packing in progress</p>
+              <span>12 Feb, Tuesday 1:14 PM</span>
+            </div>
+          </div>
+
+          <div class="yo-lnk"> <img src="assets/images/arrow-rht-sm.svg"> </div>
+        </div>
+
+      </ion-card> -->
+
+    </ion-list>
+
+    <p class="no-items" *ngIf="
+      !(orderSandbox.myOrderListLoading$ | async) &&
+      (orderSandbox.myOrderList$ | async)?.length === 0
+    ">
+      {{'No_orders'|translate}}
+    </p>
+    <!--skeleton loading-->
+    <div *ngIf="orderSandbox.myOrderListLoading$ | async">
+      <ion-card *ngFor="let list of [1, 2, 3, 4]" mode="ios" class="ion-padding">
+        <ion-row>
+          <ion-skeleton-text width="50%"></ion-skeleton-text>
+        </ion-row>
+        <ion-row>
+          <ion-skeleton-text width="70%"></ion-skeleton-text>
+        </ion-row>
+        <ion-row>
+          <ion-skeleton-text width="90%"></ion-skeleton-text>
+        </ion-row>
+        <ion-row>
+          <ion-skeleton-text width="60%"></ion-skeleton-text>
+        </ion-row>
+      </ion-card>
+    </div>
+
+  </div>
+
+  <ion-infinite-scroll threshold="100px" [disabled]="!(orderSandbox.myOrderMoreItems$ | async)"
+    (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

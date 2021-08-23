@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="editAddress()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button slot="end"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Address'|translate}}</ion-title>
+  </ion-toolbar>
+  <ion-progress-bar *ngIf="
+      (commonSandbox.shippingAddressLoading$ | async) ||
+      (commonSandbox.addShippingAddressLoading$ | async) ||
+      (commonSandbox.updateShippingAddressLoading$ | async) ||
+      (commonSandbox.deleteShippingAddressLoading$ | async)
+    " reversed="true" type="indeterminate"></ion-progress-bar>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let item of commonSandbox.shippingAddressList$ | async" lines="full" (click)="addressOption(item)"
+      button detail [disabled]="
+        (commonSandbox.deleteShippingAddressLoading$ | async) &&
+        deleteLoading == item.addressId
+      ">
+      <ion-label text-wrap>
+        <ion-text>
+          <h1>{{ item.addressType == 0 ? ('Home'|translate) : ('Work'|translate) }}</h1>
+        </ion-text>
+        <ion-text>
+          <p>
+
+            <!-- {{item | json}} -->
+            {{ item.company }}
+
+            <!-- {{ item.address1 }} -->
+            <span *ngIf="item.address1">, </span>{{ item.address1 }}
+            <span *ngIf="item.address2">,</span>{{ item.address2 }}
+            <span *ngIf="item.city">,</span> {{ item.city }}
+            <span *ngIf="item.state">,</span> {{ item.state }}
+            <span *ngIf="item.postcode">,</span> {{'Pincode'|translate}}-{{ item.postcode }}
+          </p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+
+
+    <ng-container *ngIf="
+        (commonSandbox.shippingAddressLoading$ | async) &&
+        ((commonSandbox.shippingAddressList$ | async)?.length === 0 ||
+          !(commonSandbox.shippingAddressList$ | async))
+      ">
+      <ion-item detail *ngFor="let item of [1, 2, 3, 4]">
+        <ion-text text-warp class="loading" lines="full">
+          <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+          <ion-skeleton-text animated width="70%"></ion-skeleton-text>
+          <ion-skeleton-text animated width="90%"></ion-skeleton-text>
+        </ion-text>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+  <div class="no-content" *ngIf="
+      (!(commonSandbox.shippingAddressList$ | async) ||
+        (commonSandbox.shippingAddressList$ | async)?.length === 0) &&
+      !(commonSandbox.shippingAddressLoading$ | async)
+    ">
+    <ion-icon name="book"></ion-icon>
+    <p>{{'No_Address_Found'|translate}}</p>
+    <ion-button (click)="editAddress()">{{'Add_Address'|translate}}</ion-button>
+  </div>
+</ion-content>

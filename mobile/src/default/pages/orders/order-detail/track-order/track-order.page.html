@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+
+    <ion-buttons slot="start">
+      <button (click)="dismiss()" class="back-btn"> <ion-icon name="arrow-round-back"></ion-icon> </button>
+    </ion-buttons>
+    <ion-title>Track Order</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+
+  <div class="flex order-heading">
+    <img
+      [src]="
+        imageResizeUrl +
+        'width=120&height=100&path=' +
+        myOrderDetail?.containerName +
+        '&name=' +
+        myOrderDetail?.productImage
+      "
+      onError="this.src='/assets/images/Load icon Products.png';"
+    />
+    <h3>{{ myOrderDetail?.productName }}</h3>
+  </div>
+
+  <div class="order-status" *ngIf="myOrderDetail?.deliveryStatus && myOrderDetail?.deliveryStatus.length > 0">
+
+    <ng-container *ngFor="let deliveryStatus of myOrderDetail?.deliveryStatus; let i = index;">
+
+      <div class="os-row" [ngClass]="{'os-completed': deliveryStatus.createdDate !== '', 'os-last': i === (myOrderDetail?.deliveryStatus.length -1 )}">
+        <div class="os-img"> 
+          <img *ngIf="deliveryStatus.createdDate !== ''" src="assets/images/checked.svg"> 
+          <img *ngIf="!deliveryStatus.createdDate || deliveryStatus.createdDate === ''" src="assets/images/checkbox.svg"> 
+        </div>
+        <div class="os-col">
+          <h4>{{deliveryStatus.name}}</h4>
+          <p>{{deliveryStatus.createdDate | date: 'dd MMM yyyy hh:mm a' :"0000"}}</p>
+          <div class="track-id" *ngIf="deliveryStatus.name === 'Shipped'">
+            <h5 *ngIf="myOrderDetail?.trackingId && myOrderDetail?.trackingId !== ''">Tracking ID : {{myOrderDetail?.trackingId}}</h5>
+            <h5 *ngIf="myOrderDetail?.trackingUrl && myOrderDetail?.trackingUrl !== ''">Tracking URL :</h5>
+            <a *ngIf="myOrderDetail?.trackingUrl && myOrderDetail?.trackingUrl !== ''" href="{{myOrderDetail?.trackingUrl}}" class="track-link">{{myOrderDetail?.trackingUrl}}</a>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+
+  </div>
+
+</ion-content>

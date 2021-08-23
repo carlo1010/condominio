@@ -1,0 +1,23 @@
+<ion-content>
+  <ion-button fill="none" (click)="dismiss()">
+    <ion-icon slot="icon-only" name="close"></ion-icon>
+  </ion-button>
+  <ion-slides
+    (ionSlideWillChange)="slideChanged($event)"
+    [options]="slideOptions"
+  >
+    <ion-slide *ngFor="let item of images">
+      <img [src]="item.name" />
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer *ngIf="images.length > 1">
+  <ion-thumbnail
+    *ngFor="let item of images; let idx = index"
+    id="{{ 'id' + idx }}"
+    (click)="scrollToSlide(idx)"
+    [class.low-opacity]="idx != currentSlide"
+  >
+    <img [src]="item.name" />
+  </ion-thumbnail>
+</ion-footer>

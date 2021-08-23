@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Post Question</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/product-detail"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="questionForm">
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Enter your question</ion-label>
+      <ion-textarea rows="4" formControlName="question"></ion-textarea>
+    </ion-item>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button *ngIf="!(productsSandbox.postQuestionLoading$|async)" (click)="submit()" class="cntu">
+    Submit
+  </ion-button>
+  <ion-button *ngIf="productsSandbox.postQuestionLoading$|async" class="cntu">
+    <ion-spinner name="dots"></ion-spinner>
+  </ion-button>
+</ion-footer>

@@ -1,0 +1,11 @@
+
+
+<div  fxLayout="direction" class="rating-row" fxLayoutAlign="(direction == 'row') ? 'start center' : 'center end'">
+  <div class="ratings flex">
+       <!--<mat-icon *ngFor="let star of stars; let i=index;" class="mat-icon-xs" (click)="rate(i)">{{star}}</mat-icon>-->
+      <div class="star flex" ><p> {{rating|number}}</p>  <span class="material-icons">grade</span></div>
+      <span *ngIf="ratingCount && reviewCount > 0">{{ratingCount|number}} {{'rating.Ratings'|translate}} & {{reviewCount|number}} {{'rating.Reviews'|translate}}</span> 
+      <!-- <p>76 Ratings &amp; 67 Reviews</p> -->
+  </div>
+  <!--<p class="ratings-count text-muted">{{ratingsCount}} ratings</p>-->
+</div>

@@ -1,0 +1,169 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Vendor</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/dashboard"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="!(vendorSandbox.vendorDetailLoading$ | async) &&
+  (vendorSandbox.vendorDetails$ | async) as detail">
+
+    <div class="vendor-logo">
+      <img [src]=" imageResizeUrl + 'width=50&height=50&path=' + detail.companyLogoPath +
+          '&name=' + detail.companyLogo" />
+    </div>
+
+    <div class="flex avl-star">
+      <h3> {{detail.companyName}} </h3>
+
+      <div class="rating flex">
+        <rating class="my-rates" [(ngModel)]="detail.rating" size="5" readonly="true">
+        </rating>
+      </div>
+
+      <p>Selling products : {{detail.productCount}}</p>
+    </div>
+
+    <div class="segment">
+
+      <ion-segment [(ngModel)]="vendor" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="reviews" checked>
+          <span>Reviews</span>
+        </ion-segment-button>
+        <ion-segment-button value="products">
+          <span>Products</span>
+        </ion-segment-button>
+        <ion-segment-button value="about">
+          <span>About</span>
+        </ion-segment-button>
+        <ion-segment-button value="contact">
+          <span>Contact</span>
+        </ion-segment-button>
+      </ion-segment>
+
+      <div class="vendor" [ngSwitch]="vendor">
+
+        <ion-list *ngSwitchCase="'reviews'" checked>
+
+          <div class="description">
+            <div class="rev-row flex" *ngFor="let list of vendorSandbox.vendorReviewList$|async">
+              <div class="rev-img"> 
+                <!-- <img src="assets/images/profile-img.png">  -->
+                <img *ngIf="list.avatar !== null" matListAvatar [src]="imageResizeUrl + '?path=' + list.avatarPath + '&name=' + list.avatar" 
+                onError="this.src='assets/images/avatar-1.png';" alt="image" class="review-author">
+              </div>
+              <div class="rev-content">
+                <h3>{{list.firstName + ' ' + list.lastName}}</h3>
+                <h5> {{list.createdDate|date:'dd MMM'}}, {{list.createdDate|date:'yyyy'}} at {{list.createdDate|date:'hh:mm a'}}</h5>
+                <div class="rating flex">
+                  <rating class="my-rates" [(ngModel)]="list.rating" size="5" readonly="true">
+                  </rating>
+                </div>
+                <p>{{list.review}} </p>
+              </div>
+            </div>
+
+          </div>
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'products'">
+
+          <ion-row class="products">
+
+
+            <ion-col size="6" *ngFor="let productList of vendorSandbox.productList$ | async">
+              <ion-card>
+                <div class="img-prd">
+
+                  <img [src]="imageResizeUrl + 'width=180&height=180&path=' + productList.image.containerName +
+                '&name=' + productList.image.image" (load)="imageLoadedEvent(productList.productId)"
+                    onError="this.src='/assets/images/Load icon Products.png';"
+                    [hidden]="!imageLoaded[productList.productId]" />
+                  <img src="assets/images/Load icon Products.png" [hidden]="imageLoaded[productList.productId]" />
+
+                  <span *ngIf="productList.discount > 0" class="discount high-dis">{{ productList.discount }} %</span>
+                </div>
+                <hr>
+                <div class="content">
+                  <h3>{{ productList.name }}</h3>
+                  <h4 class="flex"> {{
+                    calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                      | currencySymbol: (commonSandbox.appDetails$ | async)
+                  }} <span *ngIf="productList.pricerefer">{{
+                    calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                      | currencySymbol: (commonSandbox.appDetails$ | async)
+                  }}</span> </h4>
+                </div>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'about'">
+
+          <div class="about">
+            <h3>About {{detail.companyName}}</h3>
+            <p [innerHTML]="detail.companyDescription"></p>
+          </div>
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'contact'">
+
+          <div class="contact">
+            <h3>Address</h3>
+            <p>{{detail.companyAddress1}}</p>
+            <p>{{detail.companyAddress2}}</p>
+            <p>{{detail.companyCity}}</p>
+            <p>{{detail.companyState}}</p>
+            <p>{{detail.countryName}}</p>
+            <p>{{detail.pincode}}</p>
+          </div>
+
+        </ion-list>
+
+      </div>
+
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="(vendorSandbox.vendorDetailLoading$ | async)">
+
+    <div class="flex vendor-title">
+      <img src="assets/images/Load icon Products.png" />
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+    </div>
+
+  </ng-container>
+
+  <!--SKELETON LOADING START HERE-->
+  <ion-row *ngIf="
+        (vendorSandbox.productListLoading$ | async)">
+    <ion-col size="6" *ngFor="let loading of [1, 2, 3, 4]" class="ion-no-padding">
+      <ion-card>
+        <div class="image-canvas">
+          <img src="assets/images/Load icon Products.png" />
+        </div>
+        <hr />
+        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <!--SKELETON LOADING END HERE-->
+
+
+</ion-content>

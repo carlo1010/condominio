@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Tier Price Chart</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/product-detail"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <span class="msg">
+    <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px" width="100%">
+      <tr>
+        <th width="100px">Quantity</th>
+        <th>Price</th>
+      </tr>
+      <tr *ngFor="let list of tirePrice">
+        <td>{{list.quantity}}</td>
+        <td>{{list.quantity * list.price | currencySymbol: (commonSandbox.appDetails$ | async)}} (per unit =
+          {{list.price | currencySymbol: (commonSandbox.appDetails$ | async)}})</td>
+      </tr>
+    </table>
+  </span>
+
+
+</ion-content>

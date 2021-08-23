@@ -1,0 +1,196 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{
+      showDetail | translate}}</ion-title>
+    <ion-buttons class="notification" (click)="gotoCart()" slot="end">
+      <ion-icon mode="ios" name="cart"></ion-icon>
+      <ion-badge mode="ios">{{
+        productCtrlSandbox.cartListCount$ | async
+      }}</ion-badge>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="product-list">
+    <ion-row *ngIf="showDetail === 'Featured_Products'">
+      <ion-col size="6" *ngFor="let productList of productsSandbox.featuredList$ | async" class="ion-no-padding">
+        <ion-card (click)="openProductDetail(productList.productId, productList.productSlug)">
+          <ion-chip *ngIf="productList.discount > 0">
+            <ion-label>{{ productList.discount }} %</ion-label>
+          </ion-chip>
+          <div class="image-canvas">
+            <img *ngIf="productList.image" [src]="
+                imageResizeUrl +
+                'width=90&height=90&path=' +
+                productList.image.containerName +
+                '&name=' +
+                productList.image.image
+              " (load)="checkImageLoaded(productList.productId)"
+              onError="this.src='/assets/images/Load icon Products.png';"
+              [hidden]="!isImageLoaded[productList.productId]" />
+            <img src="assets/images/Load icon Products.png" [hidden]="isImageLoaded[productList.productId]" />
+          </div>
+          <hr />
+          <p>{{ productList.name }}</p>
+          <!-- <h6>
+            {{
+              calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                | currencySymbol: (commonSandbox.appDetails$ | async)
+            }}
+          </h6> -->
+
+
+          <h6 *ngIf="productList.flag ==1">
+            <span class="priceSpan">
+              {{
+                calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                  | currencySymbol: (commonSandbox.appDetails$ | async)
+              }}
+            </span>
+
+            <span class="strikedPrice">{{productList.price}}</span>
+          </h6>
+
+          <h6 *ngIf="productList.flag ===''">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+
+          <h6 *ngIf="productList.flag ===0">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="showDetail === 'Today_Deals'">
+      <ion-col size="6" *ngFor="let productList of productsSandbox.todayDealList$ | async" class="ion-no-padding">
+        <ion-card (click)="openProductDetail(productList.productId, productList.productSlug)">
+          <ion-chip *ngIf="productList.discount > 0">
+            <ion-label>{{ productList.discount }} %</ion-label>
+          </ion-chip>
+          <div class="image-canvas">
+            <img *ngIf="productList.image" [src]="
+                imageResizeUrl +
+                'width=90&height=90&path=' +
+                productList.image.containerName +
+                '&name=' +
+                productList.image.image
+              " (load)="checkImageLoaded(productList.productId)"
+              onError="this.src='/assets/images/Load icon Products.png';"
+              [hidden]="!isImageLoaded[productList.productId]" />
+            <img src="assets/images/Load icon Products.png" [hidden]="isImageLoaded[productList.productId]" />
+          </div>
+          <hr />
+          <p>{{ productList.name }}</p>
+
+          <h6 *ngIf="productList.flag ==1">
+            <span class="priceSpan">
+              {{
+                calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                  | currencySymbol: (commonSandbox.appDetails$ | async)
+              }}
+            </span>
+
+            <span class="strikedPrice">{{productList.price}}</span>
+          </h6>
+
+          <h6 *ngIf="productList.flag ===''">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+          <h6 *ngIf="productList.flag ===0">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="showDetail !== 'featuredProducts' && showDetail !== 'todayDeal'">
+      <ng-container *ngFor="let widgets of productsSandbox.widgetProductList$ | async">
+
+        <ng-container *ngIf="widgets.widgetTitle == showDetail">
+          <ion-col size="6" *ngFor="let productList of widgets.items" class="ion-no-padding">
+            <ion-card (click)="openProductDetail(productList.productId, productList.productSlug)">
+              <ion-chip *ngIf="productList.discount > 0">
+                <ion-label>{{ productList.discount }} %</ion-label>
+              </ion-chip>
+              <div class="image-canvas">
+                <img *ngIf="productList.Images" [src]="
+                imageResizeUrl +
+                'width=90&height=90&path=' +
+                productList.Images.containerName +
+                '&name=' +
+                productList.Images.image
+              " (load)="checkImageLoaded(productList.productId)"
+                  onError="this.src='/assets/images/Load icon Products.png';"
+                  [hidden]="!isImageLoaded[productList.productId]" />
+                <img src="assets/images/Load icon Products.png" [hidden]="isImageLoaded[productList.productId]" />
+              </div>
+              <hr />
+              <p>{{ productList.name }}</p>
+
+              <h6 *ngIf="productList.flag ==1">
+                <span class="priceSpan">
+                  {{
+                    calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                      | currencySymbol: (commonSandbox.appDetails$ | async)
+                  }}
+                </span>
+
+                <span class="strikedPrice">{{productList.price}}</span>
+              </h6>
+
+              <h6 *ngIf="productList.flag ===''">
+                <span class="priceSpan">
+                  {{
+                      calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                        | currencySymbol: (commonSandbox.appDetails$ | async)
+                    }}
+                </span>
+              </h6>
+
+              <h6 *ngIf="productList.flag ===0">
+                <span class="priceSpan">
+                  {{
+                      calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                        | currencySymbol: (commonSandbox.appDetails$ | async)
+                    }}
+                </span>
+              </h6>
+
+
+            </ion-card>
+          </ion-col>
+        </ng-container>
+
+      </ng-container>
+    </ion-row>
+
+  </div>
+</ion-content>

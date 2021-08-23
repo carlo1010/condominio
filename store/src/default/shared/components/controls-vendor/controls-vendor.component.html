@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted">
+    <div class="flex prod-icon">
+        {{openClose}}
+        <!--{{currentDate | date:'HH:mm:ss'}}-->
+
+        <button class="wishlist-card" mat-icon-button matTooltip="{{product.wishListStatus === 1 ? 'Added to wishlist': 'Add to wishlist'}}" (click)="addToWishList(product)">
+            <mat-icon *ngIf="product.wishListStatus === 1"><img src="assets/img/heart-select.svg"></mat-icon>
+            <mat-icon  *ngIf="product.wishListStatus !== 1" ><img src="assets/img/heart-outline.svg"></mat-icon>
+        </button>
+
+        <div *ngIf="type==='home'||'all'" class="cart-lk">
+            <mat-icon>map</mat-icon>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+    <defs>
+        <linearGradient id="linear-gradient" x1="-.198" x2=".904" y1=".052" y2="1.053" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#afafaf"/>
+            <stop offset="0" stop-color="#ff8000"/>
+            <stop offset=".08" stop-color="#cf9c43"/>
+            <stop offset=".19" stop-color="#ffa200"/>
+            <stop offset=".687" stop-color="#ff9100"/>
+            <stop offset="1" stop-color="#f1b042"/>
+        </linearGradient>
+        <filter id="Rectangle_1381" width="30" height="30" x="0" y="0" filterUnits="userSpaceOnUse">
+            <feOffset dy="1"/>
+            <feGaussianBlur result="blur" stdDeviation="1"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <style>
+            .cls-2{fill:url(#linear-gradient)}
+        </style>
+    </defs>
+    <g id="Group_1696" transform="translate(3 2)">
+        <g id="Group_1690" filter="url(#Rectangle_1381)" transform="translate(-3 -2)">
+            <rect id="Rectangle_1381-2" width="24" height="24" fill="#fff" rx="4" transform="translate(3 2)"/>
+        </g>
+        <g id="Layer_2" transform="translate(4 6)">
+            <g id="Layer_1">
+                <path id="Path_3781" d="M14.941 3.975a1 1 0 0 0-.882 1.425c-.548.465-1.311.943-1.721.841-.04-.01-.244-.263-.246-1.222a9.543 9.543 0 0 1 .065-1.059 1 1 0 1 0-1.041-.46c-.376.562-.968 1.21-1.38 1.227-.052-.029-.386-.265-.835-1.663-.171-.536-.349-1.264-.349-1.274a1 1 0 1 0-1.162 0c0 .01-.159.676-.349 1.271-.449 1.4-.782 1.634-.835 1.663-.413-.017-1-.666-1.38-1.227a1 1 0 1 0-1.041.46 9.544 9.544 0 0 1 .065 1.059c0 .959-.206 1.212-.246 1.222-.409.1-1.173-.375-1.721-.841a1 1 0 1 0-.953.576 15.543 15.543 0 0 1 1.15 2.884.156.156 0 0 0 .15.113h11.482a.156.156 0 0 0 .15-.115 15.529 15.529 0 0 1 1.15-2.883 1 1 0 1 0-.072-2zm-6.97 4.247c-.448 0-.749-.452-.749-1.124s.3-1.124.749-1.124.749.452.749 1.124-.301 1.124-.749 1.124z" class="cls-2" transform="translate(.023 .022)"/>
+                <path id="Path_3782" d="M76.431 310.4a8.4 8.4 0 0 1 .11 1.316.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5 8.434 8.434 0 0 1 .11-1.316.156.156 0 0 0-.154-.18h-10.9a.156.156 0 0 0-.154.18z" class="cls-2" transform="translate(-74.036 -300.22)"/>
+            </g>
+        </g>
+    </g>
+</svg>

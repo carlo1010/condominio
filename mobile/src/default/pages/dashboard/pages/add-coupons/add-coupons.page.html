@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="modalCtrl.dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button (click)="modalCtrl.dismiss()"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="type == 'coupon'">
+    <h2>Add Coupons, Vouchers & Promotional Codes</h2>
+
+    <div class="input-group">
+      <p>Coupons and Promotional code</p>
+      <ion-input [(ngModel)]="code"></ion-input>
+    </div>
+  </ng-container>
+
+  <p class="center">
+    <ion-button class="apply" (click)="submit()">Apply</ion-button>
+  </p>
+
+</ion-content>

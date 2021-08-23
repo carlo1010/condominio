@@ -1,0 +1,334 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'Home' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button #colorPalette (click)="selectTheme($event)">
+        <ion-icon mode="ios" slot="icon-only" icon="assets/icon/palette.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-toolbar (click)="gotoSearch()">
+    <ion-searchbar id="input" [placeholder]="'Search' | translate" disabled="true" mode="ios"></ion-searchbar>
+  </ion-toolbar>
+  <ion-slides mode="ios" pager="false" [options]="slideOpts">
+    <ion-slide *ngFor="let banner of productsSandbox.bannerList$ | async">
+      <img [src]="
+          imageResizeUrl +
+          'width=600&height=200&path=' +
+          banner.imagePath +
+          '&name=' +
+          banner.image
+        " onError="this.src='/assets/images/Load icon Banner.png';" (load)="bannerImageLoadedEvent()"
+        [hidden]="!bannerImageLoaded" />
+      <img src="assets/images/Load icon Banner.png" [hidden]="bannerImageLoaded" />
+    </ion-slide>
+  </ion-slides>
+  <!--Image Loading-->
+  <img *ngIf="
+      (productsSandbox.bannerListLoading$ | async) &&
+      !bannerImageLoaded &&
+      (!(productsSandbox.bannerList$ | async) ||
+        (productsSandbox.bannerList$ | async)?.length === 0)
+    " src="assets/images/Load icon Banner.png" />
+  <ion-card class="no-border-radius ion-no-margin ion-no-padding segment-card">
+    <ion-button color="primary" *ngFor="let categories of productsSandbox.categoryList$ | async"
+      (click)="gotoCategories(categories)">
+      {{ categories.name | titlecase }}
+    </ion-button>
+  </ion-card>
+  <ion-card class="no-border-radius ion-no-margin segment-card ion-no-padding"
+    *ngIf="productsSandbox.categoryListLoading$ | async">
+    <ion-button color="primary" *ngFor="let categories of [1, 2, 3]">
+      <ion-skeleton-text animated style="width: 6rem"></ion-skeleton-text>
+    </ion-button>
+  </ion-card>
+
+  <!--Featured Product list-->
+  <div class="product-list">
+    <p class="see-all" (click)="gotoViewMore('Featured_Products')">
+      {{ 'See_all' | translate }}
+    </p>
+    <h5>{{ 'Featured_Products' | translate }}</h5>
+    <ion-row *ngIf="!(productsSandbox.featuredListLoading$ | async)">
+      <ion-col *ngFor="
+          let productList of productsSandbox.featuredList$ | async;
+          let i = index
+        " size="6" (click)="openProductDetail(productList.productId, productList.productSlug)" class="ion-no-padding">
+        <ion-card *ngIf="i < 4">
+          <ion-chip *ngIf="productList.discount > 0">
+            <ion-label>{{ productList.discount }} %</ion-label>
+          </ion-chip>
+
+          <div class="image-canvas">
+            <img [src]="
+                imageResizeUrl +
+                'width=90&height=90&path=' +
+                productList.image?.containerName +
+                '&name=' +
+                productList.image?.image
+              " onError="this.src='/assets/images/Load icon Products.png';"
+              (load)="isFeaturedImageLoadedEvent(productList.productId)"
+              [hidden]="!featuredImageLoaded[productList.productId]" />
+            <img src="assets/images/Load icon Products.png" [hidden]="featuredImageLoaded[productList.productId]" />
+          </div>
+          <hr />
+          <p>{{ productList.name }}</p>
+          <!-- <h6>
+            {{
+              calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                | currencySymbol: (commonSandbox.appDetails$ | async)
+            }}
+          </h6> -->
+
+
+          <h6 *ngIf="productList.flag ==1">
+            <span class="priceSpan">
+              {{
+                calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                  | currencySymbol: (commonSandbox.appDetails$ | async)
+              }}
+            </span>
+
+            <span class="strikedPrice">{{productList.price}}</span>
+          </h6>
+
+          <h6 *ngIf="productList.flag ===''">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+          <h6 *ngIf="productList.flag ===0">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="productsSandbox.featuredListLoading$ | async">
+      <ion-col size="6" *ngFor="let animation of [1, 2, 3, 4]" class="ion-no-padding">
+        <ion-card>
+          <div class="image-canvas">
+            <img src="assets/images/Load icon Products.png" />
+          </div>
+          <hr />
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <!-- <ng-container *ngIf="!(productsSandbox.todayDealListLoading$ | async)">
+    <ion-slides mode="ios" pager="false" [options]="slideOpts">
+      <ion-slide *ngFor="let banner of productsSandbox.todayDealList$ | async">
+        <img [src]="
+          imageResizeUrl +
+          'width=600&height=200&path=' +
+          banner.image?.containerName +
+          '&name=' +
+          banner.image?.image
+        " onError="this.src='/assets/images/Load icon Banner.png';" (load)="bannerImageLoadedEvent()"
+          [hidden]="!bannerImageLoaded" />
+        <img src="assets/images/Load icon Banner.png" [hidden]="bannerImageLoaded" />
+      </ion-slide>
+    </ion-slides>
+  </ng-container> -->
+
+  <!--Today Deals list-->
+  <div class="product-list">
+    <p class="see-all" (click)="gotoViewMore('Today_Deals')">
+      {{ 'See_all' | translate }}
+    </p>
+    <h5>{{ 'Today_Deals' | translate }}</h5>
+    <ion-row *ngIf="!(productsSandbox.todayDealListLoading$ | async)">
+      <ion-col *ngFor="
+          let productList of productsSandbox.todayDealList$ | async;
+          let i = index
+        " size="6" (click)="openProductDetail(productList.productId, productList.productSlug)" class="ion-no-padding">
+        <ion-card *ngIf="i < 4">
+          <ion-chip *ngIf="productList.discount > 0">
+            <ion-label>{{ productList.discount }} %</ion-label>
+          </ion-chip>
+          <div class="image-canvas">
+            <img [src]="
+                imageResizeUrl +
+                'width=90&height=90&path=' +
+                productList?.image?.containerName +
+                '&name=' +
+                productList?.image?.image
+              " onError="this.src='/assets/images/Load icon Products.png';"
+              (load)="isTodayDealImageLoaded(productList.productId)"
+              [hidden]="!todayDealImageLoaded[productList.productId]" />
+            <img src="assets/images/Load icon Products.png" [hidden]="todayDealImageLoaded[productList.productId]" />
+          </div>
+          <hr />
+          <p>{{ productList.name }}</p>
+          <h6 *ngIf="productList.flag ==1">
+            <span class="priceSpan">
+              {{
+                calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                  | currencySymbol: (commonSandbox.appDetails$ | async)
+              }}
+            </span>
+
+            <span class="strikedPrice">{{productList.price}}</span>
+          </h6>
+
+          <h6 *ngIf="productList.flag===''">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+          <h6 *ngIf="productList.flag===0">
+            <span class="priceSpan">
+              {{
+                  calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+            </span>
+          </h6>
+
+
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="productsSandbox.todayDealListLoading$ | async">
+      <ion-col size="6" *ngFor="let animation of [1, 2, 3, 4]" class="ion-no-padding">
+        <ion-card>
+          <div class="image-canvas">
+            <img src="assets/images/Load icon Products.png" />
+          </div>
+          <hr />
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <!--Widget product list-->
+  <ng-container *ngFor="let widget of productsSandbox.widgetProductList$ | async">
+
+    <div class="product-list">
+
+      <!-- <ng-container *ngIf="!(productsSandbox.widgetProductListLoading$ | async)">
+        <ion-slides mode="ios" pager="false" [options]="slideOpts">
+          <ion-slide *ngFor="let banner of widget.items">
+            <img [src]="
+              imageResizeUrl +
+              'width=600&height=200&path=' +
+              banner.Images?.containerName +
+              '&name=' +
+              banner.Images?.image
+            " onError="this.src='/assets/images/Load icon Banner.png';" (load)="bannerImageLoadedEvent()"
+              [hidden]="!bannerImageLoaded" />
+            <img src="assets/images/Load icon Banner.png" [hidden]="bannerImageLoaded" />
+          </ion-slide>
+        </ion-slides>
+      </ng-container> -->
+
+      <p class="see-all" (click)="gotoViewMore(widget.widgetTitle)">
+        {{ 'See_all' | translate }}
+      </p>
+      <h5>{{ widget.widgetTitle }}</h5>
+      <ion-row *ngIf="!(productsSandbox.widgetProductListLoading$ | async)">
+        <ion-col *ngFor="
+            let productList of widget.items;
+            let i = index
+          " size="6" (click)="openProductDetail(productList.productId, productList.productSlug)"
+          class="ion-no-padding">
+          <ion-card *ngIf="i < 4">
+            <ion-chip *ngIf="productList.discount > 0">
+              <ion-label>{{ productList.discount }} %</ion-label>
+            </ion-chip>
+            <div class="image-canvas">
+              <img [src]="
+                  imageResizeUrl +
+                  'width=90&height=90&path=' +
+                  productList?.Images?.containerName +
+                  '&name=' +
+                  productList?.Images?.image
+                " onError="this.src='/assets/images/Load icon Products.png';"
+                (load)="isTodayDealImageLoaded(productList.productId)"
+                [hidden]="!todayDealImageLoaded[productList.productId]" />
+              <img src="assets/images/Load icon Products.png" [hidden]="todayDealImageLoaded[productList.productId]" />
+            </div>
+            <hr />
+            <p>{{ productList.name }}</p>
+
+
+            <h6 *ngIf="productList.flag ==1">
+              <span class="priceSpan">
+                {{
+                  calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)
+                }}
+              </span>
+
+              <span class="strikedPrice">{{productList.price}}</span>
+            </h6>
+
+            <h6 *ngIf="productList.flag===''">
+              <span class="priceSpan">
+                {{
+                    calculatePrice(productList.price, productList.taxType, productList.taxValue)
+                      | currencySymbol: (commonSandbox.appDetails$ | async)
+                  }}
+              </span>
+            </h6>
+
+            <h6 *ngIf="productList.flag===0">
+              <span class="priceSpan">
+                {{
+                    calculatePrice(productList.pricerefer, productList.taxType, productList.taxValue)
+                      | currencySymbol: (commonSandbox.appDetails$ | async)
+                  }}
+              </span>
+            </h6>
+
+
+
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="productsSandbox.todayDealListLoading$ | async">
+        <ion-col size="6" *ngFor="let animation of [1, 2, 3, 4]" class="ion-no-padding">
+          <ion-card>
+            <div class="image-canvas">
+              <img src="assets/images/Load icon Products.png" />
+            </div>
+            <hr />
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ng-container>
+</ion-content>

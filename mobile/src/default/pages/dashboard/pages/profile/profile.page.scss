@@ -1,0 +1,114 @@
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --border-color: var(--ion-color-primary);
+  --border-width: 1px;
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+ion-content {
+  .profl-img {
+    height: 130px;
+    background: var(--ion-color-secondary);
+    text-align: center;
+    color: #fff;
+    img {
+      height: 55px;
+      border-radius: 50%;
+      width: 55px;
+      margin-top: 2vh;
+    }
+    h3 {
+      margin: 0;
+      font-weight: 400;
+      font-size: 16px;
+    }
+    p {
+      margin: 0;
+    }
+    .edit-btn {
+      position: absolute;
+      height: 20px;
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      right: 10px;
+      top: 10px;
+      --background: #fff;
+      --background-activated: #fff;
+      --color: #000;
+      --color-activated: #000;
+      --padding-start: 8px;
+      --padding-end: 8px;
+
+    }
+  }
+  ion-segment {
+    ion-segment-button {
+      text-transform: none;
+      font-size: 14px;
+      font-weight: 400;
+      border: thin solid #d8d7d76b;
+      border-right: none;
+    }
+  }
+  .my-order {
+    padding: 0.5rem;
+
+    p {
+      width: 100%;
+      font-size: 0.8rem;
+      margin: 8px 0;
+      span {
+        float: right;
+        color: var(--ion-color-primary);
+        font-weight: 500;
+        font-size: 1rem;
+      }
+    }
+    h2 {
+      width: 100%;
+      font-size: 1rem;
+      margin: 8px 0;
+      font-weight: 300;
+      color: var(--ion-color-dark);
+      span {
+        float: right;
+        color: var(--ion-color-medium);
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+}
+
+.error {
+  --highlight-color-focused: var(--ion-color-danger);
+  --highlight-color-invalid: var(--ion-color-danger);
+  --highlight-color-valid: transparent;
+}
+
+ion-item {
+  --highlight-color-focused: transparent;
+  --highlight-color-invalid: transparent;
+  --highlight-color-valid: transparent;
+}
+
+ion-label {
+  font-family: 'Rubik', sans-serif;
+}
+
+ion-input {
+  font-family: 'Rubik', sans-serif;
+}
+
+ion-footer {
+  width: 100%;
+  display: inline-block;
+  ion-button {
+    display: inline-block;
+    width: 48%;
+    text-transform: none;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Report Abuse</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/product-detail"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="reportAbuseForm" (ngSubmit)="submit()">
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Reason</ion-label>
+      <ion-select formControlName="reason" placeholder="reason">
+        <ion-select-option *ngFor="let list of productsSandbox.abuseReasonList$ | async" value="{{list.id}}">
+          {{list.reason}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Comments</ion-label>
+      <ion-textarea rows="4" formControlName="comments"></ion-textarea>
+    </ion-item>
+
+
+    <ion-button *ngIf="!(productsSandbox.reportAbuseLoading$|async)" type="submit" class="cntu">
+      Save
+    </ion-button>
+
+    <ion-button *ngIf="productsSandbox.reportAbuseLoading$|async" class="cntu">
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-button>
+
+  </form>
+
+</ion-content>

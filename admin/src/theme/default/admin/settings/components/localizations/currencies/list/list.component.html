@@ -1,0 +1,107 @@
+<div class="setup-wrapper">
+    <!-- <div class="setup-header flex"> -->
+        <!-- <h3>{{'Settings.Local.Currency.SettingsLocalizationCurrenciesPath' | translate}}</h3>
+        <div class="back-button-settings">
+            <button  class="coc" routerLink="/settings">>>Back</button>
+        </div>  -->
+    <!-- </div> -->
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <!-- <ng-template ngbTabTitle></ng-template> -->
+                        <ng-template ngbTabContent style="display: flex !important;">
+
+                <div class="localize-header flex">
+                    <div class="loc-hdr-lft">
+                        <h3>Currency list</h3>
+                        <p>Here the Admin maintains the master list of currencies and one among these currencies becomes the default currency in which the pricing of the products will be shown. 
+                        </p>
+                    </div>
+                    <button class="btn" (click)="addCurrency('','add')" [appHideIfUnauthorized]="'create-currency'"><img
+                        src="assets/img/add-white-ico.png"> {{'Settings.Local.Currency.AddCurrency' | translate}}
+                </button>
+                </div>
+
+                            <div class="setup-right">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Settings.Local.Currency.CurrencyTitle' | translate}}</th>
+                                                <th>{{'Settings.Local.Currency.Code' | translate}}</th>
+                                                <th>{{'Settings.Local.Currency.LastUpdate' | translate}}</th>
+                                                <th>{{'Settings.Local.Emailtemplate.Status' | translate}}</th>
+                                                <th [appHideIfUnauthorized]="'edit-currency' || 'delete-currency'">
+                                                    {{'Settings.Local.Currency.Action' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let currencylist of (sandbox.currencyList$|async); let i=index">
+                                                <td>{{currencylist.title}}</td>
+                                                <td>{{currencylist.code}}</td>
+                                                <td>{{currencylist.modifiedDate ? (currencylist.modifiedDate | date:"
+                                                    dd/MM/yyyy") :
+                                                    (currencylist.createdDate | date:" dd/MM/yyyy")}}</td>
+                                                <td>
+                                                    <div *ngIf="currencylist.isActive === 1">
+                                                        {{'Settings.Local.StockStatus.Active' |
+                                                        translate}}
+                                                    </div>
+                                                    <div *ngIf="currencylist.isActive === 0">
+                                                        {{'Settings.Local.StockStatus.InActive' |
+                                                        translate}}</div>
+                                                </td>
+                                                <td style="cursor:pointer"
+                                                    [appHideIfUnauthorized]="'edit-currency' || 'delete-currency'">
+                                                    <img [appHideIfUnauthorized]="'edit-currency'"
+                                                        src='assets/img/edit-ico.png'
+                                                        (click)="addCurrency(currencylist,'edit')" class="icon"
+                                                        style="cursor:pointer">
+                                                    <img [appHideIfUnauthorized]="'delete-currency'"
+                                                        src='assets/img/delete-file-ico.png'
+                                                        [ngbPopover]="deleteContent" placement="bottom"
+                                                        #deletePop="ngbPopover" class="icon" style="cursor:pointer" />
+                                                    <ng-template #deleteContent>
+                                                        <div class="style">
+                                                            <div class="modal-header">
+                                                                <h6 class="modal-title" style="margin-left: 17%;">
+                                                                    {{'CommonFormAll.Doyouwanttodelete' | translate}}
+                                                                </h6>
+
+                                                            </div>
+
+                                                            <div class="modal-footer" style="margin-right: 23%;">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    (click)="deletePop.close();" data-dismiss="modal">No
+                                                                </button>
+                                                                <button type="button" class="btn btn-success"
+                                                                    (click)="deleteCurrency(currencylist.currencyId, deletePop)"
+                                                                    data-dismiss="modal">Yes
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-paginator [length]="(sandbox.currencyListCount$ | async)?.data" [pageSize]="pageSize"
+                                    [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                                </mat-paginator>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <!--country-->
+                  
+                    <!--zone-->
+                </ngb-tabset>
+
+            </div>
+        </div>
+    </div>
+  
+
+</div>

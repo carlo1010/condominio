@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'Address' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/dashboard/dashboardTab/cart"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-progress-bar *ngIf="commonSandbox.shippingAddressLoading$ | async" reversed="true" type="indeterminate">
+  </ion-progress-bar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="profile-details">
+    <form [formGroup]="checkOutForm">
+      <ion-item [class.error]="submitted && checkOutForm['controls'].firstName.invalid" lines="full">
+        <ion-label position="stacked">{{ 'First_name' | translate }}</ion-label>
+        <ion-input formControlName="firstName" type="text" [placeholder]="'Enter_First_name' | translate"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].lastName.invalid" lines="full">
+        <ion-label position="stacked">{{ 'Last_name' | translate }}</ion-label>
+        <ion-input formControlName="lastName" type="text" [placeholder]="'Enter_Last_name' | translate"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].email.invalid" lines="full">
+        <ion-label position="stacked">{{ 'Email' | translate }}</ion-label>
+        <ion-input formControlName="email" type="email" [placeholder]="'Email' | translate"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].mobile.invalid" lines="full">
+        <ion-label position="stacked">{{
+          'Phone_Number' | translate
+        }}</ion-label>
+        <ion-input type="tel" formControlName="mobile" [placeholder]="'Phone_Number' | translate"></ion-input>
+      </ion-item>
+    </form>
+  </div>
+
+  <div class="btns flex">
+    <ion-button (click)="addAddress()">Add Address</ion-button>
+  </div>
+
+  <div class="ship">
+
+    <h3>Shipping Address</h3>
+    <ion-radio-group>
+      <ion-item *ngFor="let item of commonSandbox.shippingAddressList$ | async"
+        (click)="selectAddress(item, 'shipping')">
+        <ion-label>
+          <b> {{item.addressType == 0 ? ('Home' | translate) : ('Work' | translate)}}</b>
+          <p *ngIf="item.company">{{ item.company }}</p>
+          <p *ngIf="item.address1">{{ item.address1 }}</p>
+          <p *ngIf="item.address2">{{ item.address2 }}</p>
+          <p *ngIf="item.city"> {{ item.city }}</p>
+          <p *ngIf="item.state"> {{ item.state }}</p>
+          <p *ngIf="item.postcode"> {{ 'Pincode' | translate }} -
+            {{ item.postcode }}</p>
+        </ion-label>
+        <ion-radio slot="start" value="{{item.address2}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+
+  <ion-item class="billing">
+    <ion-label>Billing address same as Shipping address</ion-label>
+    <ion-checkbox [(ngModel)]="sameAddress" slot="start"></ion-checkbox>
+  </ion-item>
+
+  <div class="ship " *ngIf="!sameAddress">
+    <h3>Billing Address</h3>
+    <ion-radio-group>
+      <ion-item *ngFor="let item of commonSandbox.shippingAddressList$ | async"
+        (click)="selectAddress(item, 'billing')">
+        <ion-label>
+          <b> {{item.addressType == 0 ? ('Home' | translate) : ('Work' | translate)}}</b>
+          <p *ngIf="item.address1">{{ item.address1 }}</p>
+          <p *ngIf="item.address2">{{ item.address2 }}</p>
+          <p *ngIf="item.city"> {{ item.city }}</p>
+          <p *ngIf="item.state"> {{ item.state }}</p>
+          <p *ngIf="item.postcode"> {{ 'Pincode' | translate }} -
+            {{ item.postcode }}</p>
+        </ion-label>
+        <ion-radio slot="start" value="{{item.addressId}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button (click)="orderType==='order' ? orderRequest() : openPaymentPage()" color="secondary">
+    {{ 'Continue' | translate }}
+  </ion-button>
+</ion-footer>

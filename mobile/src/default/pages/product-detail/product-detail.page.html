@@ -1,0 +1,402 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"> </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (productsSandbox.productDetails$ | async)?.name }}</ion-title>
+    <ion-buttons class="notification" (click)="gotoCart()" slot="end">
+      <ion-icon mode="ios" name="cart"></ion-icon>
+      <ion-badge mode="ios">{{
+        productCtrlSandbox.cartListCount$ | async
+      }}</ion-badge>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+
+  <ion-toolbar class="compare" *ngIf="productCtrlSandbox.getCompareListCount() > 0 && showCompareBar" class="compare"
+    (click)="gotoCompare(); $event.stopPropagation()">
+    <ion-buttons slot="start">
+      <ion-button fill="none">
+        <ion-icon slot="start" icon="assets/icon/compare-white.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ 'Compare' | translate }} (
+      {{ productCtrlSandbox.getCompareListCount() }} )</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="hideCompareBar(); $event.stopPropagation()" fill="none">
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+
+
+  <ng-container *ngIf="productDetails.productId">
+
+    <p class="bc" *ngIf="productDetails.category.length">Category : {{productDetails.category[0]?.categoryName}}</p>
+    <div class="flex avl-star">
+      <h3 class="flex"> <img src="../../../assets/images/tick-green.svg"> Available </h3>
+      <div class="rating flex">
+        <div class="rating">
+          <rating class="my-rates" [(ngModel)]="productDetails.rating" size="5" readonly="true">
+          </rating>
+        </div>
+      </div>
+    </div>
+    <h2 class="product-title">{{ productDetails.name }}</h2>
+    <ion-button class="wish" (click)="addToWishList(productDetails, productDetails.wishListStatus);">
+      <ion-icon name="heart" [color]="productDetails.wishListStatus == 1 ? 'danger' : 'dark'"></ion-icon>
+    </ion-button>
+
+    <ion-button class="compare" color="light" *ngIf="!(productCtrlSandbox.checkCompareLoading$ | async)"
+      (click)="compareProduct(productDetails.productId)">
+      <ion-icon icon="assets/icon/compare-dark.svg"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="productCtrlSandbox.checkCompareLoading$ | async" color="light">
+      <ion-spinner color="secondary" name="crescent"></ion-spinner>
+    </ion-button>
+
+    <div class="skuDiv"> SKU: {{productDetails.selectedVariant && productDetails.selectedVariant.skuName ? 
+      productDetails.selectedVariant.skuName : productDetails.sku}} </div>
+
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide *ngFor="let image of productDetails.productImage" (click)="viewImages(productDetails.productImage)">
+        <div class="image-canvas">
+          <img [src]="
+              imageResizeUrl +
+              'width=600&height=200&path=' +
+              image.containerName +
+              '&name=' +
+              image.image
+            " onError="this.src='/assets/images/Load icon Banner.png';" (load)="isImageLoaded(image)"
+            [hidden]="!productImageLoaded[image.productImageId]" />
+          <img src="assets/images/Load icon Banner.png" [hidden]="productImageLoaded[image.productImageId]" />
+        </div>
+      </ion-slide>
+    </ion-slides>
+    <div class="pri-det">
+      <div class="pd-row flex">
+        <div class="pd-lft">
+
+          <h3 *ngIf="productDetails.tirePrice > 0">
+            {{calculatePrice(productDetails.tirePrice, productDetails.taxType, productDetails.taxValue)|currencySymbol: 
+              (commonSandbox.appDetails$ | async)}}</h3>
+
+          <h3 class="flex" *ngIf="!productDetails.tirePrice || productDetails.tirePrice<=0">
+            <span>
+              {{calculatePrice(productDetails.price, productDetails.taxType, productDetails.taxValue)
+                | currencySymbol: (commonSandbox.appDetails$ | async)}}</span>
+
+            <span class="pricerefer" *ngIf="productDetails.flag == 1">
+              {{calculatePrice(productDetails.originalPrice, productDetails.taxType, productDetails.taxValue)
+                    | currencySymbol: (commonSandbox.appDetails$ | async)}}</span>
+
+
+
+            <span class="discount" *ngIf="productDetails.discount>0">{{productDetails.discount}}% off</span>
+          </h3>
+
+        </div>
+        <!--lft-->
+        <div class="pd-rht flex">
+          <p>Quantity :</p>
+          <div class="flex pd-quan">
+            <ion-button [disabled]="itemQuantity === 1 || itemQuantity <= minimumCartQuantity"
+              (click)="changeQuantity('minus', productDetails.stockStatus)">-
+            </ion-button>
+
+            <h2> {{itemQuantity }} </h2>
+            <ion-button [disabled]="itemQuantity >= maximumCartQuantity" (click)="changeQuantity('plus')">+
+            </ion-button>
+          </div>
+        </div>
+      </div>
+      <!--row-->
+      <div class="tier-price flex">
+
+
+        <ng-container
+          *ngIf="productDetails.hasTirePrice == 1 && ( productDetails.productvarientList && productDetails.productvarientList.length>0) &&
+          productDetails.selectedVariant.productTirePrices &&productDetails.selectedVariant.productTirePrices.length>0">
+          <h4 (click)="openTirePrice('hasVariant')" *ngIf="productDetails.productTirePrices.length > 0">Tier Price
+            Chart</h4>
+        </ng-container>
+
+        <ng-container *ngIf="productDetails.hasTirePrice == 1 && (!productDetails.productvarientList || 
+      (productDetails.productvarientList && productDetails.productvarientList.length<1))">
+          <h4 (click)="openTirePrice('noVariant')" *ngIf="productDetails.productTirePrices.length > 0">Tier Price Chart
+          </h4>
+        </ng-container>
+
+
+        <div (click)="gotoVendorDetails(productDetails.vendorId, productDetails.vendorPrefixId)" class="comp-logo"
+          *ngIf="productDetails.vendorId > 0">
+          <img
+            [src]="imageResizeUrl+ 'path=' + productDetails?.companyLogoPath + '&name=' + productDetails?.companyLogo + '&width=260&height=260'"
+            onError="this.src='/assets/images/Load icon Products.png';">
+        </div>
+      </div>
+      <!--row-->
+    </div>
+
+    <div class="msc-btns flex">
+      <ion-button *ngFor="let variant of productDetails.productVarient; let i = index"
+        (click)="openProductOptions(variant, i)">{{variant.selectedOptionName?variant.selectedOptionName:variant.name}}
+      </ion-button>
+    </div>
+
+    <div class="acbn-btns flex" *ngIf="(productDetails.pincodeBasedDelivery !=1) || 
+    (productDetails.pincodeBasedDelivery ==1 && 
+    (productCtrlSandbox.productAvailabilityData$ | async)?.status === 1)">
+
+      <ion-button *ngIf="(productDetails.hasStock === 1 && productDetails.stockStatus === 'outOfStock' && 
+        productDetails.enableBackOrders)" (click)="orderNow()">
+        Order Now
+      </ion-button>
+
+      <ng-container *ngIf="productDetails.stockStatus !== 'outOfStock'">
+        <ion-button (click)=" addToCart(productDetails)" class="atc">
+          <ion-icon name="cart"></ion-icon> Add to Cart
+        </ion-button>
+
+        <ion-button (click)="addToCart(productDetails, 'buyNow')" class="bn">
+          <ion-icon name="flash"></ion-icon> Buy Now
+        </ion-button>
+      </ng-container>
+
+
+      <ion-button class="mq" *ngIf="productDetails.quotationAvailable === 1"
+        [routerLink]="['/make-quatation', productDetails.productId]"> Make Quotation
+      </ion-button>
+    </div>
+
+
+
+    <div class="pri-det" *ngIf="productDetails.stockStatus === 'outOfStock'">
+      <div class="pd-row flex">
+        <div class="pd-lft">
+          <h6 class="not-avail">Out of stock</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="chk-ship" *ngIf="productDetails.pincodeBasedDelivery ==1">
+      <h3>Check Shipping & delivery to your location</h3>
+      <ion-input #pin (keyup)="getPincode(pin.value)" placeholder="Enter a pin-code eg: 600034">
+      </ion-input>
+
+      <ion-button *ngIf="!(productCtrlSandbox.productAvailabilityLoading$|async)" (click)="checkAvailability()">
+        Check Availability
+      </ion-button>
+
+      <ion-button expand="full" *ngIf="productCtrlSandbox.productAvailabilityLoading$|async" color="secondary">
+        <ion-spinner name="dots"></ion-spinner>
+      </ion-button>
+
+      <p class="flex"
+        *ngIf="(productCtrlSandbox.productAvailabilityData$ | async)?.status === 1 && pinCode && checkPinCode === true">
+        <img src="assets/images/tick-green-rd.svg"> Delivery Available </p>
+
+      <p class="flex"
+        *ngIf="(productCtrlSandbox.productAvailabilityData$ | async)?.status === 0 && pinCode && checkPinCode === true">
+        Delivery Not Available </p>
+    </div>
+
+
+
+    <div class="description">
+      <h3>Description</h3>
+      <p [innerHTML]="productDetails.description"></p>
+    </div>
+
+
+    <div class="description" *ngIf="productAttributes && productAttributes.length">
+      <h3>Specifications</h3>
+      <div class="specificationDiv" *ngFor="let attributes of productAttributes">
+        <p class="groupName">{{attributes.group}}</p>
+
+        <ion-row class="specificationRow" *ngFor="let item of attributes.value">
+          <ion-col size="6" class="colLeft">{{item.attributeName}}</ion-col>
+          <ion-col size="6" class="colRight">{{item.text}}</ion-col>
+        </ion-row>
+
+      </div>
+
+    </div>
+
+
+
+
+    <div class="description">
+      <h3>Reviews</h3>
+      <div class="rev-row flex" *ngFor="let list of (productsSandbox.productRatingList$ | async)|slice:0:3">
+        <div class="rev-img"> <img src="assets/images/profile-img.png"> </div>
+        <div class="rev-content">
+          <h3>{{ list.firstName }} {{ list.lastName }}</h3>
+          <h5> {{ list.createdDate | date:'dd MMM, yyyy' }} at {{list.createdDate | date:'h:mm a'}}</h5>
+          <div class="rating flex">
+            <rating class="my-rates" [(ngModel)]="list.rating" size="5" readonly="true">
+            </rating>
+          </div>
+          <p>{{ list.review }} </p>
+        </div>
+      </div>
+
+      <div class="rev-row nobrd flex" *ngIf="(productsSandbox.productRatingList$ | async)?.length > 3">
+        <div class="rev-img"> </div>
+        <div class="rev-content">
+          <ion-button>See all</ion-button>
+        </div>
+      </div>
+
+      <div class="error-content" *ngIf="(productsSandbox.productRatingList$ | async)?.length == 0">
+        <ion-icon name="logo-buffer"></ion-icon>
+        <p>{{ 'No_Reviews' | translate }}</p>
+      </div>
+
+    </div>
+
+    <div class="customer-que">
+      <div class="flex ca-tit">
+        <h3>Customer questions & answers</h3>
+        <ion-button (click)="postQuestion()">Post Question
+        </ion-button>
+      </div>
+
+      <div class="error-content description" *ngIf="(productsSandbox.questionList$ | async)?.length == 0 && 
+      !(productsSandbox.questionListLoading$ | async)">
+        <p>No questions found</p>
+      </div>
+      <ng-container>
+
+        <ion-searchbar class="iSearchBar" [(ngModel)]="question" placeholder="Have a question? Find answer?"
+          (ionChange)="getQuestionList(question)">
+        </ion-searchbar>
+
+        <div class="iSpinner" *ngIf="(productsSandbox.questionListLoading$ | async)">
+          <ion-spinner name="crescent" *ngIf="(productsSandbox.questionListLoading$ | async)"></ion-spinner>
+        </div>
+
+
+        <div class="qa-row" *ngFor="let question of (productsSandbox.questionList$|async)|slice:0:3">
+          <div class="flex qa-que">
+            <span>Q :</span>
+            <p>{{question.question}}</p>
+          </div>
+          <div class="flex qa-que">
+            <span>A :</span>
+            <p class="wt">{{question.answerList?.answer}}</p>
+          </div>
+          <div class="qa-pro-rep">
+            <h5>{{question.postedBy.firstName}} <span _ngcontent-c27="">on
+                {{question.answerList?.createdDate|date:'dd MMM, yyyy'}}</span></h5>
+            <div class="flex qa-rep">
+              <p><a>
+                  <ion-icon name="thumbs-up" [style.color]="question.answerList?.likeType === 1 ? 'blue' : 'gray'"
+                    (click)="likeOrDislike($event, question)">thumb_up</ion-icon>
+                </a>{{question.answerList ? question.answerList.likes: 0}} </p>
+              <p><a>
+                  <ion-icon name="thumbs-down" [style.color]="question.answerList?.likeType === 2 ? 'blue' : 'gray'"
+                    (click)="likeOrDislike($event, question)">thumb_down</ion-icon>
+                </a>{{question.answerList ? question.answerList.dislikes: 0}} </p>
+              <a class="repot" (click)="reportAbuse(question)">Report Abuse</a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="rev-content" *ngIf="productDetails.questionList.length>0">
+        <ion-button [routerLink]="['/question-lists', productDetails.productId]">See all</ion-button>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!---- ***************** SKELETON LOADING START HERE ***************** -->
+  <ng-container *ngIf="(productsSandbox.productDetailLoading$ | async)">
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+        <div class="image-canvas">
+          <img src="assets/images/Load icon Banner.png" />
+        </div>
+      </ion-slide>
+    </ion-slides>
+    <div class="product-title">
+      <div class="rating">
+        <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+      </div>
+      <div class="availability">
+        <p>
+          <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+        </p>
+      </div>
+      <ion-grid>
+        <div class="pri-det">
+          <div class="pd-row flex">
+            <div class="pd-lft">
+              <h3></h3>
+              <h4 class="flex"> <span></span> </h4>
+            </div>
+            <!--lft-->
+            <div class="pd-rht flex">
+              <ion-col size="4" class="ion-no-padding">
+                <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+              </ion-col>
+            </div>
+          </div>
+          <!--row-->
+        </div>
+        <ion-row class="ion-no-padding">
+          <ion-col size="4" class="ion-no-padding">
+            <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="share-list">
+        <ion-fab-button color="light">
+          <ion-spinner color="medium" name="crescent"></ion-spinner>
+        </ion-fab-button>
+        <ion-fab-button color="light">
+          <ion-spinner color="medium" name="crescent"></ion-spinner>
+        </ion-fab-button>
+        <ion-fab-button color="light">
+          <ion-spinner color="medium" name="crescent"></ion-spinner>
+        </ion-fab-button>
+      </div>
+      <hr />
+      <ion-button expand="full" color="secondary">
+        <ion-icon name="cart"></ion-icon>
+        <ion-skeleton-text width="60%"></ion-skeleton-text>
+      </ion-button>
+    </div>
+    <div class="description">
+      <h3>{{ 'Description' | translate }}</h3>
+      <ion-skeleton-text animated width="99%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="87%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    </div>
+    <hr />
+    <div class="description">
+      <h3>{{ 'Ratings_Reviews' | translate }}</h3>
+      <div class="review-list" *ngFor="let list of [1, 2]">
+        <div class="name">
+          <ion-skeleton-text></ion-skeleton-text>
+        </div>
+        <ion-skeleton-text animated width="50%"></ion-skeleton-text>
+        <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+        <ion-skeleton-text animated width="22%"></ion-skeleton-text>
+      </div>
+    </div>
+  </ng-container>
+  <!-- ***************** SKELETON LOADING END HERE *****************-->
+
+</ion-content>

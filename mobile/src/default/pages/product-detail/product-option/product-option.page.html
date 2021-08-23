@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'Product_Options'|translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="optionsValue.selectedOption">
+      <ion-list-header>
+        <ion-label>{{optionsValue.name}}</ion-label>
+      </ion-list-header>
+
+      <ion-item lines="none" *ngFor="let val of optionsValue.varientsValue">
+        <ion-label>{{val.valueName}}</ion-label>
+        <ion-radio  slot="start" value="{{val.id}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="dismiss()" color="secondary">
+      {{'Done'|translate}}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

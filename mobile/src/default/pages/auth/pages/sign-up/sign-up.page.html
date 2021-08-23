@@ -1,0 +1,126 @@
+<ion-content>
+  <div class="top-postion">
+    <img [@fadeIn] src="assets/images/Spurtcommerce 2.0 logo.png" />
+  </div>
+
+  <div class="text-bottom">
+    <ion-row class="ion-no-padding">
+      <ion-col size="4" class="ion-no-padding">
+        <h2>{{ 'Sign_Up' | translate }}</h2>
+      </ion-col>
+
+      <ion-col size="8" class="ion-no-padding">
+        <p class="login">
+          {{ 'Already_Registered' | translate
+          }}<span (click)="gotoLogin()" class="login-Btn">{{
+            'Login' | translate
+          }}</span>
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="name" type="text" [placeholder]="'First Name'|translate"></ion-input>
+        <ion-icon name="person"></ion-icon>
+      </ion-item>
+      <p *ngIf="submitted && !registerForm.value.name" class="errorMsg">
+        {{ 'Enter_first_name' | translate }}
+      </p>
+
+
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="lastName" type="text" [placeholder]="'Last Name'|translate"></ion-input>
+        <ion-icon name="person"></ion-icon>
+      </ion-item>
+      <p *ngIf="submitted && !registerForm.value.lastName" class="errorMsg">
+        {{ 'Enter_last_name' | translate }}
+      </p>
+
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="email" type="email" [placeholder]="'Email_Id'|translate"></ion-input>
+        <ion-icon name="mail"></ion-icon>
+      </ion-item>
+      <p class="errorMsg" *ngIf="
+          submitted &&
+          !registerForm.controls.email.valid &&
+          registerForm['controls'].email.touched
+        ">
+        {{'Please_enter_a_valid_Email_Address'|translate}}
+      </p>
+
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="mobileNumber" type="tel" [placeholder]="'Mobile_Number'|translate" minlength="8"
+          maxlength="15"></ion-input>
+        <ion-icon name="phone-portrait"></ion-icon>
+      </ion-item>
+      <p *ngIf="
+          submitted && registerForm['controls'].mobileNumber.errors?.minlength
+        " class="errorMsg">
+        {{'Mobile number should be between 8-15 digits'|translate}}
+      </p>
+
+      <p *ngIf="
+      submitted && registerForm['controls'].mobileNumber.errors?.maxlength
+    " class="errorMsg">
+        {{'Mobile number should be between 8-15 digits'|translate}}
+      </p>
+
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="password" type="password" [placeholder]="'Password'|translate"></ion-input>
+        <ion-icon name="lock"></ion-icon>
+      </ion-item>
+
+      <div class="passwordDisclaimer">
+        <p>*Must be at least 8 characters long</p>
+        <p>*Must contain at least one lowercase and one uppercase letter</p>
+        <p>*Must contain at least one symbol or number</p>
+      </div>
+
+      <p *ngIf="submitted && registerForm['controls'].password.errors?.minlength" class="errorMsg">
+        {{'Password_must_be_more_than_5_characters'|translate}}
+      </p>
+
+      <p *ngIf="submitted && registerForm['controls'].password.errors?.maxlength" class="errorMsg">
+        {{'Password_should_not_exceed_more_than_10_characters'|translate}}
+      </p>
+
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="confirmPassword" type="password" [placeholder]="'Confirm_Password'|translate">
+        </ion-input>
+        <ion-icon name="lock"></ion-icon>
+      </ion-item>
+
+      <p *ngIf="
+          submitted &&
+          registerForm.value.confirmPassword != registerForm.value.password
+        " class="errorMsg">
+        {{'Password_does_not_match'|translate}}
+      </p>
+    </form>
+
+
+  </div>
+
+
+
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-button [disabled]="
+      !(
+        registerForm.value.name &&
+        registerForm.value.email &&
+        registerForm.value.mobileNumber &&
+        registerForm.value.password &&
+        registerForm.value.confirmPassword
+      )
+    " *ngIf="!(authSandbox.registerLoading$ | async)" (click)="submit()" type="submit" class="signUp-btn"
+    expand="full">{{'Sign_Up'|translate}}
+  </ion-button>
+  <ion-button *ngIf="authSandbox.registerLoading$ | async" class="signUp-btn" expand="full">
+    <ion-spinner name="dots"></ion-spinner>
+  </ion-button>
+</ion-footer>

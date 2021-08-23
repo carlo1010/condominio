@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{'Order_Detail'|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="
+    (orderSandbox.myOrderDetail$ | async) &&
+    !(orderSandbox.myOrderDetailLoading$ | async)
+  ">
+    <ion-card class="flex">
+
+      <div class="yo-img">
+        <img [src]="
+                imageResizeUrl +
+                'width=120&height=100&path=' +
+                (orderSandbox.myOrderDetail$ | async)?.containerName +
+                '&name=' +
+                (orderSandbox.myOrderDetail$ | async)?.productImage
+              " onError="this.src='/assets/images/Load icon Products.png';" />
+      </div>
+
+      <div class="yo-content">
+        <h3>{{ (orderSandbox.myOrderDetail$ | async)?.productName }}</h3>
+
+        <p *ngIf="cancelRequest == 0">{{ (orderSandbox.myOrderDetail$ | async)?.orderStatus }} </p>
+
+        <ng-container *ngIf="cancelRequest > 0">
+          <p *ngIf="cancelRequestStatus == 1" class="flex" style="color: red;">
+            Your order is cancelled
+          </p>
+          <p *ngIf="cancelRequestStatus == 2" class="flex">
+            Your cancel request is rejected
+          </p>
+        </ng-container>
+        <p>{{ (orderSandbox.myOrderDetail$ | async)?.orderStatusDate | date : 'd MMM y' }}</p>
+      </div>
+
+      <div class="ord-det">
+        <button class="ripple flex" *ngIf="(orderSandbox.myOrderDetail$ | async) as orderDetail"
+          (click)="viewDetail(orderDetail)"> Order Details <img src="assets/images/arrow-rht-sm.svg"> </button>
+        <button class="ripple flex" *ngIf="(orderSandbox.myOrderDetail$ | async) as orderDetail"
+          (click)="trackDetail(orderDetail)"> Track Order <img src="assets/images/arrow-rht-sm.svg"> </button>
+      </div>
+      <div *ngIf="cancelRequest == 0" class="ord-det ord-det-cnl" style="display: flex;
+      justify-content: flex-end; margin-top: 0px; margin-bottom: 5px;">
+        <ng-container *ngIf="(orderSandbox.myOrderDetail$ | async) as orderDetail">
+          <a style="padding: 5px;" href="javascript:void(0)" *ngIf="!orderDetail.cancelRequest"
+            (click)="cancelOrder(orderDetail); $event.stopPropagation()" class="flex review-btn"> Cancel Order </a>
+        </ng-container>
+      </div>
+
+    </ion-card>
+
+    <a href="javascript:void(0)" *ngIf="(orderSandbox.myOrderDetail$ | async) as orderDetail"
+      (click)="feedbackAlert(orderDetail); $event.stopPropagation()" class="flex review-btn"> Review this Product <img
+        src="assets/images/arrow-rht-sm.svg"> </a>
+
+    <div class="po-wrap">
+
+      <h3>Shipping Details</h3>
+
+      <div class="sd-grid">
+        <div class="sd-content">
+          <h4>Shipping Address</h4>
+          <h3>{{ (orderSandbox.myOrderDetail$ | async)?.shippingAddress1 }}</h3>
+          <p>{{ (orderSandbox.myOrderDetail$ | async)?.shippingAddress2 }}</p>
+          <p>{{ (orderSandbox.myOrderDetail$ | async)?.shippingCity }}</p>
+          <p>
+            {{ (orderSandbox.myOrderDetail$ | async)?.shippingPostcode + ', ' + (orderSandbox.myOrderDetail$ | async)?.shippingZone }}
+          </p>
+        </div>
+      </div>
+
+      <h3>Order Details</h3>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" class="odl">Order Date</ion-col>
+          <ion-col size="8" class="odr">{{ (orderSandbox.myOrderDetail$ | async)?.orderedDate | date : 'd MMM y' }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" class="odl">Order #</ion-col>
+          <ion-col size="8" class="odr">{{ (orderSandbox.myOrderDetail$ | async)?.orderProductPrefixId }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" class="odl">Order Value</ion-col>
+          <ion-col size="8" class="odr">
+            {{(orderSandbox.myOrderDetail$ | async)?.currencySymbolLeft ? (orderSandbox.myOrderDetail$ | async)?.currencySymbolLeft : ''}}
+            {{ (orderSandbox.myOrderDetail$ | async)?.discountAmount ? ((orderSandbox.myOrderDetail$ | async)?.total - (orderSandbox.myOrderDetail$ | async)?.discountAmount)  : (orderSandbox.myOrderDetail$ | async)?.total }}
+            {{(orderSandbox.myOrderDetail$ | async)?.currencySymbolRight ? (orderSandbox.myOrderDetail$ | async)?.currencySymbolRight : ''}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </ng-container>
+
+
+  <!--SKELETON LOADING START HERE -->
+  <div *ngIf="orderSandbox.myOrderDetailLoading$ | async">
+    <ion-grid class="product-detail ion-no-padding">
+      <ion-row class="ion-no-padding">
+        <ion-col size="4" class="ion-no-padding">
+          <div class="image-canvas">
+            <img src="assets/images/Load icon Products.png" />
+          </div>
+        </ion-col>
+        <ion-col size="8" class="item-detail">
+          <ion-skeleton-text width="80%"></ion-skeleton-text>
+          <ion-skeleton-text width="80%"></ion-skeleton-text>
+          <ion-skeleton-text width="80%"></ion-skeleton-text>
+          <ion-skeleton-text width="80%"></ion-skeleton-text>
+          <ion-skeleton-text width="80%"></ion-skeleton-text>
+          <hr />
+        </ion-col>
+      </ion-row>
+      <ion-skeleton-text margin-top="15px" width="90%"></ion-skeleton-text>
+      <ion-skeleton-text margin-top="15px" width="75%"></ion-skeleton-text>
+    </ion-grid>
+    <hr />
+    <div class="address po-wrap">
+      <h3>Shipping Details</h3>
+      <ion-skeleton-text animated width="35%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="100%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="70%"></ion-skeleton-text>
+    </div>
+    <hr />
+    <div class="address po-wrap">
+      <h3>Order Details</h3>
+      <ion-skeleton-text animated width="42%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="90%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    </div>
+    <hr />
+  </div>
+  <!--SKELETON LOADING END HERE -->
+
+</ion-content>

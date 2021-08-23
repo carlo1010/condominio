@@ -1,0 +1,124 @@
+
+<!-- <h2 class="text-muted text-center" style="color: black !important;">{{'authentication.SignIn.'|translate}}</h2> -->
+<!-- <form [formGroup]="loginForm" novalidate> -->
+    <!-- <div class="w-100 mt-2 input-group" [ngClass]="{'validationcolor':
+    (loginForm.controls.email.hasError('required') && submitted)}">
+    <p>{{'authentication.Email'|translate}}*</p>
+        <input  placeholder="{{'authentication.Email'|translate}}" formControlName="email" required>
+        <mat-error *ngIf="loginForm.controls['email'].hasError('required') && submitted">
+            {{'Error.EmailIsRequired'|translate}}
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['email'].hasError('invalidEmail') && submitted">
+            {{'Error.InvalidEmailAddress'|translate}}
+        </mat-error>
+    </div> -->
+    <!-- <div class="w-100 mt-1 input-group" [ngClass]="{'validationcolor':
+    (loginForm.controls.password.hasError('required') && submitted)}">
+    <p>{{'authentication.Password'|translate}}*</p>
+        <input  placeholder="{{'authentication.Password'|translate}}" formControlName="password" type="password"
+            required>
+        <mat-error *ngIf="loginForm.controls['password'].hasError('required') && submitted">
+            {{'Error.PasswordisRequired'|translate}}
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['password'].hasError('minlength') && submitted">
+            {{'Error.PasswordLong'|translate}}
+        </mat-error>
+    </div> -->
+    <!-- <div class="text-center mt-2">
+        <button class="mat-elevation-z6 signin" color="primary" (click)="onLoginFormSubmit(loginForm.value)">
+            <i *ngIf="(authSandbox.loginLoading$ | async)" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+
+            <p *ngIf="!(authSandbox.loginLoading$ | async)">Sign In</p>
+        </button>
+    </div> -->
+    <!-- <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2 ">
+        <h5 class="text-muted auth forgot fgt" routerLink="/auth/forgot">
+            {{'authentication.ForgottenAccount'|translate}}</h5>
+
+    </div> -->
+
+    <!-- <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2"> -->
+        <!-- <div class="divider w-100"></div> -->
+        <!-- <h3 class="text-muted auth " style="color: #474747 !important;"> -->
+            <!-- {{'authentication.SignInWithOneClick'|translate}}</h3> -->
+        <!-- <div class="divider w-100"></div> -->
+    <!-- </div> -->
+
+
+    
+
+    <!-- <div class="social-one-click">
+        <img src="assets/img/fb-sign.svg" alt="">
+
+        <svg class="social-icon" viewBox="0 0 24 24" (click)="socialSignIn('facebook')"
+            matTooltip="{{'authentication.Facebook'|translate}}">
+            <path
+                d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z" />
+        </svg>
+        <img src="assets/img/google-sign.svg" alt="">
+        <svg class="social-icon" viewBox="0 0 24 24" matTooltip="{{'authentication.Google'|translate}}"
+            (click)="socialSignIn('gmail')">
+            <path
+                d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M19.5,12H18V10.5H17V12H15.5V13H17V14.5H18V13H19.5V12M9.65,11.36V12.9H12.22C12.09,13.54 11.45,14.83 9.65,14.83C8.11,14.83 6.89,13.54 6.89,12C6.89,10.46 8.11,9.17 9.65,9.17C10.55,9.17 11.13,9.56 11.45,9.88L12.67,8.72C11.9,7.95 10.87,7.5 9.65,7.5C7.14,7.5 5.15,9.5 5.15,12C5.15,14.5 7.14,16.5 9.65,16.5C12.22,16.5 13.96,14.7 13.96,12.13C13.96,11.81 13.96,11.61 13.89,11.36H9.65Z" />
+        </svg>
+    </div> -->
+
+<!-- </form> -->
+
+
+<div class="container">
+
+    <div class="registration-wrap flex">
+          <div class="reg-left">
+              <div class="reg-lft-inner" [formGroup]="loginForm">
+                    <h3> {{'login.login'|translate}}</h3>
+                    <div class="input-group" >
+                        <p>{{'login.E-mail'|translate}}</p>
+                        <input   formControlName="email"  (keyup.enter)="onLoginFormSubmit(loginForm.value)" placeholder="{{'login.gmail'|translate}}">
+                        <mat-error *ngIf="loginForm.controls['email'].hasError('required') && submitted">
+                          {{'Error.EmailIsRequired'|translate}}
+                      </mat-error>
+                      <mat-error *ngIf="loginForm.controls['email'].hasError('invalidEmail') && submitted">
+                          {{'Error.InvalidEmailAddress'|translate}}
+                      </mat-error>
+                    </div>
+                    <div class="input-group mb8" [ngClass]="{'validationcolor':
+                    (loginForm.controls.password.hasError('required') && submitted)}">
+                        <p>{{'login.Password'|translate}}</p>
+                        <div class="ig-password">
+                            <input    [type]="hide ? 'password' : 'text'"  placeholder="{{'login.password'|translate}}"  (keyup.enter)="onLoginFormSubmit(loginForm.value)" formControlName="password"
+                            required>
+                            <mat-error *ngIf="loginForm.controls['password'].hasError('required') && submitted">
+                              {{'Error.PasswordisRequired'|translate}}
+                          </mat-error>
+                          <mat-error *ngIf="loginForm.controls['password'].hasError('minlength') && submitted">
+                              {{'Error.PasswordLong'|translate}}
+                          </mat-error>
+                            <button (click)="hide=!hide"> <i class="material-icons">{{hide?'visibility_off':'visibility'}}</i> </button>
+                        </div>
+                    </div>
+                    <div class="fgtpwd"> <a  routerLink="/auth/forgot">{{'login.forgetpassword'|translate}}?</a> </div>
+                    <button class="submit" style="cursor: pointer;"  (click)="onLoginFormSubmit(loginForm.value)">
+                        
+                        <i *ngIf="(authSandbox.loginLoading$ | async)"   class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+
+                        <span *ngIf="!(authSandbox.loginLoading$ | async)">  {{'login.login'|translate}}</span>
+                       </button>
+                    <p class="alread-acc">{{'login.Donothaveanaccount'|translate}}? <a href="javascript:void(0)" (click)="register()" >{{'login.registernow'|translate}}</a> </p>
+                    <div class="social-one-click">
+                        <button style="background: transparent; border: none; cursor: pointer;" (click)="socialSignIn('facebook')"> <img src="assets/img/fb-sign.svg"> Sign In with Facebook </button>
+                        <button style="background: transparent; border: none; cursor: pointer;" (click)="socialSignIn('gmail')"> <img src="assets/img/google-sign.svg"> Sign In with Google </button>
+                    </div>
+              </div>
+             
+          </div>
+          
+  
+        <div class="reg-rht">
+            <img src="assets/img/log-img.svg">
+        </div>
+  
+    </div>
+  
+  </div>
+

@@ -1,0 +1,127 @@
+{
+  "name": "spurtcommerce",
+  "version": "4.3.0",
+  "author": "Ionic Framework",
+  "homepage": "https://ionicframework.com/",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^8.2.10",
+    "@angular/common": "~8.2.14",
+    "@angular/compiler": "~8.2.14",
+    "@angular/core": "~8.2.14",
+    "@angular/forms": "~8.2.14",
+    "@angular/platform-browser": "~8.2.14",
+    "@angular/platform-browser-dynamic": "~8.2.14",
+    "@angular/router": "~8.2.14",
+    "@ionic-native/camera": "^5.15.0",
+    "@ionic-native/core": "^5.0.0",
+    "@ionic-native/facebook": "^5.16.0",
+    "@ionic-native/file": "^5.15.0",
+    "@ionic-native/file-opener": "^5.15.0",
+    "@ionic-native/google-plus": "^5.16.0",
+    "@ionic-native/in-app-browser": "^5.15.0",
+    "@ionic-native/splash-screen": "^5.0.0",
+    "@ionic-native/status-bar": "^5.0.0",
+    "@ionic/angular": "^4.7.0",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/effects": "^8.4.0",
+    "@ngrx/store": "^8.4.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
+    "com.razorpay.cordova": "1.4.8",
+    "cordova-android": "8.1.0",
+    "cordova-plugin-camera": "^4.1.0",
+    "cordova-plugin-facebook4": "^6.2.0",
+    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-file-opener2": "^2.2.1",
+    "cordova-plugin-googleplus": "^8.2.0",
+    "cordova-plugin-inappbrowser": "^3.1.0",
+    "cordova-plugin-ionic-keyboard": "^2.0.5",
+    "cordova-plugin-ionic-webview": "^4.0.0",
+    "core-js": "^2.5.4",
+    "immutable": "^4.0.0-rc.12",
+    "ionic4-rating": "^1.0.9",
+    "lodash": "^4.17.15",
+    "pdfmake": "^0.1.54",
+    "reselect": "^4.0.0",
+    "rxjs": "~6.5.1",
+    "rxjs-compat": "^6.5.3",
+    "time-ago-pipe": "^1.3.2",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/architect": "^0.803.21",
+    "@angular-devkit/build-angular": "^0.803.21",
+    "@angular-devkit/core": "^8.3.21",
+    "@angular-devkit/schematics": "^8.3.21",
+    "@angular/cli": "~8.3.21",
+    "@angular/compiler-cli": "~8.2.14",
+    "@angular/language-service": "~8.2.14",
+    "@ionic/angular-toolkit": "^2.0.0",
+    "@ionic/lab": "2.0.18",
+    "@types/jasmine": "~3.3.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codelyzer": "^5.0.0",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.1.2",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.1.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.5.3"
+  },
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-file": {},
+      "cordova-plugin-file-opener2": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "apps.googleusercontent.com.681689413160-p03arqc41t0rqn426ags9dc9bloose23"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "2579235238767200",
+        "APP_NAME": "Spurtcommerce",
+        "FACEBOOK_HYBRID_APP_EVENTS": "false",
+        "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0"
+      },
+      "com.razorpay.cordova": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}

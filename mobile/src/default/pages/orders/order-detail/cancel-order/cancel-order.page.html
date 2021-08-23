@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <button (click)="dismiss()" class="back-btn"> <ion-icon name="arrow-round-back"></ion-icon> </button>
+      </ion-buttons>
+  
+      <ion-title> Cancel Order </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+
+    <ion-list >
+      <ion-radio-group [(ngModel)]="reason" name="reason">
+        <ion-list-header>
+          <ion-label>Cancel Reason</ion-label>
+        </ion-list-header>
+
+        <ng-container *ngIf="!(orderSandbox.cancelReasonListLoading$ | async)">
+
+          <ng-container *ngFor="let list of orderSandbox.cancelReasonList$ | async">
+            <ion-item lines="none">
+              <ion-label>{{ list.reason }}</ion-label>
+              <ion-radio slot="start" value="{{ list.id }}"></ion-radio>
+            </ion-item>
+          </ng-container>
+
+        </ng-container>
+      </ion-radio-group>
+    </ion-list>
+  
+    <h3>Let us know your feedback</h3>
+  
+    <textarea rows="8" [(ngModel)]="feedback"></textarea>
+  
+    <div class="flex review-btn">
+      <button class="ripple" [disabled]="!feedback || !reason" (click)="submit()">{{'submit'|translate}}</button>
+    </div>
+  
+  </ion-content>

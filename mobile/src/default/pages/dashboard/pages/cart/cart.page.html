@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/dashboard"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="items"> Items in your cart - {{(productCtrlSandbox.cartlist$ | async)?.length}} </div>
+
+  <ion-row *ngFor="let list of productCtrlSandbox.cartlist$ | async" (click)="openDetail(list.productSlug);">
+    <ion-col size="4" class="brd">
+      <div class="image-canvas">
+        <img *ngIf="list.productImage.length > 0" [src]="
+                imageResizeUrl +
+                'width=60&height=60&path=' +
+                list.productImage[0].containerName +
+                '&name=' +
+                list.productImage[0].image
+              " onError="this.src='/assets/images/Load icon Products.png';" />
+      </div>
+    </ion-col>
+    <ion-col size="8">
+      <p style="display: grid;" class="title">{{list.name}}
+        <span *ngIf="list.productVarient.length" style="    color: gray;
+        font-size: 12px;">SKU {{list.productVarient[0].skuName}} {{list.productVarient[0].varientName}}
+        </span>
+      </p>
+      <div class="pd-rht flex">
+        <p>Qty :</p>
+        <div class="flex pd-quan">
+          <ion-button [disabled]="list.selectedQuantity === 1 || 
+          list.selectedQuantity<= minimumCartQuantity"
+            (click)="productQuantity(false, list); $event.stopPropagation()">-</ion-button>
+
+          <h2>{{ list.selectedQuantity || 1 }}</h2>
+
+          <ion-button [disabled]="list.selectedQuantity >= 
+            (list.selectedVariant && list.selectedVariant.maxQuantityAllowedCart && 
+            list.selectedVariant.maxQuantityAllowedCart > 0 ? list.selectedVariant.maxQuantityAllowedCart : 
+            list.maxQuantityAllowedCart)" (click)="productQuantity(true, list); $event.stopPropagation()">+
+          </ion-button>
+        </div>
+      </div>
+
+      <h4 class="flex"> {{
+        calculatePrice((list.hasTirePrice == 1 && list.tirePrice>0?list.tirePrice: list.price), list.taxType, list.taxValue) * list.selectedQuantity
+          | currencySymbol: (commonSandbox.appDetails$ | async) }}
+      </h4>
+
+      <ion-button (click)="confirmRemove(list); $event.stopPropagation()" class="delete"> <img
+          src="assets/images/close-rd.svg"> </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ng-container
+    *ngIf="(productCtrlSandbox.cartlist$ | async)?.length > 0 && productCtrlSandbox.cartlist$ | async as productDetails">
+    <div class="billing-details">
+      <p class="flex"> Delivery Charges <span class="free">Free</span></p>
+      <p class="flex brd"> Shipping <span>{{ 'Free' | translate }}</span></p>
+      <p *ngIf="productCtrlSandbox.totalCartPrice$ | async as price" class="flex brd"> Sub total
+        <span> {{
+        price | currencySymbol: (commonSandbox.appDetails$ | async)
+      }}</span>
+      </p>
+
+      <p class="flex gift" *ngIf="(productCtrlSandbox.applyCouponDataLoaded$ | async) && (productCtrlSandbox.applyCouponData$ | async)?.data?.appliedProducts?.length > 
+        0 && !clearCoupon">
+
+        <ion-button class="delete"> <img (click)="removeDiscount()" src="assets/images/close-rd.svg"> </ion-button>
+        {{(productCtrlSandbox.applyCouponData$ | async)?.data?.couponCode}} <span> (-)
+          {{(productCtrlSandbox.applyCouponData$ | async)?.data?.grandDiscountAmount  | currencySymbol: (commonSandbox.appDetails$ | async)}}</span>
+
+      </p>
+
+      <ng-container *ngIf="((productCtrlSandbox.applyCouponDataLoaded$ | async) && (productCtrlSandbox.applyCouponData$ | async)?.data?.appliedProducts?.length > 0)||
+        giftCardAmount">
+        <p *ngIf="productCtrlSandbox.totalCartPrice$ | async as total" class="flex brd total">
+          <ng-container>
+            Remaining Amount to be paid
+            <span>
+              {{  total - (couponDiscountAmout>0?couponDiscountAmout:0 + giftCardAmount>0?giftCardAmount:0 ) | currencySymbol: (commonSandbox.appDetails$ | async)}}
+            </span>
+          </ng-container>
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="btns flex">
+      <ion-button *ngIf="!(productCtrlSandbox.applyCouponDataLoading$|async)"
+        (click)="openCouponPage(productDetails, 'coupon')">
+        Coupons, Vouchers & Promotional Codes</ion-button>
+      <ion-button *ngIf="productCtrlSandbox.applyCouponDataLoading$|async">
+        <ion-spinner name="dots" color="dark"></ion-spinner>
+      </ion-button>
+    </div>
+
+    <ion-button (click)="placeOrder()" class="cntu">Place Order</ion-button>
+
+  </ng-container>
+
+</ion-content>

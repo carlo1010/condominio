@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'Address_Information' | translate }}</ion-title>
+    <ion-buttons (click)="dismiss()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="shippingAddressFrom">
+    <ion-radio-group [class.error]="submitted && fields.addressType.errors" formControlName="addressType">
+      <ion-item lines="none">
+        <ion-label>{{ 'Home' | translate }}</ion-label>
+        <ion-radio slot="start" value="0"></ion-radio>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>{{ 'Work' | translate }}</ion-label>
+        <ion-radio slot="start" value="1"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+
+
+    <ion-item [class.error]="submitted && fields.userName.errors">
+      <ion-label position="stacked">{{ 'Name' | translate }}</ion-label>
+      <ion-input formControlName="userName" placeholder="{{ 'Name' | translate }}">
+      </ion-input>
+    </ion-item>
+
+    <ion-item [class.error]="submitted && fields.address.errors">
+      <ion-label position="stacked">{{ 'Address' | translate }} {{ 'Line_1' | translate }}</ion-label>
+      <ion-input formControlName="address" placeholder="{{ 'Address' | translate }} {{ 'Line_1' | translate }}">
+      </ion-input>
+    </ion-item>
+    <ion-item [class.error]="submitted && fields.address1.errors">
+      <ion-label position="stacked">{{ 'Address' | translate }} {{ 'Line_2' | translate }}</ion-label>
+      <ion-input formControlName="address1" placeholder="{{ 'Address' | translate }} {{ 'Line_2' | translate }}">
+      </ion-input>
+    </ion-item>
+    <ng-container *ngIf=" commonSandbox.countryList$ | async as list">
+      <div (click)="searchModal(list)">
+        <ion-item [class.error]="
+            submitted && shippingAddressFrom['controls'].country.invalid
+          ">
+          <ion-label position="stacked" style="opacity: 1 !important;">{{
+            'Country' | translate
+          }}</ion-label>
+          <ion-select disabled style="opacity: 1 !important;" formControlName="country"
+            [placeholder]="'Choose_country' | translate">
+            <ion-select-option *ngFor="let countryList of commonSandbox.countryList$ | async"
+              [value]="countryList.countryId">{{ countryList.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </ng-container>
+    <ion-item [class.error]="submitted && fields.state.errors">
+      <ion-label position="stacked">{{ 'State' | translate }}</ion-label>
+      <ion-input formControlName="state" type="text" placeholder="Enter State"></ion-input>
+    </ion-item>
+    <ion-item [class.error]="submitted && fields.city.errors">
+      <ion-label position="stacked">{{ 'City' | translate }}</ion-label>
+      <ion-input formControlName="city" type="text" placeholder="Enter City"></ion-input>
+    </ion-item>
+    <ion-item [class.error]="submitted && fields.pincode.errors">
+      <ion-label position="stacked">{{ 'Pincode' | translate }}</ion-label>
+      <ion-input formControlName="pincode" minlength="6" maxlength="8" type="tel"
+        [placeholder]="'Enter_Pincode' | translate"></ion-input>
+    </ion-item>
+    <div *ngIf="submitted && fields.pincode.errors" class="invalid-feedback">
+      <div *ngIf="fields.pincode.errors.maxlength">
+        {{ 'Maximum_8_digits' | translate }}
+      </div>
+    </div>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" (click)="submit()" color="secondary" [disabled]="
+      (commonSandbox.addShippingAddressLoading$ | async) ||
+      (commonSandbox.updateShippingAddressLoading$ | async)
+    ">
+    <ion-spinner name="crescent" *ngIf="
+        (commonSandbox.addShippingAddressLoading$ | async) ||
+        (commonSandbox.updateShippingAddressLoading$ | async)
+      "></ion-spinner>
+
+    {{ 'Save' | translate }}
+  </ion-button>
+</ion-footer>

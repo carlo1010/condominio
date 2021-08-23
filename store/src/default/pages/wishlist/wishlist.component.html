@@ -1,0 +1,71 @@
+
+     
+<mat-card class="p-2">
+    <div class="wishlist-wrap"  >
+        
+<div  class="flex wishlist-empty" *ngIf="((wishlistSandbox.wishlist$ | async)?.length == 0)&&(wishlistSandbox.wishlistLoaded$ | async)">
+     <img src="assets/img/wishlist-empty-img.svg">
+     <h3>{{'Wishlist.EmptyWishlist'|translate}}</h3>
+     <p>{{'Wishlist.item'|translate}}</p>
+   </div>
+
+   <div class="wrapper" *ngIf="wishlistSandbox.wishlistLoading$ | async">
+       <div class="overlay">
+           <div class="spinner-wrapper">
+               <app-spinner [isShow]="wishlistSandbox.wishlistLoading$ | async"></app-spinner>
+           </div>
+       </div>
+   </div>
+
+   <div class="wishlist-row"  *ngFor="let product of wishlistSandbox.wishlist$ | async">
+       <div class="wishlist-img">
+           <img *ngIf="product.productImage" [src]="imagePath+ '?path=' + product.productImage.containerName + '&name=' + product.productImage.image + '&width=300&height=300'" onError="this.src='/assets/images/default_image.png';">
+           </div>
+           <div class="wishlist-col">
+               <div class="wishlist-col-top">
+                  <h3> <div><a [routerLink]="['/products/productdetails', product.product.productSlug]" class="product-name" style="color: black;">{{product.product.name}}</a>
+                       <div class="availableData" *ngFor="let data of product.productOption">
+                           <ng-container *ngIf="data.name!=''">
+                               {{data.optionName}}{{semiColon}}{{data.optionValue}}
+                           </ng-container>
+                       </div>
+                   </div></h3>
+                   <p style="text-align: left" *ngIf="product.product.rating>0">
+                    <app-mat-star-rating [rating]="product.product.rating" [reviewCount]="product.product.reviewCount" [ratingCount]="product.product.ratingCount"></app-mat-star-rating>
+                </p>
+                   <h2>
+
+                       <div>
+                           <ng-container *ngIf="(product.product.flag=='')&&(product.product.pricerefer =='');else one">{{calculatePrice(product.product.price, product.product.taxType, product.product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                           </ng-container>
+                           <ng-template #one>
+                               <span *ngIf="(product.product.flag)==0">{{calculatePrice(product.product.pricerefer, product.product.taxType, product.product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                               <span *ngIf="(product.product.flag)==1"><del class="del">{{calculatePrice(product.product.price, product.product.taxType, product.product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del>
+                                               {{calculatePrice(product.product.pricerefer, product.product.taxType, product.product.taxValue) | currencysymbol}}</span>
+                           </ng-template>
+
+                       </div>
+
+                   </h2>
+               </div>
+               <div class="wishlist-atc">
+
+
+                   <!-- <div> -->
+                       <button color="primary"  (click)="addToCart(product)" >
+                           <img src="assets/img/cart-blue.svg">{{'Wishlist.Addtocart'|translate}}
+                       </button>
+                       <button  (click)="remove(product.productId)" >
+                           <img src="assets/img/trash.svg">{{'Wishlist.Clear'|translate}}
+                       </button>
+                       <!-- <span [hidden]="!(wishlistSandbox.wishlistLoading$ | async)" class="spinner-border spinner-border-sm pull-right" role="status" aria-hidden="true"></span> -->
+                   
+
+               </div>
+           </div>
+       </div>
+   
+
+   
+</div>
+</mat-card>

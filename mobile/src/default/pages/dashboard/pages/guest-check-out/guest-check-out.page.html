@@ -1,0 +1,178 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'Address' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="dashboard/dashboardTab/cart"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <form [formGroup]="checkOutForm" (ngSubmit)="submit()">
+      <ion-item [class.error]="submitted && checkOutForm['controls'].firstName.invalid">
+        <ion-label position="stacked">{{ 'First_name' | translate }}</ion-label>
+        <ion-input formControlName="firstName" type="text" [placeholder]="'Enter_First_name' | translate"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].lastName.invalid">
+        <ion-label position="stacked">{{ 'Last_name' | translate }}</ion-label>
+        <ion-input formControlName="lastName" type="text" [placeholder]="'Enter_Last_name' | translate"></ion-input>
+      </ion-item>
+
+      <ion-item [class.error]="submitted && checkOutForm['controls'].email.invalid">
+        <ion-label position="stacked">{{ 'Email' | translate }}</ion-label>
+        <ion-input formControlName="email" type="email" [placeholder]="'Enter_Email' | translate"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].mobile.invalid">
+        <ion-label position="stacked">{{
+          'Phone_Number' | translate
+        }}</ion-label>
+        <ion-input formControlName="mobile" type="tel" minlength="8" maxlength="15"
+          [placeholder]="'Enter_Phone_Number' | translate"></ion-input>
+      </ion-item>
+      <ng-container *ngIf="submitted && checkOutForm['controls'].mobile.errors">
+
+        <div class="error-text" *ngIf="checkOutForm['controls'].mobile.errors.minlength ||
+        checkOutForm['controls'].mobile.errors.maxlength">
+          {{ 'Mobile number should be between 8-15 digits' | translate }}
+        </div>
+      </ng-container>
+      <ng-container *ngIf=" commonSandbox.countryList$ | async as list">
+        <div (click)="searchModal(list)">
+          <ion-item [class.error]="
+              submitted && checkOutForm['controls'].country.invalid
+            ">
+            <ion-label position="stacked" style="opacity: 1 !important;">{{
+              'Country' | translate
+            }}</ion-label>
+            <ion-select disabled style="opacity: 1 !important;" formControlName="country"
+              [placeholder]="'Choose_country' | translate">
+              <ion-select-option *ngFor="let countryList of commonSandbox.countryList$ | async"
+                [value]="countryList.countryId">{{ countryList.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </ng-container>
+
+      <ion-item lines="none">
+        <ion-label>{{ 'Create_account' | translate }}</ion-label>
+        <ion-checkbox formControlName="createAccount" color="secondary" slot="start" checked="false"
+          (ionChange)="updatePassword($event)"></ion-checkbox>
+      </ion-item>
+
+      <ion-item *ngIf="checkOutForm['controls'].createAccount.value"
+        [class.error]="submitted && checkOutForm['controls'].password.invalid">
+        <ion-label position="stacked">{{
+          'Create_account_password' | translate
+        }}</ion-label>
+        <ion-input formControlName="password" type="password" [placeholder]="'Enter_account_password' | translate">
+        </ion-input>
+      </ion-item>
+      <p class="error-text" *ngIf="submitted && checkOutForm['controls'].password.errors">
+        {{ 'Password_must_be_more_than_5_characters' | translate }}
+      </p>
+      <ion-list-header>
+        <ion-label>{{ 'Shipping_Address' | translate }}</ion-label>
+      </ion-list-header>
+
+      <ion-item [class.error]="submitted && checkOutForm['controls'].address1.invalid">
+        <ion-label position="stacked">{{ 'Address' | translate }}({{
+            'street_apartment_suit_unit_etc' | translate
+          }})</ion-label>
+        <ion-input formControlName="address1" type="text" [placeholder]="'Address' | translate"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].address2.invalid">
+        <ion-label position="stacked">{{ 'Address' | translate }} {{ 'Line_1' | translate }}</ion-label>
+        <ion-input formControlName="address2" type="text" placeholder="Address 1"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].city.invalid">
+        <ion-label position="stacked">{{ 'City' | translate }}</ion-label>
+        <ion-input formControlName="city" type="text" placeholder="{{ 'City' | translate }}"></ion-input>
+      </ion-item>
+      <ion-item [class.error]="submitted && checkOutForm['controls'].state.invalid">
+        <ion-label position="stacked">{{ 'State' | translate }}/{{ 'Province' | translate }}</ion-label>
+        <ion-input formControlName="state" type="text" [placeholder]="'State' | translate"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'Zip' | translate }}/{{ 'Postal_code' | translate }}</ion-label>
+        <ion-input formControlName="pincode" type="text" maxlength="6"
+          placeholder="{{ 'Zip' | translate }}/{{ 'Postal_code' | translate }}"></ion-input>
+      </ion-item>
+      <ng-container *ngIf="submitted && checkOutForm['controls'].pincode.errors">
+        <p class="error-text">
+          {{ 'Zip' | translate }}/{{ 'Postal_code' | translate }}
+          {{ 'Postal code must be 6 digits' | translate }}
+        </p>
+        <p *ngIf="checkOutForm['controls'].pincode.errors.pattern" class="error-text">
+          {{ 'Only_Numbers_are_Allowed' | translate }}
+        </p>
+      </ng-container>
+
+
+
+      <ion-item class="billing" (ionChange)="getData()">
+        <ion-label style="font-size: 13px;">Billing address same as Shipping address</ion-label>
+        <ion-checkbox style="margin-right: 10px;" [(ngModel)]="sameAddress" [ngModelOptions]="{standalone: true}"
+          slot="start"></ion-checkbox>
+      </ion-item>
+
+
+
+
+      <ng-container *ngIf="!sameAddress">
+
+        <ion-list-header>
+          <ion-label>{{ 'Billing_Address' | translate }}</ion-label>
+        </ion-list-header>
+
+
+        <ion-item [class.error]="submitted && checkOutForm['controls'].billingAddress1.invalid">
+          <ion-label position="stacked">{{ 'Address' | translate }}({{
+            'street_apartment_suit_unit_etc' | translate
+          }})</ion-label>
+          <ion-input formControlName="billingAddress1" type="text" [placeholder]="'Address' | translate"></ion-input>
+        </ion-item>
+        <ion-item [class.error]="submitted && checkOutForm['controls'].billingAddress2.invalid">
+          <ion-label position="stacked">{{ 'Address' | translate }} {{ 'Line_1' | translate }}</ion-label>
+          <ion-input formControlName="billingAddress2" type="text" placeholder="Address 1"></ion-input>
+        </ion-item>
+        <ion-item [class.error]="submitted && checkOutForm['controls'].billingCity.invalid">
+          <ion-label position="stacked">{{ 'City' | translate }}</ion-label>
+          <ion-input formControlName="billingCity" type="text" placeholder="{{ 'City' | translate }}"></ion-input>
+        </ion-item>
+        <ion-item [class.error]="submitted && checkOutForm['controls'].billingState.invalid">
+          <ion-label position="stacked">{{ 'State' | translate }}/{{ 'Province' | translate }}</ion-label>
+          <ion-input formControlName="billingState" type="text" [placeholder]="'State' | translate"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">{{ 'Zip' | translate }}/{{ 'Postal_code' | translate }}</ion-label>
+          <ion-input formControlName="billingPincode" type="text" maxlength="6"
+            placeholder="{{ 'Zip' | translate }}/{{ 'Postal_code' | translate }}"></ion-input>
+        </ion-item>
+        <ng-container *ngIf="submitted && checkOutForm['controls'].billingPincode.errors">
+          <p class="error-text">
+            {{ 'Zip' | translate }}/{{ 'Postal_code' | translate }}
+            {{ 'Postal code must be 6 digits' | translate }}
+          </p>
+          <p *ngIf="checkOutForm['controls'].billingPincode.errors.pattern" class="error-text">
+            {{ 'Only_Numbers_are_Allowed' | translate }}
+          </p>
+        </ng-container>
+
+
+
+      </ng-container>
+
+
+      <ion-button type="submit" class="continue-btn" expand="full" color="secondary">
+        {{ 'Continue' | translate }}
+      </ion-button>
+    </form>
+  </ion-list>
+</ion-content>

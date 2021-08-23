@@ -1,0 +1,161 @@
+<app-main-carousel></app-main-carousel>
+<div class="theme-container main">
+
+
+
+
+    <div class="products-tabs justin featured-week dod-container flex">
+        <div class="dod">
+            RISTORANTI
+
+        </div>
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab>
+
+                <app-vendor-carousel [productType]="'today deals'" [products]="listSandbox.todayDealList$ | async">
+                </app-vendor-carousel>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+
+
+    <div class="products-tabs justin featured-week dod-container flex">
+        <div class="dod">
+            {{'homePage.todaydeals'|translate}}
+
+        </div>
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab>
+
+                <app-products-carousel [productType]="'today deals'" [products]="listSandbox.todayDealList$ | async">
+                </app-products-carousel>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+
+
+    <div class="products-tabs justin featured-product">
+
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab>
+                <h2 style="color: #212121; font-size: 24px; margin: 0 0 24px;">{{'homePage.featuredproduct'|translate}}
+                </h2>
+                <app-products-carousel [productType]="'feature product'" [products]="listSandbox.featuredList$ | async">
+                </app-products-carousel>
+            </mat-tab>
+        </mat-tab-group>
+
+        <div class="add-home">
+            <a href="javascript:void(0)">
+                <img src="assets/img/home-add1.jpg">
+            </a>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="home-adds flex">
+        <div class="hads-col">
+            <img src="assets/img/banner-sm1.jpg">
+        </div>
+        <div class="hads-col">
+            <img src="assets/img/banner-sm2.jpg">
+        </div>
+        <div class="hads-col">
+            <img src="assets/img/banner-sm3.jpg">
+        </div>
+    </div>
+
+
+
+    <div *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[0]?.items ;let i = index" class="products-tabs justin trending-products">
+        <mat-tab-group mat-stretch-tabs>
+
+            <mat-tab label="Today Deals">
+                <h2 style="color: #212121; font-size: 24px;">
+                    {{(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[0]?.widgetTitle}}
+                </h2>
+                <app-widgets-products [productType]="'today deals'" [type]="i" [products]="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[0]?.items">
+                </app-widgets-products>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[0]?.items" class="flex home-ad-wrapper">
+        <a href="javascript:void(0)"> <img src="assets/img/home-add2.jpg"> </a>
+    </div>
+
+    <div style="background: white;" class="products-tabs justin featured-product fea-product-style2">
+        <div *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[1]?.items" class="add-home">
+            <a href="javascript:void(0)">
+                <img src="assets/img/home-add3.jpg">
+            </a>
+        </div>
+        <mat-tab-group mat-stretch-tabs *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[0]?.items; let i = index">
+
+            <mat-tab label="Today Deals">
+                <h2 style="color: #212121; font-size: 24px;">
+                    {{(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[1]?.widgetTitle}}
+                </h2>
+                <app-widgets-products [productType]="'feature product'" [type]="i" [products]="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[1]?.items">
+                </app-widgets-products>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+
+    <div *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[1]?.items" class="home-adds flex">
+        <div class="hads-col">
+            <img src="assets/img/banner-sm1.jpg">
+        </div>
+        <div class="hads-col">
+            <img src="assets/img/banner-sm2.jpg">
+        </div>
+        <div class="hads-col">
+            <img src="assets/img/banner-sm3.jpg">
+        </div>
+    </div>
+
+
+
+
+    <div *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[2]?.items; let i = index " class="products-tabs justin trending-products">
+        <mat-tab-group mat-stretch-tabs>
+
+            <mat-tab label="Today Deals">
+                <h2 style="color: #212121; font-size: 24px;">
+                    {{(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[2]?.widgetTitle}}
+                </h2>
+                <app-widgets-products [productType]="'today deals'" [type]="i" [products]="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data[2]?.items">
+                </app-widgets-products>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div *ngIf="(listSandbox.widgetProductList$ | async)?.data && (listSandbox.widgetProductList$ | async)?.data.length>3">
+        <ng-container *ngFor="let datass of (listSandbox.widgetProductList$ | async)?.data; let i=index">
+            <ng-container *ngIf="i>2">
+                <mat-tab-group mat-stretch-tabs class="products-tabs justin trending-products">
+
+                    <mat-tab label="Today Deals">
+                        <h2 style="color: #212121; font-size: 24px;">
+                            {{datass.widgetTitle}}</h2>
+                        <app-widgets-products [productType]="'today deals'" [products]="datass.items" [type]="i">
+                        </app-widgets-products>
+                    </mat-tab>
+                </mat-tab-group>
+            </ng-container>
+        </ng-container>
+
+    </div>
+
+
+
+
+</div>
+
+<app-brands-carousel [brands]="listSandbox.manufacturer$ | async"></app-brands-carousel>

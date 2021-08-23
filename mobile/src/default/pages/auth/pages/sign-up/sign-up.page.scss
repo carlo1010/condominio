@@ -1,0 +1,119 @@
+.top-postion {
+  background: var(--ion-color-primary) url('../../../../../assets/images/login-background.png') no-repeat 0 0;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  height: 100%;
+  padding-top: 23px;
+  box-sizing: border-box;
+  -webkit-animation: slide 20s linear infinite;
+}
+
+.top-postion img {
+  height: 85px;
+  margin-top: 2vh;
+}
+
+@-webkit-keyframes slide {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -350px 0;
+  }
+}
+
+.text-bottom {
+  bottom: 0;
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  background: linear-gradient(rgba(var(--ion-color-primary-rgb), 0.35), 10%, var(--ion-color-primary));
+  color: white;
+  min-height: 74%;
+  max-height: 75%;
+  overflow: scroll;
+  border-bottom: 1px solid var(--ion-color-primary-contrast);
+  padding: 0 33px 33px 33px;
+
+  ion-row {
+    margin-top: 27px;
+  }
+
+  ion-label {
+    color: var(--ion-color-primary);
+    font-family: 'Rubik', sans-serif;
+  }
+
+  ion-item {
+    display: block;
+    --highlight-color-focused: transparent;
+    --highlight-color-invalid: transparent;
+    --highlight-color-valid: transparent;
+    --background: transparent;
+    border-bottom: 1px groove;
+    margin-top: 8px;
+
+    ion-icon {
+      font-size: 15px;
+      color: white;
+    }
+  }
+
+  .login {
+    font-size: 14px;
+    margin-top: 25px;
+    margin-left: 17px;
+
+    .login-Btn {
+      color: var(--ion-color-secondary);
+      font-size: 18px;
+      text-decoration: underline;
+      margin-left: 3px;
+    }
+  }
+
+  ion-input {
+    color: white;
+    font-size: 18px;
+    font-family: 'Rubik', sans-serif;
+  }
+
+  h2 {
+    font-weight: 500;
+  }
+
+  .errorMsg {
+    color: #EE4242;
+    margin: 0;
+  }
+
+  .passwordDisclaimer {
+    // margin-top: 30px;
+
+    p {
+      font-size: 12px;
+      margin: 5px 0;
+    }
+  }
+}
+
+ion-footer {
+  height: 4.5rem;
+  background: var(--ion-color-primary);
+
+  .signUp-btn {
+    --background: var(--ion-color-secondary);
+    --background-activated: var(--ion-color-secondary);
+    --color-activated: #ffffff;
+    text-transform: none;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    padding-left: 27px;
+    padding-right: 27px;
+    margin-top: 15px;
+  }
+
+}

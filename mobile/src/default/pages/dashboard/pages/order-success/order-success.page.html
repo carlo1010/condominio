@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-back-button defaultHref="/dashboard"> </ion-back-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="productCtrlSandbox.checkedOutData$|async as details">
+    <div class="flex osp">
+      <ion-icon name="checkmark"></ion-icon> Order Successfully Placed
+    </div>
+
+    <!-- {{details |json}} -->
+
+    <div class="flex cod">Payment : {{details.paymentMethod == 2? 'Cash On Delivery' : details.paymentMethod == 1? 'Paypal' : 
+      details.paymentMethod == 5 ? 'Razorpay' : details.paymentMethod == 6 ? 'Stripe' : ''}} </div>
+    <div class="items"> Order Details </div>
+
+    <ion-row *ngFor="let product of details.productDetail">
+
+      <ion-col size="4" class="brd">
+        <div class="image-canvas">
+          <img [src]="
+                imageResizeUrl +
+                'width=180&height=180&path=' +
+                product?.image?.containerName +
+                '&name=' +
+                product?.image?.image
+              " (load)="imageLoadedEvent(product.productId)"
+            onError="this.src='/assets/images/Load icon Products.png';" [hidden]="!imageLoaded[product.productId]" />
+        </div>
+      </ion-col>
+      <ion-col size="8">
+        <p class="title">{{ product.name }}</p>
+        <h4 class="flex"> {{
+          product.productPrice
+            | currencySymbol: (commonSandbox.appDetails$ | async)
+        }} </h4>
+      </ion-col>
+
+    </ion-row>
+
+
+    <div class="billing-details">
+
+      <p class="flex total"> Total <span>
+          {{details.amount | currencySymbol: (commonSandbox.appDetails$ | async)}}</span></p>
+      <p class="flex total"> Discount <span class="dis">
+          {{details.discountAmount>0?details.discountAmount:0| currencySymbol: (commonSandbox.appDetails$ | async)}}</span>
+      </p>
+      <p class="flex total"> Total amount paid <span>
+          {{details.total | currencySymbol: (commonSandbox.appDetails$ | async)}}</span></p>
+
+    </div>
+  </ng-container>
+
+
+  <ion-button class="cntu" [routerLink]="['/dashboard']">Continue Shopping</ion-button>
+
+</ion-content>

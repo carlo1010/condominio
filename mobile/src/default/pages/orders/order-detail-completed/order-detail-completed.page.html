@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{'Order_Detail'|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="po-wrap" *ngIf="myOrderDetail &&!pageLoad">
+
+    <h3>Order Details</h3>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4" class="odl">Order Date</ion-col>
+        <ion-col size="8" class="odr">{{ myOrderDetail?.orderedDate | date : 'd MMM y' }}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="odl">Order #</ion-col>
+        <ion-col size="8" class="odr">{{ myOrderDetail?.orderProductPrefixId }}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="odl">Order Value</ion-col>
+        <ion-col size="8" class="odr">
+          {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+          {{ myOrderDetail?.discountAmount ? (myOrderDetail?.total - myOrderDetail?.discountAmount)  : myOrderDetail?.total }}
+          {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h3>Shipping Details</h3>
+
+    <div class="sd-grid">
+
+      <div class="sd-content">
+        <h4>Shipping Address</h4>
+        <h3>{{  myOrderDetail?.shippingAddress1 }}</h3>
+        <p>{{  myOrderDetail?.shippingAddress2 }}</p>
+        <p>{{  myOrderDetail?.shippingCity }}</p>
+        <p>{{  myOrderDetail?.shippingPostcode + ', ' +  myOrderDetail?.shippingZone }}</p>
+      </div>
+
+    </div>
+
+    <h3>Payment Information</h3>
+
+    <div class="sd-grid">
+
+      <div class="sd-top" *ngIf="myOrderDetail?.paymentMethod">
+        <h3>Payment Method</h3>
+        <p>{{myOrderDetail?.paymentMethod}}</p>
+      </div>
+
+      <div class="sd-content">
+        <h4>Billing Address</h4>
+        <p>{{  myOrderDetail?.paymentAddress1 }}</p>
+        <p>{{  myOrderDetail?.paymentAddress2 }}</p>
+        <p>{{  myOrderDetail?.paymentCity }}</p>
+        <p>{{  myOrderDetail?.paymentPostcode + ', ' +  myOrderDetail?.paymentZone }}</p>
+      </div>
+
+    </div>
+
+    <h3>Order Summary</h3>
+
+    <div class="sd-grid">
+
+      <table class="table">
+        <tr>
+          <th>Items :</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ myOrderDetail?.basePrice }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+          </td>
+        </tr>
+        <tr>
+          <th>Postage &amp; Packing :</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            0.00
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+          </td>
+        </tr>
+        <tr>
+          <th>Total before Tax :</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ myOrderDetail?.basePrice }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}</td>
+        </tr>
+        <tr>
+          <th>Tax :</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ calculateTax(myOrderDetail?.basePrice, myOrderDetail?.taxType, myOrderDetail?.taxValue) + '.00' }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}</td>
+        </tr>
+        <tr>
+          <th>Discount</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ myOrderDetail?.discountAmount ? myOrderDetail?.discountAmount : '0.00' }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+          </td>
+        </tr>
+        <tr>
+          <th>Gift card discount:</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ myOrderDetail?.giftDiscountAmount ? myOrderDetail?.giftDiscountAmount : '0.00' }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+          </td>
+        </tr>
+        <tr>
+          <th>Total :</th>
+          <td class="text-right">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ (myOrderDetail?.discountAmount ? (myOrderDetail?.total - myOrderDetail?.discountAmount)  : myOrderDetail?.total) + '.00' }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+          </td>
+        </tr>
+        <tr>
+          <th class="ot">Order Total :</th>
+          <td class="text-right ot-tot">
+            {{ myOrderDetail?.currencySymbolLeft ? myOrderDetail?.currencySymbolLeft : '' }}
+            {{ (myOrderDetail?.discountAmount ? (myOrderDetail?.total - myOrderDetail?.discountAmount)  : myOrderDetail?.total) + '.00' }}
+            {{ myOrderDetail?.currencySymbolRight ? myOrderDetail?.currencySymbolRight : '' }}
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+  </div>
+
+  <!--SKELETON LOADING START HERE -->
+  <div *ngIf="pageLoad">
+    <div class="address po-wrap">
+      <h3>Order Details</h3>
+      <ion-skeleton-text animated width="42%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="90%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    </div>
+    <hr />
+    <hr />
+    <div class="address po-wrap">
+      <h3>Shipping Details</h3>
+      <ion-skeleton-text animated width="35%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="100%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="70%"></ion-skeleton-text>
+    </div>
+    <hr />
+    <div class="address po-wrap">
+      <h3>Payment Information</h3>
+      <ion-skeleton-text animated width="42%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="90%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    </div>
+    <hr />
+    <hr />
+    <div class="address po-wrap">
+      <h3>Order Summary</h3>
+      <ion-skeleton-text animated width="42%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="90%"></ion-skeleton-text>
+      <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+    </div>
+    <hr />
+  </div>
+  <!--SKELETON LOADING END HERE -->
+
+</ion-content>

@@ -1,0 +1,93 @@
+<ion-content>
+  <div class="top-postion">
+    <ion-button (click)="gotoDashboard()" color="primary" shape="round">{{ 'Skip' | translate }}
+      <ion-icon slot="end" name="fastforward"></ion-icon>
+    </ion-button>
+    <img [@fadeIn] src="assets/images/Spurtcommerce 2.0 logo.png" />
+  </div>
+
+  <div [@fadeIn] *ngIf="!showForgotPass" class="text-bottom">
+    <div class="sign-change">
+      <h2>{{ 'Login' | translate }}</h2>
+      <p>
+        {{ 'Do_not_have_account' | translate }}
+        <span (click)="gotoRegister()">{{ 'Sign_Up' | translate }}</span>
+      </p>
+    </div>
+
+    <form #login="ngForm" [formGroup]="loginForm" (ngSubmit)="submit()">
+      <!--Email-->
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="email" type="text" [placeholder]="'Email_Id' | translate"></ion-input>
+        <ion-icon slot="end" name="mail"></ion-icon>
+      </ion-item>
+      <p class="errorMsg" *ngIf="
+          submitted &&
+          !loginForm.controls.email.valid &&
+          loginForm['controls'].email.touched
+        ">
+        {{ 'Please_enter_a_valid_Email_Address' | translate }}
+      </p>
+
+      <!--Password-->
+      <ion-item class="ion-no-padding">
+        <ion-input [formControl]="password" type="password" [placeholder]="'Password' | translate"></ion-input>
+        <ion-icon name="lock"></ion-icon>
+      </ion-item>
+      <!-- <p *ngIf="submitted && loginForm['controls'].password.errors?.minlength" class="errorMsg">
+        {{ 'Password_must_be_more_than_5_characters' | translate }}
+      </p> -->
+
+      <!-- <p *ngIf="submitted && loginForm['controls'].password.errors?.maxlength" class="errorMsg">
+        {{ 'Password_should_not_exceed_more_than_10_characters' | translate }}
+      </p> -->
+
+      <p class="forgot-pass" (click)="forgotPassword()">
+        {{ 'Forgot_Password' | translate }} ?
+      </p>
+    </form>
+  </div>
+
+  <!--Forget Password-->
+
+  <div class="text-bottom" [@fadeIn] *ngIf="showForgotPass">
+    <h2>{{ 'Forgot_Password' | translate }}</h2>
+
+    <ion-item class="forget-password-top" class="ion-no-padding">
+      <ion-input type="email" [placeholder]="'Enter_Email' | translate" [(ngModel)]="enterEmail" name="myEmail"
+        #myEmail="ngModel" email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required></ion-input>
+      <ion-icon slot="end" name="mail"></ion-icon>
+    </ion-item>
+    <h6 class="errorMsg" *ngIf="myEmail.errors && submitted && (myEmail.dirty || myEmail.touched)">
+      {{ 'Please_enter_a_valid_Email_Address' | translate }}
+    </h6>
+    <ion-grid class="ion-no-padding">
+      <ion-row class="forgotpassword ion-no-padding">
+        <ion-col size="4">
+          <ion-button class="cancel" (click)="forgotPassword()">{{
+            'Cancel' | translate
+          }}</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button *ngIf="!(authSandbox.recoverLoading$ | async)" [disabled]="!myEmail.value"
+            (click)="sendPassword()" color="secondary" class="sendPass">{{ 'Send_password' | translate }}
+          </ion-button>
+          <ion-button *ngIf="authSandbox.recoverLoading$ | async" class="sendPass">
+            <ion-spinner name="dots"></ion-spinner>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="!showForgotPass">
+  <ion-button *ngIf="!(authSandbox.loginLoading$ | async)" (click)="submit()"
+    [disabled]="!(loginForm.value.email && loginForm.value.password)" type="submit" color="secondary" class="login-btn"
+    expand="full">{{ 'Login' | translate }}
+  </ion-button>
+
+  <ion-button *ngIf="authSandbox.loginLoading$ | async" color="secondary" class="login-btn" expand="full">
+    <ion-spinner name="dots"></ion-spinner>
+  </ion-button>
+</ion-footer>

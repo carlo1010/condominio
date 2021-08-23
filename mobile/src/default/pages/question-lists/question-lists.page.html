@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Question Lists</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/product-detail"> </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="spin" *ngIf="!(productsSandbox.questionListLoaded$|async)">
+    <ion-spinner name="crescent" *ngIf="(productsSandbox.questionListLoading$|async)"></ion-spinner>
+  </div>
+ 
+  <div class="customer-que" *ngIf="productsSandbox.questionListLoaded$|async">
+    <div class="flex ca-tit">
+      <h3>Customer questions & answers</h3>
+      <!-- <ion-button *ngIf="!(productsSandbox.postQuestionLoading$|async)" (click)="postQuestion()">Post Question
+      </ion-button> -->
+      <!-- <ion-button *ngIf="productsSandbox.postQuestionLoading$|async">
+        <ion-spinner color="dark" name="bubbles"></ion-spinner>
+      </ion-button> -->
+    </div>
+    <ion-input [(ngModel)]="question" placeholder="Have a question? Find answer"></ion-input>
+    <div class="qa-row" *ngFor="let question of productsSandbox.questionList$|async">
+      <div class="flex qa-que">
+        <span>Q :</span>
+        <p>{{question.question}}</p>
+      </div>
+      <div class="flex qa-que">
+        <span>A :</span>
+        <p class="wt">{{question.answerList.answer}}</p>
+      </div>
+      <div class="qa-pro-rep">
+        <h5>{{question.postedBy.firstName}} <span _ngcontent-c27="">on
+            {{question.answerList.createdDate|date:'dd MMM, yyyy'}}</span></h5>
+            <div class="flex qa-rep">
+              <p><a href="javascript:Void(0)"><ion-icon name="thumbs-up" [style.color]= "question.answerList?.likeType === 1 ? 'blue' : 'gray'" 
+                (click)="likeOrDislike($event, question)">thumb_up</ion-icon> </a>{{question.answerList ? question.answerList.likes: 0}} </p>
+              <p><a href="javascript:Void(0)"><ion-icon name="thumbs-down" [style.color]= "question.answerList?.likeType === 2 ? 'blue' : 'gray'"  
+                (click)="likeOrDislike($event, question)">thumb_down</ion-icon> </a>{{question.answerList ? question.answerList.dislikes: 0}} </p>
+              <a href="javascript:Void(0)" class="repot" (click)="reportAbuse(question)">Report Abuse</a>
+            </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

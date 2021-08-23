@@ -1,0 +1,65 @@
+<h1 class="imgs" style="cursor: pointer;" (click)="close()">
+    x
+</h1>  
+<div fxLayout="row wrap" class="wrap" *ngIf="!(productDetail.productDetailLoading$ | async)">
+    <div class="swiper-left">
+        <div class="flex sl-product">
+            <div class="small-carousel"> 
+                <div class="swiper-container" >
+                    <div class="swiper-wrapper">
+                        <div *ngFor="let list of (productDetail.productDetails$ | async)?.productImage; let i = index"
+                            class="swiper-slide" [ngClass]="{'selected' : i === index}">
+                            <mat-card (click)="selectImage(list, i)" class="p-1 img-card"
+                                [ngClass]="{ 'active-img': image == (imagePath + '?path=' + list.containerName + '&name=' + list.image + '&width=660&height=660') }">
+                                <img [src]="imagePath + '?path=' + list.containerName + '&name=' + list.image+'&width=660&height=660'"
+                                    class="swiper-lazy" />
+                            </mat-card>
+                        </div>
+                    </div> 
+
+                </div>
+            </div>
+            <div class="slider-wrapper">
+                <div class="main-slider"> 
+                    <div *ngIf="!isLoading"  >
+                        <div  class="imagespinner"  >
+                        <img width="80px" height="80px"src="assets/images/others/spurt-2.1-v1.gif"/>
+                        </div>
+                    </div>
+                    <div class="swiper-container h-100" [swiper]="config" [(index)]="index">
+                        <div class="swiper-wrapper">
+                            <div *ngFor="let list of (productDetail.productDetails$ | async)?.productImage"  class="swiper-slide">
+                                <div style="display: flex; justify-content: center;"  class="swiper-col">
+            <!-- <mat-card class="product-image swiper-container" [swiper]="config"> -->
+                <!-- <div class="swiper-wrapper h-100"> -->
+                    <!-- <div *ngFor="let product of products" class="swiper-slide"> -->
+                        <!-- <img style="height: 600px;" [src]="image" /> 
+                         -->
+                         <!-- <img  [src]="imagePath + '?path=' + list.containerName + '&name=' + list.image+'&width=390&height=600'"
+                                    class="swiper-lazy" /> -->
+                                    <!-- <img [src]="imagePath + '?path=' + list.containerName + '&name=' + list.image + '&width=390&height=390'"> -->
+                                    
+                        <img  (load)="loading()"[src]="imagePath + '?path=' + list.containerName + '&name=' + list.image+'&width=600&height=600'"
+                                    class="swiper-lazy" style="width:auto; max-width: 100%;" />
+                        </div>
+                </div>
+                </div>
+                <!-- <div class="swiper-pagination white"></div> -->
+                <button mat-mini-fab color="" class="swiper-button-prev swipe-arrow"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                <button mat-mini-fab color="" class="swiper-button-next swipe-arrow"><mat-icon>keyboard_arrow_right</mat-icon></button>
+                </div>
+                </div>
+                </div>
+              
+                    
+            <!-- </mat-card> -->
+        </div>
+       
+
+
+
+    </div>
+    <!---->
+ 
+
+</div>

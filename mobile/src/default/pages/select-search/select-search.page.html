@@ -1,0 +1,26 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios" color="primary">
+    <ion-title>Select Country</ion-title>
+    <ion-button slot="end" (click)="modalCtrl.dismiss()" fill="none">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar (ionChange)="searchList($event)" mode="md"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-virtual-scroll [items]="filteredList" approxItemHeight="800px">
+    <ion-item
+      button
+      (click)="modalCtrl.dismiss(item)"
+      lines="full"
+      *virtualItem="let item"
+    >
+      <ion-label>{{ item.name }}</ion-label>
+      <ion-button slot="end" fill="none">
+        <ion-icon slot="icon-only" name="radio-button-off"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-virtual-scroll>
+</ion-content>

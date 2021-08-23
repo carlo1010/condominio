@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon icon="assets/images/menu.svg"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'Account_Settings'|translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-item lines="none" button="true" detail (click)="gotoProfile()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-label color="primary">{{'My_Profile'|translate}}</ion-label>
+      <ion-button fill="none" slot="end">{{'View'|translate}}</ion-button>
+    </ion-item>
+  </ion-card>
+  <ion-card (click)="gotoPage('edit-account-info'); $event.stopPropagation()">
+    <ion-item lines="full" button="true">
+      <ion-label color="primary">{{'Account_Information'|translate}}</ion-label>
+      <ion-button fill="none" slot="end">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <div class="item-detail">
+      <h5>{{'Name'|translate}}</h5>
+      <p>{{ (commonSandbox.profiledetails$ | async)?.firstName }}</p>
+    </div>
+    <div class="item-detail">
+      <h5>{{'Email'|translate}}</h5>
+      <p>{{ (commonSandbox.profiledetails$ | async)?.email }}</p>
+    </div>
+    <hr />
+    <h3 (click)="gotoPage('change-password'); $event.stopPropagation()">
+      {{'Change_Password'|translate}}
+    </h3>
+  </ion-card>
+
+  <ion-card>
+    <ion-item lines="none" button="true" (click)="gotoPage('address-info')" detail>
+      <ion-label color="primary">{{'Address'|translate}}</ion-label>
+      <ion-button fill="none" slot="end">
+        {{'View'|translate}}
+      </ion-button>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item lines="none" button="true" (click)="gotoPage('order')" detail>
+      <ion-label color="primary">{{'Order_History'|translate}}</ion-label>
+      <ion-button fill="none" slot="end">
+        {{'View'|translate}}
+      </ion-button>
+    </ion-item>
+  </ion-card>
+</ion-content>
