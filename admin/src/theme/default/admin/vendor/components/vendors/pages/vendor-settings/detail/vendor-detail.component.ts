@@ -26,6 +26,7 @@ import { VendorProductSandbox } from '../../../../../../../../../core/admin/vend
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subscription } from 'rxjs';
 import { LayoutSandbox } from '../../../../../../../../../core/admin/layout/layout.sandbox';
+import { SellerSandbox } from 'src/core/admin/vendor/pages/seller/seller.sandbox';
 
 @Component({
   selector: 'app-vendor-settings-detail',
@@ -41,12 +42,14 @@ export class VendorSettingsDetailComponent implements OnInit, OnDestroy {
   public vendorId: any;
   public ImageUrl: any = '';
   public settingForm: FormGroup;
+  public genraleId: FormControl;
   public categoryId: FormControl;
   public commission: FormControl;
   public setCommissionForm: FormGroup;
   public defaultCommission: FormControl;
   public submitted = false;
   public selectedCategory = [];
+  public selectedSub = [];
   public edit: any;
   private CategoryEditdata: any;
   public CommissionButton = false;
@@ -72,6 +75,7 @@ export class VendorSettingsDetailComponent implements OnInit, OnDestroy {
     private configService: ConfigService, public productSandbox: VendorProductSandbox,
     public router: Router,
     private modalService: NgbModal,
+    public sellerSandbox: SellerSandbox,
     private modalService2: NgbModal,
     public fb: FormBuilder,
     private changeDetectRef: ChangeDetectorRef,
@@ -261,6 +265,12 @@ export class VendorSettingsDetailComponent implements OnInit, OnDestroy {
     this.settingSandbox.addCategory(category);
   }
 
+  // add category lists event
+  addSub(sub) {
+    this.selectedSub.push(sub);
+    this.settingSandbox.addSub(sub);
+  }
+
   removecategory(category) {
     this.selectedCategory = this.selectedCategory.filter(cat => {
       if (cat.categoryId === category.categoryId) {
@@ -270,6 +280,17 @@ export class VendorSettingsDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.settingSandbox.removeCategory(category);
+  }
+
+  removesub(sub) {
+    this.selectedSub = this.selectedSub.filter(suba => {
+      if (suba.generaleId === sub.generaleId) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    this.settingSandbox.removeSub(sub);
   }
 
   createCategory() {
@@ -292,9 +313,33 @@ export class VendorSettingsDetailComponent implements OnInit, OnDestroy {
     }));
   }
 
+  createSub() {
+    if (this.selectedSub.length === 0) {
+      this.toastr.errorToastr('Please choose atleast one category');
+      return;
+    }
+    const sub = this.selectedSub.map(val => {
+      return val.generaleId;
+    });
+    const params: any = {};
+    params.vendorId = this.sellerId;
+    params.generaleId = sub.toString();
+    this.settingSandbox.updatesubs(params);
+    this.subscriptions.push(this.settingSandbox.getUpdateSubsRequestLoaded$.subscribe(data => {
+      if (data === true) {
+        this.getSellerDetail();
+      }
+    }));
+  }
+
   addAllCategory(categoryList) {
     this.selectedCategory = categoryList;
     this.settingSandbox.addCategory(categoryList);
+  }
+
+  addAllSub(subList) {
+    this.selectedSub = subList;
+    this.settingSandbox.addSub(subList);
   }
 
   removeAllCategory() {
@@ -302,6 +347,14 @@ export class VendorSettingsDetailComponent implements OnInit, OnDestroy {
     if (this.selectedCategory.length > 0) {
       this.settingSandbox.removeCategory(this.selectedCategory);
       this.selectedCategory = [];
+    }
+  }
+
+  removeAllSub() {
+    this.clear = true;
+    if (this.selectedSub.length > 0) {
+      this.settingSandbox.removeSub(this.selectedSub);
+      this.selectedSub = [];
     }
   }
 

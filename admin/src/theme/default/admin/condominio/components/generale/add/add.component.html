@@ -1,0 +1,76 @@
+<!--REACTIVE FORM-->
+<form novalidate [formGroup]="generaleForm">
+
+    <div class="row products-section">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)">Condominio</a></li>
+                        <li>{{updateGeneraleId ? 'Aggiorna Generale' : 'Aggiungi Generale' }}</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" type="submit" (click)="onSubmits()"><img
+                            src="assets/img/tick-round-white.png"> Salva
+                    </button>
+                    <button class="btn btn-cancel" (click)='cancel()'><img
+                            src="assets/img/close-white-ico.png"> Cancella
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span> Generali
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Numero Sub<sup>*</sup></label>
+                        <input type="text" appOnlyNumber class="form-control" placeholder="" formControlName="generaleId" [ngClass]="{'validationcolor':generaleForm.get('generaleId').hasError('required') &&generaleForm.get('generaleId').touched && submitted}">
+                        <div class="validation-error" *ngIf="generaleForm.get('generaleId').hasError('required') &&generaleForm.get('generaleId').touched && submitted">
+                            Sub Richiesto
+                        </div>
+                    </div>
+                </div>
+                <div class="data-col">
+                    <div class="form-group">
+                        <label>Piano<sup>*</sup></label>
+
+                        <select class="custom-select col-12" formControlName="pianoId" [ngClass]="{'validationcolor':generaleForm.get('pianoId').hasError('required') && generaleForm.get('pianoId').touched&&submitted==true}">
+                            <option value=''>- -Seleziona Piano- -</option>
+                            <option *ngFor=" let list of pianoSandbox.getPianoList$ | async" value="{{list.pianoId}}">{{list.numPiano}}</option>
+                        </select>
+                        <div class="validation-error" *ngIf="generaleForm.get('pianoId').hasError('required') && generaleForm.get('pianoId').touched&&submitted==true">
+                            pianoId è richiesto
+                        </div>
+                    </div>
+                </div>
+                <!--col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Mq Catastali<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="mqCatastali" [ngClass]="{'validationcolor':generaleForm.get('mqCatastali').hasError('') &&generaleForm.get('mqCatastali').touched && submitted}">
+                        <div class="validation-error" *ngIf="generaleForm.get('mqCatastali').hasError('required') &&generaleForm.get('mqCatastali').touched && submitted">
+                            Mq Catastali Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Millesimi<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':generaleForm.get('millesimi').hasError('') &&generaleForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="generaleForm.get('millesimi').hasError('required') &&generaleForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

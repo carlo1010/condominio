@@ -9196,6 +9196,93 @@ define({ "api": [
     "name": "PutApiUpdateCategorySlug"
   },
   {
+    "type": "post",
+    "url": "/api/condominio/add-sub-contoCorrente",
+    "title": "Create Sub ContoCorrente API",
+    "group": "ContoCorrente",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "contoCorrenteId",
+            "description": "<p>ContoCorrente contoCorrenteId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "fornitoreId",
+            "description": "<p>ContoCorrente fornitoreId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "tipoSpesaId",
+            "description": "<p>ContoCorrente tipoSpesaId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "pdf",
+            "description": "<p>ContoCorrente pdf</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"contoCorrenteId\": \"\",\n     \"fornitoreId\" : \"\",\n     \"tipoSpesaId\" : \"\",\n     \"pdf\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Sub Parcheggio legge 122 creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-sub-contoCorrente"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub ContoCorrente error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "ContoCorrente",
+    "name": "PostApiCondominioAddSubContocorrente"
+  },
+  {
     "type": "delete",
     "url": "/api/country/delete-country/:id",
     "title": "Delete Country API",
@@ -13594,6 +13681,159 @@ define({ "api": [
     "name": "PutApiEmailTemplateUpdateEmailTemplateId"
   },
   {
+    "type": "post",
+    "url": "/api/condominio/add-fornitore",
+    "title": "Create Fornitore API",
+    "group": "Fornitore",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "nomeCompagnia",
+            "description": "<p>Fornitore nomeCompagnia</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Fornitore email</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "infoBanca",
+            "description": "<p>Fornitore infoBanca</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"nomeCompagnia\": \"\",\n     \"email\" : \"\",\n     \"infoBanca\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Piano creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-fornitore"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Piano error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Fornitore",
+    "name": "PostApiCondominioAddFornitore"
+  },
+  {
+    "type": "post",
+    "url": "/api/condominio/add-tipo-spesa",
+    "title": "Create Tipo Spesa API",
+    "group": "Fornitore",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "tipoSpesa",
+            "description": "<p>TipoSpesa tipoSpesa</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "causale",
+            "description": "<p>TipoSpesa causale</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"tipoSpesa\": \"\",\n     \"causale\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Tipo Spesa creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-tipo-spesa"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Tipo Spesa error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Fornitore",
+    "name": "PostApiCondominioAddTipoSpesa"
+  },
+  {
     "type": "delete",
     "url": "/api/language/delete-language/:id",
     "title": "Delete Language API",
@@ -17462,6 +17702,180 @@ define({ "api": [
     "name": "PutApiPageGroupUpdatePageGroupId"
   },
   {
+    "type": "post",
+    "url": "/api/condominio/add-sub-park122",
+    "title": "Create Sub Park122 API",
+    "group": "Park122",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "park122Id",
+            "description": "<p>Park122 park122Id</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>Park122 pianoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>Park122 mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>Park122 millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"park122Id\": \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Sub Parcheggio legge 122 creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-sub-park122"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub Park122 error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Park122",
+    "name": "PostApiCondominioAddSubPark122"
+  },
+  {
+    "type": "post",
+    "url": "/api/condominio/add-sub-parkPub",
+    "title": "Create Sub ParkPub API",
+    "group": "ParkPub",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "parkPubId",
+            "description": "<p>ParkPub parkPubId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>ParkPub pianoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>ParkPub mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>ParkPub millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"parkPubId\": \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Sub Parcheggio legge 122 creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-sub-parkPub"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub ParkPub error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "ParkPub",
+    "name": "PostApiCondominioAddSubParkpub"
+  },
+  {
     "type": "get",
     "url": "/api/payment/archive-payment-list",
     "title": "Archive Payment List API",
@@ -18298,6 +18712,1998 @@ define({ "api": [
     "filename": "src/api/controllers/PermissionModuleController.ts",
     "groupTitle": "Permission_Module",
     "name": "PostApiPermissionModuleAddPermission"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-fornitore/:id",
+    "title": "Delete Fornitore API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"fornitoreId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo Fornitore.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-fornitore/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Fornitore error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteFornitoreId"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-fornitore/:id",
+    "title": "Delete Fornitore API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"fornitoreId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo Fornitore.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-fornitore/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Fornitore error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteFornitoreId"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-paino/:id",
+    "title": "Delete piano API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"pianoId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo Piano.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-paino/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Piano error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeletePainoId"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-sub-fotovoltaico/:id",
+    "title": "Delete sub fotovoltaico API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"pianoId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo sub fotovoltaico.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-sub-fotovoltaico/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Fotovoltaico error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteSubFotovoltaicoId"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-sub/:id",
+    "title": "Delete Generale API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"pianoId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo sub.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-paino/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generale error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteSubId"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-sub-park122/:id",
+    "title": "Delete sub park122 API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"pianoId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo sub park122.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-sub-park122/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Park122 error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteSubPark122Id"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-sub-parkPub/:id",
+    "title": "Delete sub parkPub API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"pianoId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo sub parkPub.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-sub-parkPub/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "ParkPub error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteSubParkpubId"
+  },
+  {
+    "type": "delete",
+    "url": "/api/condominio/delete-tipo-spesa/:id",
+    "title": "Delete Tipo Spesa API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"tipoSpesaId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Eliminato con successo Tipo Spesa.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-tipo-spesa/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Tipo Spesa error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "DeleteApiCondominioDeleteTipoSpesaId"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/pianolist",
+    "title": "Piano List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got piano list\",\n     \"data\":\"{}\"\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/pianolist"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Piano error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioPianolist"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/pianolist",
+    "title": "Fornitore List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got fornitore list\",\n     \"data\":{\n     \"fornitoreId\"\n     \"nomeCompagnia\"\n     \"email\"\n     \"infoBanca\"\n     }\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/pianolist"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Fornitore error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioPianolist"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/sub-contoCorrentelist",
+    "title": "Sub ContoCorrente List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got sub contoCorrente list\",\n     \"data\":\"{}\"\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/sub-contoCorrentelist"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generake error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioSubContocorrentelist"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/sub-fotovoltaicolist",
+    "title": "Sub Fotovoltaico List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got sub fotovoltaico list\",\n     \"data\":\"{}\"\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/sub-fotovoltaicolist"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generake error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioSubFotovoltaicolist"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/sub-park122list",
+    "title": "Sub Park122 List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got sub park122 list\",\n     \"data\":\"{}\"\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/sub-park122list"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generake error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioSubPark122list"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/sub-parkPublist",
+    "title": "Sub ParkPub List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got sub parkPub list\",\n     \"data\":\"{}\"\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/sub-parkPublist"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generake error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioSubParkpublist"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/sublist",
+    "title": "Piano List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got sub list\",\n     \"data\":\"{}\"\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/sublist"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generake error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioSublist"
+  },
+  {
+    "type": "get",
+    "url": "/api/condominio/tipo-spesa-list",
+    "title": "Tipo Spesa List API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>limit</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>offset</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "keyword",
+            "description": "<p>keyword</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "count",
+            "description": "<p>count should be number or boolean</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Successfully got tipo spesa list\",\n     \"data\":{\n     \"tipoSpesaId\"\n     \"tipoSpesa\"\n     \"causale\"\n     }\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/tipo-spesa-list"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Tipo spesa error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "GetApiCondominioTipoSpesaList"
+  },
+  {
+    "type": "post",
+    "url": "/api/condominio/add-piano",
+    "title": "Create Piano API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "numPiano",
+            "description": "<p>Piano numPiano</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "ordinamento",
+            "description": "<p>Piano ordinamento</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "stato",
+            "description": "<p>Piano stato</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"numPiano\": \"\",\n     \"ordinamento\" : \"\",\n     \"stato\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Piano creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-piano"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Piano error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PostApiCondominioAddPiano"
+  },
+  {
+    "type": "post",
+    "url": "/api/condominio/add-sub",
+    "title": "Create Generale API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "generaleId",
+            "description": "<p>Generale generaleId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>Generale piano</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>Generale mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>Generale millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"generaleId\": \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Sub creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-sub"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generale error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PostApiCondominioAddSub"
+  },
+  {
+    "type": "post",
+    "url": "/api/condominio/add-sub-fotovoltaico",
+    "title": "Create Sub Fotovoltaico API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "fotovoltaicoId",
+            "description": "<p>Fotovoltaico fotovoltaicoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>Fotovoltaico piano</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>Fotovoltaico mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>Fotovoltaico millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"fotovoltaicoId\": \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Sub creato con successo\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/add-sub-fotovoltaico"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub Fotovoltaico error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PostApiCondominioAddSubFotovoltaico"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-fornitore:id",
+    "title": "Update Fornitore API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "fornitoreId",
+            "description": "<p>Fornitore fornitoreId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "nomeCompagnia",
+            "description": "<p>Fornitore nomeCompagnia</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Fornitore email</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "infoBanca",
+            "description": "<p>Piano infoBanca</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"fornitoreId\" : \"\",\n     \"nomeCompagnia\" : \"\",\n     \"email\" : \"\",\n     \"infoBanca\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Aggiornato con successo Fornitore.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-fornitore/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Fornitore error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdateFornitoreId"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-piano:id",
+    "title": "Update Piano API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>Piano pianoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "numPiano",
+            "description": "<p>Piano numPiano</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "ordinamento",
+            "description": "<p>Piano ordinamento</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "stato",
+            "description": "<p>Piano stato</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"pianoId\" : \"\",\n     \"numPiano\" : \"\",\n     \"ordinamento\" : \"\",\n     \"stato\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK      id: number, @Res() response: any, @Req() request: any): Promise<Piano> {\n{\n     \"message\": \"Aggiornato con successo Piano.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-piano/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Piano error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdatePianoId"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-sub-fotovoltaico:id",
+    "title": "Update Sub Fotovoltaico API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "fotovoltaicoId",
+            "description": "<p>Fotovoltaico fotovoltaicoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>Fotovoltaico pianoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>Fotovoltaico mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>Fotovoltaico millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"fotovoltaicoId\" : \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Aggiornato con successo sub fotovoltaico.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-sub-fotovoltaico/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub Fotovoltaico error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdateSubFotovoltaicoId"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-sub:id",
+    "title": "Update Generale API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "generaleId",
+            "description": "<p>Piano generaleId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "piano",
+            "description": "<p>Piano piano</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>Piano mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>Piano millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"piano\" : \"\",\n     \"numPiano\" : \"\",\n     \"ordinamento\" : \"\",\n     \"stato\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Aggiornato con successo sub.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-sub/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Generale error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdateSubId"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-sub-park122:id",
+    "title": "Update Sub Park122 API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "park122Id",
+            "description": "<p>Park122 park122Id</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>Park122 pianoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>Park122 mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>Park122 millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"park122Id\" : \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Aggiornato con successo sub park122.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-sub-park122/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub Park122 error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdateSubPark122Id"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-sub-parkPub:id",
+    "title": "Update Sub ParkPub API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "parkPubId",
+            "description": "<p>ParkPub parkPubId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>ParkPub pianoId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "mqCatastali",
+            "description": "<p>ParkPub mqCatastali</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "millesimi",
+            "description": "<p>ParkPub millesimi</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"parkPubId\" : \"\",\n     \"pianoId\" : \"\",\n     \"mqCatastali\" : \"\",\n     \"millesimi\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Aggiornato con successo sub parkPub.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-sub-parkPub/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Sub ParkPub error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdateSubParkpubId"
+  },
+  {
+    "type": "put",
+    "url": "/api/condominio/update-tipo-spesa:id",
+    "title": "Update Tipo Spesa API",
+    "group": "Piano",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "tipoSpesaId",
+            "description": "<p>Fornitore tipoSpesaId</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "tipoSpesa",
+            "description": "<p>Fornitore tipoSpesa</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Number",
+            "optional": false,
+            "field": "causale",
+            "description": "<p>Fornitore causale</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n     \"tipoSpesaId\" : \"\",\n     \"tipoSpesa\" : \"\",\n     \"causale\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n     \"message\": \"Aggiornato con successo tipo spesa.\",\n     \"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/update-tipo-spesa/:id"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "Tipo spesa error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Piano",
+    "name": "PutApiCondominioUpdateTipoSpesaId"
   },
   {
     "type": "delete",
@@ -20645,6 +23051,72 @@ define({ "api": [
     "filename": "src/api/controllers/MediaController.ts",
     "groupTitle": "Resize-Image",
     "name": "GetApiMediaImageResize"
+  },
+  {
+    "type": "post",
+    "url": "/api/condominio/delete-piano",
+    "title": "Delete Multiple piano API",
+    "group": "Righi",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "number",
+            "optional": false,
+            "field": "pianoId",
+            "description": "<p>pianoId</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n\"pianoId\" : \"\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n\"message\": \"Successfully deleted piano.\",\n\"status\": \"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/condominio/delete-piano"
+      }
+    ],
+    "error": {
+      "examples": [
+        {
+          "title": "PianoDelete error",
+          "content": "HTTP/1.1 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/controllers/CondominioController.ts",
+    "groupTitle": "Righi",
+    "name": "PostApiCondominioDeletePiano"
   },
   {
     "type": "delete",

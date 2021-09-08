@@ -1,4 +1,3 @@
-
 <div class="dashboard">
     <div class="spinner-border-sm pull-right"></div>
 
@@ -9,9 +8,42 @@
             <img src="./assets/img/Order.fw.png" id="img-order">
             <div class="content">
                 <span>{{'Dashboard.Orders'| translate}}</span>
-                    <span *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                <span *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
                 <span class="dash-count">{{(dashboardSandbox.dashboardCount$ | async).orders}}</span>
-               
+
+            </div>
+            <img src="./assets/img/Payments.fw.png" id="img-payments">
+            <div class="content">
+                <span>{{'Dashboard.Payments'| translate}}</span>
+                <span>{{(dashboardSandbox.dashboardCount$ | async).payments}}</span>
+                <span *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+            </div>
+            <img src="./assets/img/product.fw.png">
+
+            <div class="content">
+                <span>{{'Dashboard.Products'| translate}} </span>
+                <span>{{(dashboardSandbox.dashboardCount$ | async).products}}</span>
+                <span *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+            </div>
+            <img src="./assets/img/Customers.fw.png" id="img-customers">
+            <div class="content" id="content">
+                <span>{{'Dashboard.Customers'| translate}}</span>
+                <span>{{(dashboardSandbox.dashboardCount$ | async).customers}}</span>
+                <span *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="flex">
+            <div class="content">
+                <span>Ordini</span>
+                <apx-chart [series]="sparkOrder.series" [chart]="sparkOrder.chart" [xaxis]="" [title]="sparkOrder.title"></apx-chart>
+                <span *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                <span class="dash-count">{{(dashboardSandbox.dashboardCount$ | async).orders}}</span>
+
             </div>
             <img src="./assets/img/Payments.fw.png" id="img-payments">
             <div class="content">
@@ -72,16 +104,18 @@
                 </ngx-charts-bar-vertical>
             </ng-container>
             <ng-container *ngIf="(dashboardSandbox.salesOrderList$ | async).length === 0 && (dashboardSandbox.salesOrderListLoaded$ | async)">
-              <div>No Monthly sales found</div>
+                <div>No Monthly sales found</div>
             </ng-container>
 
         </div>
         <div class="card">
             <span>{{'Dashboard.Visitors'| translate}}</span>
             <span [hidden]="!(dashboardSandbox.visitorLogListLoading$ | async) && (dashboardSandbox.visitorLogListLoaded$ | async)" class="spinner-border spinner-border-sm pull-right" role="status" aria-hidden="true"></span>
-            <ng-container *ngIf="dashboardSandbox.visitorLogListLoaded$ | async">
+            <ng-container *ngIf="dashboardSandbox.visitorLogList$ | async as array">
                 <ngx-charts-line-chart [view]="view" [scheme]="colorScheme" [results]="dashboardSandbox.visitorLogList$ | async" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" (select)="onSelect($event)">
                 </ngx-charts-line-chart>
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="(dashboardSandbox.visitorLogList$ | async).createdDate" [title]="chartOptions.title"></apx-chart>
+
             </ng-container>
         </div>
     </div>
@@ -126,5 +160,8 @@
                 <br>
             </ng-container>
         </div>
+
+    </div>
+    <div style="text-align:center">
     </div>
 </div>

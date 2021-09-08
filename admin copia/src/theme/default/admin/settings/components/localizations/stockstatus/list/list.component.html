@@ -1,0 +1,103 @@
+<div class="setup-wrapper">
+    <!-- <div class="setup-header flex"> 
+        <h3> {{'Settings.Local.StockStatus.Settingspath' | translate}} </h3>
+        <div class="back-button-settings">
+            <button  class="coc" routerLink="/settings">>>Back</button>
+        </div> 
+    </div> -->
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <!-- <ng-template ngbTabTitle>Stock</ng-template> -->
+                        <ng-template ngbTabContent style="display: flex !important;">
+
+                            <div class="localize-header flex">
+                                <div class="loc-hdr-lft">
+                                    <h3>Stock list</h3>
+                                    <p>Here the Admin can create and maintain different stock statuses. These stock statuses can be used for giving an intimation to the Customers on the availability and stock for different products.
+                                    </p>
+                                </div>
+                                <button class="btn" (click)="addStockStatus('','add')"
+                                    [appHideIfUnauthorized]="'create-stock-status'"><img
+                                        src="assets/img/add-white-ico.png">
+                                    {{'Settings.Local.StockStatus.AddStockStatus' | translate}}
+                                </button>
+                            </div>
+
+                            <div class="setup-right">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Settings.Local.StockStatus.StockStatusName' | translate}}</th>
+                                                <th>{{'Settings.Local.StockStatus.Status' | translate}}</th>
+                                                <th
+                                                    [appHideIfUnauthorized]="'edit-stock-status' || 'delete-stock-status'">
+                                                    {{'Settings.Local.StockStatus.Action' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let stocklist of (sandBox.getStockList$|async); let i=index">
+                                                <td>{{stocklist.name}}</td>
+                                                <td>
+                                                    <div *ngIf="stocklist.isActive === 1">
+                                                        {{'Settings.Local.StockStatus.Active' | translate}}
+                                                    </div>
+                                                    <div *ngIf="stocklist.isActive === 0">
+                                                        {{'Settings.Local.StockStatus.InActive' | translate}}
+                                                    </div>
+                                                </td>
+
+                                                <td
+                                                    [appHideIfUnauthorized]="'edit-stock-status' || 'delete-stock-status'">
+                                                    <i [appHideIfUnauthorized]="'edit-stock-status'"
+                                                        (click)="addStockStatus(stocklist,'edit')" class="fas fa-edit"
+                                                        style="cursor:pointer"></i> <i [ngbPopover]="deleteContent"
+                                                        [appHideIfUnauthorized]="'delete-stock-status'"
+                                                        placement="bottom" #deletePop="ngbPopover"
+                                                        style="margin-left: 15px;cursor:pointer" class="fas fa-trash">
+                                                        <ng-template #deleteContent>
+                                                            <div class="style">
+                                                                <div class="modal-header">
+                                                                    <h6 class="modal-title" style="margin-left: 17%;">
+                                                                        Do you want to delete ?
+                                                                    </h6>
+
+                                                                </div>
+
+                                                                <div class="modal-footer" style="margin-right: 23%;">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        (click)="deletePop.close()"
+                                                                        data-dismiss="modal">No
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-success"
+                                                                        (click)="deleteStockStatus(stocklist.stockStatusId, deletePop)"
+                                                                        data-dismiss="modal">Yes
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+
+                                                    </i></td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-paginator [length]="(sandBox.getStockListCount$ | async)?.data" [pageSize]="pagesize"
+                                    [pageSizeOptions]="[pagesize]" (page)="onPageChange($event)">
+                                </mat-paginator>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <!--country-->
+                  
+                    <!--zone-->
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+   
+</div>

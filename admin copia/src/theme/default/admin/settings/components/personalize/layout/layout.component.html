@@ -1,0 +1,24 @@
+<div class="localize-tab">
+    <ngb-tabset>
+        <ngb-tab>
+            <ng-template ngbTabTitle = 'Product'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/personalize/product']" class="tablinks">Product</button>
+            </ng-template>
+            <ng-template ngbTabContent>
+         
+            </ng-template>
+         </ngb-tab>
+
+         <ngb-tab>
+            <ng-template ngbTabTitle = 'Order'>
+                <button [routerLinkActive]="'active'" [routerLink]="['/settings/personalize/order']" class="tablinks">Order</button>
+            </ng-template>
+            <ng-template ngbTabContent>
+         
+            </ng-template>
+         </ngb-tab>
+         </ngb-tabset>
+         </div>
+
+<router-outlet></router-outlet>
+   

@@ -1,0 +1,262 @@
+<app-layout></app-layout>
+<div class="row products-section vendor-section">
+  <!-- <div class="col-12 layout-mar"> -->
+  <!-- <div class="card"> -->
+  <!-- <div class="product-ts-left">
+          
+        </div> -->
+  <!-- </div> -->
+  <!-- </div> -->
+
+  <div class="col-12">
+    <div class="breadcrumbs-row">
+      <div class="bc-col mar">
+        <ul>
+          <li class="cusror"><a href="javascript:void(0)" style="color: gray"> AuditLog </a></li>
+          <li class="cusror">Logs</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn addserv addvend margin">
+        <!-- <button class="btn" type="submit" style="background-color:#42b3b3">
+        <img src="assets/img/add-white-ico.png" /> Add Vendor
+      </button> -->
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+
+  <div class="col-12">
+    <div class="flex filter-row">
+      <div class="filter-lft">
+        <div class="toggle">
+          <p>Filters</p>
+          <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="check($event)" />
+          <label class="tgl-btn" for="cb1"></label>
+        </div>
+        <!-- <div class="order-status"> -->
+        <!-- <p>Status</p> -->
+        <!-- <li style="list-style: none">
+              <span style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"></span>Active
+              <span style="display: inline-block;width: 14px;height: 16px;margin-left: 3px;margin-right: 7px;vertical-align: middle;background-color: #f14e6e; "></span>In Active
+
+          </li> -->
+        <!-- </div> -->
+      </div>
+      <!--Lft-->
+      <div class="filter-nav-list service-nav-list">
+        <ul class="flex" *ngIf="bulkFunction === true">
+
+          <li>
+            <a href="javascript:void(0)">
+              <img src="assets/img/Export.png" /> Export
+            </a>
+          </li>
+
+          <li>
+            <a href="javascript:void(0)">
+              <img src="assets/img/Export.png" />All Export
+            </a>
+          </li>
+        </ul>
+        <!-- <ul class="flex" *ngIf = "bulkFunction === true">
+        <li style="margin-left: 15px;" [appHideIfUnauthorized]="'delete-vendor'">
+          <a   #deletePop="ngbPopover"
+          [ngbPopover]="deleteContent"
+          >
+            <img src="assets/img/delete-ico.png" /> Delete
+          </a>
+
+          <ng-template #deleteContent>
+              <div class="style">
+                <div class="modal-header">
+                  <h6 class="modal-title" style="margin-left: 17%;">
+                    Do you Want To Delete?
+                  </h6>
+                </div>
+
+                <div class="modal-footer" style="margin-right: 23%;">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="deletePop.close()"
+                    data-dismiss="modal"
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click) = "bulkDeletes()" 
+                    data-dismiss="modal"
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+        </li>
+        <li [appHideIfUnauthorized]="'export-vendor'">
+          <a href="javascript:void(0)" (click)="exportExcel()">
+            <img src="assets/img/Export.png" /> Export
+          </a>
+        </li>
+
+        <li [appHideIfUnauthorized]="'export-all-vendor'">
+          <a href="javascript:void(0)" (click)="exportAllExcel()">
+            <img src="assets/img/Export.png" />All Export
+          </a>
+        </li>
+      </ul> -->
+      </div>
+      <!--Right-->
+    </div>
+  </div>
+</div>
+
+<!-- filter -->
+<div class="flex product-wrap">
+  <div class="filter-details" *ngIf="filterEnable">
+    <!-- <form [formGroup]="filterForm"> -->
+    <div class="form-group">
+      <label>Select Days</label>
+      <select [(ngModel)]="selectedDays" class="custom-select col-12 form-control" id="days">
+
+        <option value="" selected>- -Select Days- -</option>
+
+        <option value="7 days">7 Days</option>
+        <option value="14 days">14 Days</option>
+        <option value="1 month">1 Month</option>
+      </select>
+      <!-- <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder="Company Name"
+        
+      /> -->
+    </div>
+    <div class="form-group">
+      <label>Audit Module </label>
+      <select [(ngModel)]="module" class="custom-select col-12 form-control" id="status">
+        <option value>- -Select Module- -</option>
+
+        <option *ngFor="let days of (sandbox.auditLogModule$|async)" value="{{days.module}}">{{days.module}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>User</label>
+      <select [(ngModel)]="actionBy" class="custom-select col-12 form-control" >
+        <option value>- -Select User- -</option>
+
+        <option *ngFor="let user of (sandbox.getUsersList$ | async)" value="{{user.userId}}">{{user.firstName}}</option>
+      </select>
+    </div>
+
+    <div class="text-right filter-btns">
+      <a href="javascript:void(0)" (click)="resetFilter()">Reset</a>
+      <button type="submit" class="btn" style="background-color:#42b3b3" (click)="applyFilter()">
+        Apply Filters
+      </button>
+    </div>
+    <!-- </form> -->
+  </div>
+  <!--Filter-->
+  <div class="product-table " [ngClass]="{ 'expand-list': !buttonActive }">
+    <div class="table-responsive">
+      <table *ngIf="(sandbox.auditLogList$ | async)?.length > 0" class="table">
+        <thead>
+          <tr>
+            <!-- <th scope="col" width="5%" >
+            <div class="form-group">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" id="checkbox1" class="custom-control-input" [(ngModel)]="selectedAll" (change)="selectAll($event)"
+                [ngModelOptions]="{standalone: true}">
+              <label class="custom-control-label" for="checkbox1"></label>
+              </div>
+            </div>
+          </th> -->
+            <th scope="col" placement="left" title="The User name of the User that performed a particular action.">User
+            </th>
+            <th scope="col" placement="left" title="The module in which the action was performed."
+              style="text-align:center;">Module</th>
+            <th scope="col" placement="left" title="A description of the action performed.">Description</th>
+            <th scope="col" placement="left" title="The date and time at which the action was performed."
+              style="text-align:center;">Date</th>
+
+            <!-- <th scope="col" style="text-align:center">Method</th> -->
+
+            <th scope="col" placement="bottom" title="The details of the browser in which the action was performed."
+              style="width: 20%;" style="text-align: center">Browser</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let array of sellerArray">
+
+            <!-- <th scope="row">
+            <div class="form-group">
+              <div class="custom-control custom-checkbox mr-sm-2"> 
+                <input type="checkbox"  [id]="array.auditLogId" class="custom-control-input chk"
+                [(ngModel)]="array.selected" (change)="checkIfAllSelected()" [value]="array.auditLogId"
+                [ngModelOptions]="{standalone: true}">
+              <label class="custom-control-label" [for]="array.auditLogId"></label>
+              </div>
+            </div>
+          </th> -->
+
+            <td style="text-align:left; width: 20%;">{{ array.userName }}</td>
+
+            <td style="text-align:center; width: 20%;">{{array.module}}</td>
+            <td>{{array.description}}</td>
+            <!-- <td style="text-align: center;">{{array.method}}</td> -->
+            <td>{{array.createdDate | date:'dd/MM/yyyy hh:mm a'}}</td>
+
+            <td>{{array.browserInfo.browser}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no_data" *ngIf="(sandbox.auditLogList$ | async)?.length == 0">
+        <p>Data Not Found</p>
+      </div>
+
+      <div class="flex table-footer">
+        <div class="view-rec">
+        </div>
+        <div class="view-right">
+
+
+          <mat-paginator #paginator [length]="(sandbox.auditLogListCount$|async)" [pageSize]="pageSize"
+            [pageIndex]="index" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+          </mat-paginator>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <!--Table-->
+
+</div>

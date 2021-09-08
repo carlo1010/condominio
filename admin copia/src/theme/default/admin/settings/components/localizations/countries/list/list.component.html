@@ -1,0 +1,104 @@
+<div class="setup-wrapper">
+    <!-- <div class="setup-header flex">
+        <h3>{{'Settings.Local.Country.CountriesList' | translate}}</h3>
+        <div class="back-button-settings">
+            <button  class="coc" routerLink="/settings">>>Back</button>
+        </div> 
+    </div>  -->
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info" >
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab> 
+                      <ng-template ngbTabContent style="display: flex !important;">
+                <div class="localize-header flex">
+                    <div class="loc-hdr-lft">
+                        <h3>Country list</h3>
+                        <p>Here the Admin maintains the master list of countries and one among these countries become the country of business that will be set up in the General Settings.
+                        </p>
+                    </div>
+                    <button (click)=" addNewCountry('','add')" class="btn" [appHideIfUnauthorized]="'create-country'"><img
+                            src="assets/img/add-white-ico.png">{{'Settings.Local.Country.AddNewCountry' |
+                        translate}}</button>
+                </div>
+
+
+                <div class="setup-right">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">
+                                        {{'Settings.Local.Country.CountryName' | translate}}
+                                    </th>
+                                    <th scope="col">{{'Settings.Local.Country.IsoCode-1' | translate}}</th>
+                                    <th scope="col">{{'Settings.Local.Country.IsoCode-2' | translate}}</th>
+                                    <th scope="col">{{'Settings.Local.Emailtemplate.Status' | translate}}
+                                    </th>
+                                    <th scope="col" [appHideIfUnauthorized]="'edit-country' || 'delete-country'">
+                                        {{'Settings.Local.Country.Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let countrylist of countrySandbox.countryList$ | async; let i=index">
+                                    <td class="text-center" scope="row">{{countrylist.name}}</td>
+                                    <td>{{countrylist.isoCode2}}</td>
+                                    <td>{{countrylist.isoCode3}}</td>
+                                    <td>
+                                        <div *ngIf="countrylist.isActive === 1">
+                                            {{'Settings.Local.StockStatus.Active' |
+                                            translate}}
+                                        </div>
+                                        <div *ngIf="countrylist.isActive === 0">
+                                            {{'Settings.Local.StockStatus.InActive' |
+                                            translate}}</div>
+                                    </td>
+                                    <td [appHideIfUnauthorized]="'edit-country' || 'delete-country'"><i
+                                            style="cursor:pointer" [appHideIfUnauthorized]="'edit-country'"
+                                            (click)="addNewCountry(countrylist,'edit')" class="fas fa-edit"></i>
+                                        <i [ngbPopover]="deleteContent" [appHideIfUnauthorized]="'delete-country'"
+                                            placement="bottom" #deletePop="ngbPopover"
+                                            style="margin-left: 15px;cursor: pointer;" class="fas fa-trash">
+                                            <ng-template #deleteContent>
+                                                <div class="style">
+                                                    <div class="modal-header">
+                                                        <h6 class="modal-title" style="margin-left: 17%;">
+                                                            Do you want to delete
+                                                            ?
+                                                        </h6>
+
+                                                    </div>
+
+                                                    <div class="modal-footer" style="margin-right: 23%;">
+                                                        <button type="button" class="btn btn-danger"
+                                                            (click)="deletePop.close()" data-dismiss="modal">No
+                                                        </button>
+                                                        <button type="button" class="btn btn-success"
+                                                            (click)="deleteCountry(countrylist.countryId, deletePop)"
+                                                            data-dismiss="modal">Yes
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <mat-paginator [length]="countrySandbox.countryCount$ | async" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]"
+                        (page)="onPageChange($event)">
+                    </mat-paginator>
+                    </div>
+                  
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <!--country-->
+       
+        <!--zone-->
+      </ngb-tabset>
+            </div>
+        </div>
+    </div>
+   
+</div>

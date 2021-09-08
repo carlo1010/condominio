@@ -1,6 +1,6 @@
 /*
  * SpurtCommerce
- * version 4.5
+ * version 4.4
  * http://www.spurtcommerce.com
  *
  * Copyright (c) 2021 PICCOSOFT
@@ -12,23 +12,42 @@ import { RouterModule, Routes } from '@angular/router';
 // Component
 import { CondominioLayoutComponent } from './components/layout/layout.component';
 
-const catalogRoutes: Routes = [
+const condomonioRoutes: Routes = [
   { path: '', redirectTo: 'piano', pathMatch: 'full' },
   {
     path: '',
     component: CondominioLayoutComponent,
     children: [
       {
+        path: 'tipo-spesa',
+        loadChildren: () => import('./components/tipo-spesa/tipo-spesa.module').then(m => m.TipoSpesaModule)
+      },
+      {
+        path: 'fornitore',
+        loadChildren: () => import('./components/fornitore/fornitore.module').then(m => m.FornitoreModule)
+      },
+      {
         path: 'piano',
         loadChildren: () => import('./components/piano/piano.module').then(m => m.PianoModule)
       },
-
+      {
+        path: 'generale',
+        loadChildren: () => import('./components/generale/generale.module').then(m => m.GeneraleModule)
+      },
+      {
+        path: 'fotovoltaico',
+        loadChildren: () => import('./components/fotovoltaico/fotovoltaico.module').then(m => m.FotovoltaicoModule)
+      },
+      {
+        path: 'conto-corrente',
+        loadChildren: () => import('./components/conto-corrente/conto-corrente.module').then(m => m.ContoCorrenteModule)
+      },
     ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(catalogRoutes)],
+  imports: [RouterModule.forChild(condomonioRoutes)],
   exports: [RouterModule]
 })
 export class CondominioRoutingModule {}

@@ -35,6 +35,7 @@ import { HttpClient } from '@angular/common/http';
 import { TruncatePipe } from '../../../../core/admin/shared/pipes/stringLengthCompress';
 import { ComponentsModule } from '../shared/components';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [DashboardComponent, TruncatePipe],
@@ -47,6 +48,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MaterialModule,
     DashboardRoutingModule,
     NgxChartsModule,
+    NgApexchartsModule,
     EffectsModule.forFeature([DashboardEffects]),
     TranslateModule.forChild({
       loader: {

@@ -75,6 +75,13 @@ import * as fromSettlementOrder from './admin/vendor/vendor-settlements/settleme
 import * as fromReports from './admin/vendor/reports/reports-reducer/reports.reducer';
 import * as fromPageGroup from './admin/cms/page-group/page-group-reducer/page-group.reducer';
 import * as fromAuditLog from './admin/audit-log/reducer/audit-log.reducer';
+import * as fromPiano from './admin/condominio/piano/reducer/piano.reducer'
+import * as fromFornitore from './admin/condominio/fornitore/reducer/fornitore.reducer'
+import * as fromTipoSpesa from './admin/condominio/tipo-spesa/reducer/tipo-spesa.reducer'
+import * as fromGenerale from './admin/condominio/generale/reducer/generale.reducer'
+import * as fromFotovoltaico from './admin/condominio/fotovoltaico/reducer/fotovoltaico.reducer'
+import * as fromContocorrente from './admin/condominio/conto-corrente/reducer/contocorrente.reducer'
+
 
 
 /**
@@ -104,6 +111,12 @@ import { reduce } from 'rxjs/operators';
  */
 
 export const reducers: ActionReducerMap<State> = {
+  contocorrente: fromContocorrente.reducer,
+  fotovoltaico: fromFotovoltaico.reducer,
+  generale: fromGenerale.reducer,
+  TipoSpesa: fromTipoSpesa.reducer,
+  fornitore: fromFornitore.reducer,
+  piano: fromPiano.reducer,
   auth: fromAuth.reducer,
   auditLog: fromAuditLog.reducer,
   common: fromCommon.reducer,

@@ -8,7 +8,7 @@
 
 import 'reflect-metadata';
 import { IsNotEmpty } from 'class-validator';
-export class DeletePiano {
+export class DeleteFornitore {
 
     @IsNotEmpty()
     public fornitoreId: [];

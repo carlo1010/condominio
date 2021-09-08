@@ -1,0 +1,26 @@
+.table-responsive table tr td a {
+  font-size: 13px;
+  font-weight: normal;
+  color: #de1717;
+  text-decoration: underline;
+}
+.table-responsive table tr td.action a {
+  margin: 0 5px;
+}
+.action {
+  cursor: pointer;
+}
+.settings-right-wrapper {
+  display: block;
+  margin-left: 0px !important; 
+  background: white;
+  padding: 15px 30px 100px;
+  margin-top: 0;
+  padding-bottom: 0;
+}
+.setting2-inner-header {
+  justify-content: space-between;
+  margin-bottom: 15px;
+  margin-left: 0px !important; 
+  padding: 8px;
+}

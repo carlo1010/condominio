@@ -1,0 +1,151 @@
+<!--REACTIVE FORM-->
+<form novalidate [formGroup]="contoCorrenteForm">
+
+    <div class="row products-section">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)">Condominio</a></li>
+                        <li>{{updateContoCorrenteId ? 'Aggiorna Spesa' : 'Aggiungi Spesa' }}</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" type="submit" (click)="onSubmits()"><img
+                            src="assets/img/tick-round-white.png"> Salva
+                    </button>
+                    <button class="btn btn-cancel" (click)='cancel()'><img
+                            src="assets/img/close-white-ico.png"> Cancella
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span> Generali
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Fornitore<sup>*</sup></label>
+                        <select class="custom-select col-12" formControlName="pianoId" [ngClass]="{'validationcolor':contoCorrenteForm.get('pianoId').hasError('') && contoCorrenteForm.get('pianoId').touched&&submitted==true}">
+                            <option value=''>- -Seleziona Fornitore- -</option>
+                            <option *ngFor=" let list of fornitoreSandbox.getFornitoreList$ | async" value="{{list.fornitoreId}}">{{list.nomeCompagnia}}</option>
+                        </select>
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('pianoId').hasError('required') && contoCorrenteForm.get('pianoId').touched&&submitted==true">
+                            pianoId è richiesto
+                        </div>
+                    </div>
+                </div>
+                <div class="data-col">
+                    <div class="form-group">
+                        <label>Cliente<sup>*</sup></label>
+                        <select class="custom-select col-12" formControlName="pianoId" [ngClass]="{'validationcolor':contoCorrenteForm.get('pianoId').hasError('') && contoCorrenteForm.get('pianoId').touched&&submitted==true}">
+                            <option value=''>- -Seleziona Cliente- -</option>
+                            <option *ngFor=" let list of vendorSandbox.getSellerList$ | async" value="{{list.VendorPrefixId}}">{{list.companyName}}</option>
+                        </select>
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('pianoId').hasError('required') && contoCorrenteForm.get('pianoId').touched&&submitted==true">
+                            pianoId è richiesto
+                        </div>
+                    </div>
+                </div>
+                <!--col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label><sup>Tipo Spesa*</sup></label>
+                        <select class="custom-select col-12" formControlName="pianoId" [ngClass]="{'validationcolor':contoCorrenteForm.get('pianoId').hasError('') && contoCorrenteForm.get('pianoId').touched&&submitted==true}">
+                            <option value=''>- -Seleziona Tipo di Spesa- -</option>
+                            <option *ngFor=" let list of tipoSpesaSandbox.getTipoSpesaList$ | async" value="{{list.tipoSpesaId}}">{{list.tipoSpesa}}</option>
+                        </select>
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('pianoId').hasError('required') && contoCorrenteForm.get('pianoId').touched&&submitted==true">
+                            pianoId è richiesto
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>pdf<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Numero Fattura<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Data Fattura<sup>*</sup></label>
+                        <input type="date" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Data Movimento<sup>*</sup></label>
+                        <input type="date" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Anno Competenza<sup>*</sup></label>
+                        <input type="date" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Uscite<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Entrate<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Stato<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="millesimi" [ngClass]="{'validationcolor':contoCorrenteForm.get('millesimi').hasError('') &&contoCorrenteForm.get('millesimi').touched && submitted}">
+                        <div class="validation-error" *ngIf="contoCorrenteForm.get('millesimi').hasError('required') &&contoCorrenteForm.get('millesimi').touched && submitted">
+                            Millesimi Richiesti
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,52 @@
+<!--REACTIVE FORM-->
+<form novalidate [formGroup]="tipospesaForm">
+
+    <div class="row products-section">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)">Condominio</a></li>
+                        <li>{{updateTipoSpesaId ? 'Aggiorna TipoSpesa' : 'Aggiungi TipoSpesa' }}</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" type="submit" (click)="onSubmits()"><img
+                            src="assets/img/tick-round-white.png"> Salva
+                    </button>
+                    <button class="btn btn-cancel" (click)='cancel()'><img
+                            src="assets/img/close-white-ico.png"> Cancella
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span> Generali
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Tipo di spesa<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="tipoSpesa" [ngClass]="{'validationcolor':tipospesaForm.get('tipoSpesa').hasError('required') &&tipospesaForm.get('tipoSpesa').touched && submitted}">
+                        <div class="validation-error" *ngIf="tipospesaForm.get('tipoSpesa').hasError('required') &&tipospesaForm.get('tipoSpesa').touched && submitted">
+                        </div>
+                    </div>
+                </div>
+                <!--col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Causale<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="causale" [ngClass]="{'validationcolor':tipospesaForm.get('causale').hasError('required') &&tipospesaForm.get('causale').touched && submitted}">
+                        <div class="validation-error" *ngIf="tipospesaForm.get('causale').hasError('required') &&tipospesaForm.get('causale').touched && submitted">
+                            {{'catalog.Error.SortOrderRequired'| translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

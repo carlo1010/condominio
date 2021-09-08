@@ -53,7 +53,7 @@ export const single = [
     value: 670
   },
   {
-    name: 'DEC',
+    name: 'DIC',
     value: 750
   }
 ];

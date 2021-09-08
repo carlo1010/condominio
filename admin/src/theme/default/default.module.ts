@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultComponent } from './default.component';
 import { AdminSharedModule } from './admin/admin.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [DefaultComponent],
   imports: [
@@ -22,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DefaultRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgApexchartsModule,
     AdminSharedModule.forRoot()
   ],
   bootstrap: [DefaultComponent]

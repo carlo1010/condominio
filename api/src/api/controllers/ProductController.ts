@@ -1435,26 +1435,6 @@ export class ProductController {
                     defaultImage: 1,
                 },
             });
-            const where = [{
-                name: 'productId',
-                op: 'where',
-                value: result.product,
-            }];
-            const rating = await this.productRatingService.list(0, 0, 0, 0, where, true);
-            const whereCondition = [
-                {
-                    name: 'ProductRating.productId',
-                    op: 'where',
-                    value: result.product,
-                },
-                {
-                    name: 'ProductRating.review',
-                    op: 'NOT',
-                },
-            ];
-            const review = await this.productRatingService.listByQueryBuilder(0, 0, 0, whereCondition, 0, 0, 0, 0, true);
-            temp.ratingCount = rating ? rating : 0;
-            temp.reviewCount = review ? review : 'null';
             temp.product = product;
             temp.productImage = productImage;
             return temp;

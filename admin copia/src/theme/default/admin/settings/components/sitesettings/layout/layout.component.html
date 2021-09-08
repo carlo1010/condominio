@@ -1,0 +1,15 @@
+<div class="tab seo-tab">
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/seo']" class="tablinks" >SEO</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/social']" class="tablinks" >Social</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/filter']" class="tablinks" >Filter</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/variants']" class="tablinks" >Variants</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/attributes']" class="tablinks" >Attributes</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/attributes-group']" class="tablinks" >Attributes Group</button>
+ 
+    <div class="back-button-settings">
+        <button  class="coc" routerLink="/settings"> <<Back </button>
+    </div> 
+</div>
+
+
+<router-outlet></router-outlet>

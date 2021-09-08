@@ -1,0 +1,95 @@
+<div class="setup-wrapper">
+
+    <div class="setup-header flex">
+      <h3>Settings</h3>
+      <span> > </span>
+    </div>
+  
+    <div class="setup-container">
+  
+      <div class="setup-header">
+        <h3>Settings</h3>
+        <p>Settings is the section where the admin user will have complete  control on all the masters. They can configure the masters and maintain them and these will be applicable for the entire eCommerce platform. </p>
+      </div>
+  
+      <div class="setup-cont-wrap">
+        <div class="setup-cont-row flex">
+          <div style="cursor: pointer;" [routerLink]="['/settings/role']" [routerLinkActive]="'active'" class="setup-cont-col">
+            <h3>Roles</h3>
+            <h4 *ngIf="(appSandbox.roleCount$ | async) as data " >{{data}} Roles found</h4>
+            <div class="setupcc-link">
+              <a href="javascript:Void(0)">View Role list</a>
+              <!-- <a href="javascript:Void(0)">Create New Role</a> --> 
+            </div>
+            <div class="scc-arr-link">
+              <a href="javascript:Void(0)"> <img src="assets/img/arrow-line-long-right.svg"> </a>
+            </div>
+          </div>
+          <!--col-->
+          <div style="cursor: pointer;" [routerLink]="['/settings/user']" [routerLinkActive]="'active'" class="setup-cont-col">
+            <h3>Users</h3>
+            <h4 *ngIf="(sandbox.userPagination$ | async) as data ">{{data}} Users found</h4>
+            <div class="setupcc-link">
+              <a href="javascript:Void(0)">View User list</a>
+              <!-- <a href="javascript:Void(0)">Create New User</a> -->
+            </div>
+            <div class="scc-arr-link">
+              <a href="javascript:Void(0)"> <img src="assets/img/arrow-line-long-right.svg"> </a>
+            </div>
+          </div>
+          <!--col-->
+          <div class="setup-cont-col" style="cursor: pointer;" [routerLink]="['/settings/generalsetting']" [routerLinkActive]="'active'">
+            <h3>General Settings</h3>
+            <h4>Store Information</h4>
+            <div class="setupcc-link">
+              <a href="javascript:Void(0)">View  Store Details</a>
+            </div>
+            <div class="scc-arr-link">
+              <a href="javascript:Void(0)"> <img src="assets/img/arrow-line-long-right.svg"> </a>
+            </div>
+          </div>
+          <!--col-->
+          <div class="setup-cont-col" style="cursor: pointer;" [routerLink]="['/settings/personalize']" [routerLinkActive]="'active'">
+            <h3>Personalize</h3>
+            <h4>Personalise your page</h4>
+            <div class="setupcc-link">
+              Category Product Count, Default Items Per Page
+            </div>
+            <div class="scc-arr-link">
+              <a href="javascript:Void(0)"> <img src="assets/img/arrow-line-long-right.svg"> </a>
+            </div>
+          </div>
+          <!--col-->
+          <div class="setup-cont-col" style="cursor: pointer;"  [routerLink]="['/settings/sitesettings']" [routerLinkActive]="'active'">
+            <h3>Site Settings</h3>
+            <h4>SEO settings</h4>
+            <div class="setupcc-link">
+              Meta title, Meta keywords
+            </div>
+            <div class="scc-arr-link">
+              <a href="javascript:Void(0)"> <img src="assets/img/arrow-line-long-right.svg"> </a>
+            </div>
+          </div>
+          <!--col-->
+          <div class="setup-cont-col" style="cursor: pointer;" [routerLink]="['/settings/local']" [routerLinkActive]="'active'" [appHideIfUnauthorized]=" 'list-country' || 'list-zone' || 'list-language' || 'list-currency' || 'list-tax' || 'list-order-status' || 'list-stock-status' || 'list-email-template'">
+            <h3>Localizations</h3>
+            <h4>Serving locations</h4>
+            <div class="setupcc-link setupcc-link-loc">
+              <a href="javascript:Void(0)">view Countries</a> , <a href="javascript:Void(0)">view Zone</a>, <a href="javascript:Void(0)">Delivery location</a>,<a href="javascript:Void(0)">Language </a> , <a href="javascript:Void(0)">Currency </a> , <a href="javascript:Void(0)">Tax</a> , <a href="javascript:Void(0)">Order Status</a> ,  <a href="javascript:Void(0)">Stock Status </a> , <a href="javascript:Void(0)">Email Template </a> </div>
+            <div class="scc-arr-link">
+              <a href="javascript:Void(0)"> <img src="assets/img/arrow-line-long-right.svg"> </a>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+      </div>
+  
+    </div>
+  
+  </div>
+  
+  
+  
+  
+  <router-outlet></router-outlet>
+  

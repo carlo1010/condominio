@@ -13,7 +13,7 @@ import moment = require('moment');
 import { IsNotEmpty } from 'class-validator';
 
 @Entity('condominio_tipo_spesa')
-export class Fornitore extends BaseModel {
+export class TipoSpesa extends BaseModel {
     @IsNotEmpty()
     @PrimaryGeneratedColumn({ name: 'id_tipo_spesa' })
     public tipoSpesaId: number;

@@ -77,6 +77,12 @@ import { SettlementOrderState } from './admin/vendor/vendor-settlements/settleme
 import { ReportsState } from './admin/vendor/reports/reports-reducer/reports.state';
 import { PageGroupState } from './admin/cms/page-group/page-group-reducer/page-group.state';
 import { AuditLogState } from './admin/audit-log/reducer/audit-log.state';
+import { PianoState } from './admin/condominio/piano/reducer/piano.state';
+import { FornitoreState } from './admin/condominio/fornitore/reducer/fornitore.state';
+import { TipoSpesaState } from './admin/condominio/tipo-spesa/reducer/tipo-spesa.state';
+import { GeneraleState } from './admin/condominio/generale/reducer/generale.state';
+import { FotovoltaicoState } from './admin/condominio/fotovoltaico/reducer/fotovoltaico.state';
+import { ContoCorrenteState } from './admin/condominio/conto-corrente/reducer/contocorrente.state';
 
 
 
@@ -87,6 +93,12 @@ import { AuditLogState } from './admin/audit-log/reducer/audit-log.state';
  * @ interface AppState
  */
 export interface AppState {
+  contocorrente: ContoCorrenteState
+  generale: GeneraleState;
+  fotovoltaico: FotovoltaicoState;
+  TipoSpesa: TipoSpesaState;
+  fornitore: FornitoreState;
+  piano: PianoState;
   auth: AuthState;
   common: CommonState;
   auditLog: AuditLogState;

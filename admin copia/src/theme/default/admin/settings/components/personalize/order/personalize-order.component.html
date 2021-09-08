@@ -1,0 +1,70 @@
+
+<div class="setup-wrapper">
+    <div class="setup-header flex">
+        <h3>Settings</h3>
+        <span> > </span>
+        <h3>Personalize</h3>
+        <span>></span>
+        <a href="javascript:void(0)">Order</a>
+        <div class="back-button-settings">
+            <button  class="coc" routerLink="/settings"> <<Back </button>
+        </div> 
+      
+</div>
+<div class="setup-container flex">
+
+    <div class="setup-left">
+        <h3>Order</h3>
+        <p>Under personalize -> Order, the Admin can configure the common prefix for the Ids for different orders and also set a default order status that will be applicable for the orders when placed</p>
+      
+      </div>
+
+    <div class="setup-right">
+        <!-- <h3>{{'Settings.generalsettings.Store'| translate}}</h3> -->
+
+        <form style="margin: 0;" [formGroup]="perOrderForm" class="form-horizontal m-t-20">
+            <div  class="sup-rht-section">
+               
+                <div class="suprs-form">
+                    <div class="suprs-form-row flex">
+                        <label>{{'Settings.personalize.order.InvoicePrefix' | translate}}</label>
+                        <div class="suprs-form-col">
+                            <input [appDisableIfUnauthorized]="'edit-personalize-order'" type="text" formControlName="invoicePrefix" [ngClass]="{ 'is-invalid': submitted && f.invoicePrefix.errors }" class="form-control" />
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+                <div class="suprs-form">
+                <div class="suprs-form-row flex">
+                    <label>{{'Settings.personalize.order.OrderStatus' | translate}}</label>
+                    <!-- <div class="form-group"> -->
+                       
+                         <div class="suprs-form-col">
+                            <select [appDisableIfUnauthorized]="'edit-personalize-order'" class="form-control custom-select" data-placeholder="Choose Role" formControlName="orderStatus" placeholder="Order Status">
+                                <option *ngFor="let orderStatuslist of orderStatusSandbox.getOrderstatuslist$| async"
+                                        value={{orderStatuslist.orderStatusId}}>
+                                    {{orderStatuslist.name}}
+                                </option>
+                            </select>
+                    </div>
+                    <!-- </div> -->
+                </div>
+                </div>
+               
+              
+             
+                
+                  
+
+                <div class="col-12">
+                    <div style="justify-content: center;" class="flex user-btn">
+                        <button [appHideIfUnauthorized]="'edit-personalize-order'" (click)="onSubmit()" type="submit" class="settings-add-button">{{'Settings.personalize.order.Save' | translate}}</button>
+                        <button [appHideIfUnauthorized]="'edit-personalize-order'" [routerLink]="['/dashboard']" class="settings-cancel-button">{{'Settings.personalize.order.Cancel' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

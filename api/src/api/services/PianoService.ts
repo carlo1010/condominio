@@ -19,7 +19,7 @@ export class PianoService {
     constructor(@OrmRepository() private pianoRepository: PianoRepository,
                 @Logger(__filename) private log: LoggerInterface) {
     }
-    // create Manufacturer
+    // create Piano
     public async create(piano: Piano): Promise<Piano> {
         return this.pianoRepository.save(piano);
     }
@@ -29,13 +29,13 @@ export class PianoService {
         return this.pianoRepository.findOne(piano);
     }
 
-    // delete Manufacturer
+    // delete Piano
     public async delete(pianoId: number): Promise<any> {
         this.log.info('Elimina Piano');
         await this.pianoRepository.delete(pianoId);
         return;
     }
-    // Manufacturer List
+    // Piano List
     public list(limit: any, offset: any, select: any = [], search: any = [], whereConditions: any = [],  count: number|boolean): Promise<any> {
         const condition: any = {};
 

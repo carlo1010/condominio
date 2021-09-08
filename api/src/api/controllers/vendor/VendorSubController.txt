@@ -1,0 +1,281 @@
+/*
+ * spurtcommerce API
+ * version 4.5
+ * Copyright (c) 2021 piccosoft ltd
+ * Author piccosoft ltd <support@piccosoft.com>
+ * Licensed under the MIT license.
+ */
+
+import 'reflect-metadata';
+import {
+    Post,
+    Body,
+    JsonController,
+    Authorized,
+    Res,
+    Put,
+    Param,
+    Get,
+    QueryParam,
+    Delete,
+    Req,
+} from 'routing-controllers';
+import { VendorSubService } from 'src/api/services/VendorSubService';
+import { SubPathService } from 'src/api/services/SubPathService';
+import { CreateVendorSubRequest } from './requests/CreateVendorSubRequest';
+import { VendorSub } from 'src/api/models/VendorSub';
+
+@JsonController('/vendor-sub')
+export class VendorSubController {
+    constructor(private vendorSubService: VendorSubService,
+                private subPathService: SubPathService,
+    ) {
+    }
+
+    // Create vendor category API
+    /**
+     * @api {post} /api/vendor-sub/create-vendor-sub Create Vendor Category API
+     * @apiGroup Admin Vendor Sub
+     * @apiHeader {String} Authorization
+     * @apiParam (Request body) {Number}  vendorId vendorId
+     * @apiParam (Request body) {String}  categoryId CategoryId
+     * @apiParam (Request body) {Number}  commission commission
+     * @apiParamExample {json} Input
+     * {
+     *      "vendorId" : "",
+     *      "categoryId" : "",
+     *      "commission" : "",
+     * }
+     * @apiSuccessExample {json} Success
+     * HTTP/1.1 200 OK
+     * {
+     *      "message": "Successfully added category",
+     *      "status": "1"
+     * }
+     * @apiSampleRequest /api/vendor-category/create-vendor-category
+     * @apiErrorExample {json} vendor category  error
+     * HTTP/1.1 500 Internal Server Error
+     */
+    @Post('/create-vendor-sub')
+    @Authorized()
+    public async createVendorSub(@Body({ validate: true }) vendorSub: CreateVendorSubRequest, @Res() response: any): Promise<any> {
+        const arr: any = [];
+        const category = vendorSub.generaleId;
+        const splitId = category.split(',');
+        for (const data of splitId) {
+            const newVendorSub: any = new VendorSub();
+            newVendorSub.vendorId = vendorSub.vendorId;
+            newVendorSub.generaleId = data;
+            arr.push(newVendorSub);
+        }
+        const subVendor = await this.vendorSubService.create(arr);
+        if (subVendor !== undefined) {
+            const successResponse: any = {
+                status: 1,
+                message: 'Successfully added vendor category.',
+                data: subVendor,
+            };
+            return response.status(200).send(successResponse);
+        } else {
+            const errorResponse: any = {
+                status: 0,
+                message: 'unable to add vendor category',
+            };
+            return response.status(400).send(errorResponse);
+        }
+    }
+
+    // Update vendor category API
+    /**
+     * @api {put} /api/vendor-category/update-vendor-category Update Vendor Category API
+     * @apiGroup Admin Vendor Category
+     * @apiHeader {String} Authorization
+     * @apiParam (Request body) {Number} vendorId vendorId
+     * @apiParam (Request body) {String} categoryId categoryId
+     * @apiParam (Request body) {Number}  commission commission
+     * @apiParamExample {json} Input
+     * {
+     *      "vendorId" : "",
+     *      "categoryId" : "",
+     *      "commission" : "",
+     * }
+     * @apiSuccessExample {json} Success
+     * HTTP/1.1 200 OK
+     * {
+     *      "message": "Successfully update",
+     *      "status": "1"
+     * }
+     * @apiSampleRequest /api/vendor-category/update-vendor-category
+     * @apiErrorExample {json} vendor category  error
+     * HTTP/1.1 500 Internal Server Error
+     */
+    @Put('/update-vendor-sub')
+    @Authorized()
+    public async updateVendorSub(@Body({ validate: true }) updateParam: CreateVendorSubRequest, @Res() response: any): Promise<any> {
+        const VendorsSub = await this.vendorSubService.findAll({
+            where: {
+                vendorId: updateParam.vendorId,
+            },
+        });
+        if (VendorsSub.length > 0) {
+            await this.vendorSubService.delete(VendorsSub);
+        }
+        const arr: any = [];
+        const sub = updateParam.generaleId;
+        const splitId = sub.split(',');
+        for (const data of splitId) {
+            const newVendorSub: any = new VendorSub();
+            newVendorSub.vendorId = updateParam.vendorId;
+            newVendorSub.generaleId = data;
+            arr.push(newVendorSub);
+        }
+        const subVendor = await this.vendorSubService.create(arr);
+        if (subVendor !== undefined) {
+            const successResponse: any = {
+                status: 1,
+                message: 'Successfully update vendor category.',
+                data: subVendor,
+            };
+            return response.status(200).send(successResponse);
+        } else {
+            const errorResponse: any = {
+                status: 0,
+                message: 'unable to update vendor category',
+            };
+            return response.status(400).send(errorResponse);
+        }
+    }
+    // Vendor Category List API
+    /**
+     * @api {get} /api/vendor-category/vendorCategoryList/:id Vendor Category List API
+     * @apiGroup Admin Vendor Category
+     * @apiHeader {String} Authorization
+     * @apiParam (Request body) {Number} limit limit
+     * @apiParam (Request body) {Number} offset offset
+     * @apiParam (Request body) {Boolean} count count should be number or boolean
+     * @apiSuccessExample {json} Success
+     * HTTP/1.1 200 OK
+     * {
+     *      "message": "Successfully get vendor category list",
+     *      "data":{
+     *       "vendorId" : "",
+     *       "vendorCategoryId" : "",
+     *       "categoryId" : "",
+     *       "commission" : "",
+     *      }
+     *      "status": "1"
+     * }
+     * @apiSampleRequest /api/vendor-category/vendorCategoryList/:id
+     * @apiErrorExample {json} Vendor category error
+     * HTTP/1.1 500 Internal Server Error
+     */
+    @Get('/vendorSubList/:id')
+    @Authorized()
+    public async vendorSubList(@Param('id') id: number, @QueryParam('limit') limit: number, @QueryParam('offset') offset: number, @QueryParam('keyword') keyword: string, @QueryParam('count') count: number | boolean, @Res() response: any): Promise<any> {
+        const select = [
+            'SubPath.subId as subId',
+            'GROUP_CONCAT' + '(' + 'path.name' + ' ' + 'ORDER BY' + ' ' + 'CategoryPath.level' + ' ' + 'SEPARATOR' + " ' " + '>' + " ' " + ')' + ' ' + 'as' + ' ' + 'levels',
+        ];
+
+        const relations = [
+            {
+                tableName: 'SubPath.sub',
+                aliasName: 'sub',
+            },
+            {
+                tableName: 'SubPath.path',
+                aliasName: 'path',
+            },
+            {
+                tableName: 'sub.vendorSub',
+                aliasName: 'vendorSub',
+            },
+        ];
+        const groupBy = [
+            {
+                name: 'SubPat.sub_id',
+            },
+        ];
+
+        const whereConditions = [];
+        const searchConditions = [];
+
+        whereConditions.push({
+            name: 'vendorSub.vendorId',
+            op: 'and',
+            value: id,
+        });
+
+        const sort = [];
+        sort.push({
+            name: 'vendorSub.generale_id',
+            order: 'ASC',
+        });
+        const vendorSubList: any = await this.subPathService.listByQueryBuilder(limit, offset, select, whereConditions, searchConditions, relations, groupBy, sort, false, true);
+        // const findProduct = vendorSubList.map(async (val: any) => {
+        //     const temp: any = val;
+        //     const productToSub = await this.vendorProductService.findingProduct(val.categoryId, id);
+        //     if (productToSub) {
+        //         temp.productAvailable = 1;
+        //     } else {
+        //         temp.productAvailable = 0;
+        //     }
+        //     return temp;
+        // });
+        // const results = await Promise.all(findProduct);
+        const successResponse: any = {
+            status: 1,
+            message: 'Successfully got the vendor category list.',
+            data: vendorSubList,
+        };
+        return response.status(200).send(successResponse);
+    }
+
+    // Delete Vendor Category API
+    /**
+     * @api {delete} /api/vendor-category/delete-vendor-category/:id Delete Vendor Category API
+     * @apiGroup Admin Vendor Category
+     * @apiHeader {String} Authorization
+     * @apiSuccessExample {json} Success
+     * HTTP/1.1 200 OK
+     * {
+     *      "message": "Successfully deleted vendor category.",
+     *      "status": "1"
+     * }
+     * @apiSampleRequest /api/vendor-category/delete-vendor-category/:id
+     * @apiErrorExample {json} Vendor category error
+     * HTTP/1.1 500 Internal Server Error
+     */
+    @Delete('/delete-vendor-sub/:id')
+    @Authorized()
+    public async deleteVendorSub(@Param('id') id: number, @Res() response: any, @Req() request: any): Promise<any> {
+
+        const vendor = await this.vendorSubService.findOne({
+            where: {
+                vendorySubId: id,
+            },
+        });
+        if (!vendor) {
+            const errorResponse: any = {
+                status: 0,
+                message: 'Invalid vendorySubId',
+            };
+            return response.status(400).send(errorResponse);
+        }
+
+        const deleteVendor = await this.vendorSubService.delete(id);
+        if (deleteVendor) {
+            const successResponse: any = {
+                status: 1,
+                message: 'Successfully deleted the vendor category.',
+            };
+            return response.status(200).send(successResponse);
+        } else {
+            const errorResponse: any = {
+                status: 0,
+                message: 'unable to delete vendor category',
+            };
+            return response.status(400).send(errorResponse);
+        }
+    }
+}

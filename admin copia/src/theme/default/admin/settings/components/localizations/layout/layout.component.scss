@@ -1,0 +1,82 @@
+/* Style the tab */
+
+// .local {
+//     .nav-tabs {
+//         padding: 13px 40px 0;
+//         background: white;
+//         .nav-item {
+//           margin: 0;
+//           .nav-link {
+//             border: 0;
+//             margin: 0;
+//             font-size: 15px;
+//             font-weight: normal;
+//             color: #5d5d5d;
+//             padding: 13px 20px;
+//             &.active {
+//               font-weight: 500;
+//               color: #000000;
+//               border-bottom: solid 2px #f20a6d;
+//             }
+//             &:hover {
+//               background: transparent;
+//             }
+//           }
+//         }
+//       }
+// }
+
+// .nav-tabs .nav-link.active{
+    // border-bottom: 2px solid red !important;
+    
+// }
+
+
+/* Style the buttons that are used to open the tab content */
+
+.localize-tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 17px 25px;
+    transition: 0.3s;
+}
+
+
+/* Change background color of buttons on hover */
+
+.localize-tab button:hover {
+    background-color: #ddd;
+}
+
+
+/* Create an active/current tablink class */
+
+.localize-tab button.active {
+    background-color: #eaeaea;
+    // color: #f2086d;
+    font-weight: 500;
+    color: #000000;
+    border-bottom: solid 2px #f20a6d;;
+    //color: ;
+}
+
+
+/* Style the tab content */
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.coc{
+    background: #f20a6d !important;
+      border: solid thin #dddddd !important;
+      color: white !important;
+      padding: 4px 16px !important;
+  }
+

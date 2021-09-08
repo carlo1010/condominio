@@ -1,0 +1,56 @@
+<!--REACTIVE FORM-->
+<form novalidate [formGroup]="fornitoreForm">
+
+    <div class="row products-section">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)">Condominio</a></li>
+                        <li>{{updateFornitoreId ? 'Aggiorna Fornitore' : 'Aggiungi Fornitore' }}</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" type="submit" (click)="onSubmits()"><img
+                            src="assets/img/tick-round-white.png"> Salva
+                    </button>
+                    <button class="btn btn-cancel" (click)='cancel()'><img
+                            src="assets/img/close-white-ico.png"> Cancella
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span> Generali
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Nome Compagnia<sup>*</sup></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="nomeCompagnia" [ngClass]="{'validationcolor':fornitoreForm.get('nomeCompagnia').hasError('required') &&fornitoreForm.get('nomeCompagnia').touched && submitted}">
+                        <div class="validation-error" *ngIf="fornitoreForm.get('nomeCompagnia').hasError('required') &&fornitoreForm.get('nomeCompagnia').touched && submitted">
+                        </div>
+                    </div>
+                </div>
+                <!--col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>email</label>
+                        <input type="text" class="form-control" placeholder="" formControlName="email" [ngClass]="{'validationcolor':fornitoreForm.get('email').hasError('') &&fornitoreForm.get('email').touched && submitted}">
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Info Banca</label>
+                        <input type="text" class="form-control" placeholder="" formControlName="infoBanca" [ngClass]="{'validationcolor':fornitoreForm.get('infoBanca').hasError('') &&fornitoreForm.get('infoBanca').touched && submitted}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

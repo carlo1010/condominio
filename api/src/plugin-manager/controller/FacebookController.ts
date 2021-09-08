@@ -126,7 +126,7 @@ export class FacebookController {
             const redirectUrl = env.storeRedirectUrl;
             const logo = await SettingRepository.findOne();
             MAILService.registerMail(logo, message, newCustomer.email, emailContent.subject, redirectUrl);
-            
+
             if (newCustomer) {
                 const successResponse: any = {
                     status: 1,
@@ -155,7 +155,7 @@ export class FacebookController {
             const customer = await CustomerRepository.findOne({where: {email: resultData.email, deleteFlag: 0}});
             customer.lastLogin = savedloginLog.createdDate;
             await CustomerRepository.save(customer);
-            
+
                 const accessTokenRepository = getManager().getRepository(AccessToken);
                 const newToken = new AccessToken();
                 newToken.userId = resultData.id;

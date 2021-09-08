@@ -114,7 +114,7 @@ export class GmailController {
             await CustomerRepository.save(customer);
             // create a token
             const token = jwt.sign({ id: newCustomer.id }, env.jwtSecret);
-           
+
                 const accessTokenRepository = getManager().getRepository(AccessToken);
                 const newToken = new AccessToken();
                 newToken.userId = newCustomer.id;
@@ -140,9 +140,9 @@ export class GmailController {
             }
         } else {
             // create a token
-            
+
             const token = jwt.sign({ id: resultData.id }, env.jwtSecret);
-           
+
                 const accessTokenRepository = getManager().getRepository(AccessToken);
                 const newToken = new AccessToken();
                 newToken.userId = resultData.id;
