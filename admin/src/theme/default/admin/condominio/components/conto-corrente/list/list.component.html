@@ -96,13 +96,12 @@
                             </div>
 
                         </th>
-
-                        <td class="text-center">{{arr.clienteId}}
-                        </td>
                         <!-- <td class="text-center">
                             <img *ngIf="arr.image" [src]="imageUrl+ '?width=60&height=60&path=' + arr.imagePath + '&name='+ arr.image" onError="this.src='/assets/error-images/Load-icon-Products.png';" (load)="ContoCorrenteListImageLoading(arr.manufacturerId)" [hidden]="!brandListImage[arr.manufacturerId]">
                             <img src="./assets/error-images/Load icon Products.png" [hidden]="brandListImage[arr.manufacturerId]">
                         </td> -->
+                        <td class="text-center">{{arr.fornitoreId}}</td>
+                        <td class="text-center">{{arr.clienteId}}</td>
                         <td class="text-center">{{arr.tipoSpesaId}}</td>
                         <td class="text-center">{{arr.pdf}}</td>
                         <td class="text-center">{{arr.numFattura}}</td>

@@ -29,10 +29,10 @@ export class ContoCorrenteAddModel {
 
     constructor(contocorrenteAddForm: any) {
         // this.contoCorrenteId =  contocorrenteAddForm.contoCorrenteId || 0;
-        this.fornitoreId = contocorrenteAddForm.pianoId || 0;
-        this.clienteId = contocorrenteAddForm.mqCatastali || '' ;
-        this.tipoSpesaId = contocorrenteAddForm.millesimi || '' ;
-        this.pdf = contocorrenteAddForm.pianoId || '';
+        this.fornitoreId = contocorrenteAddForm.fornitoreId || 0;
+        this.clienteId = contocorrenteAddForm.clienteId || '' ;
+        this.tipoSpesaId = contocorrenteAddForm.tipoSpesaId || '' ;
+        this.pdf = contocorrenteAddForm.pdf || '';
         this.numFattura = contocorrenteAddForm.numFattura || '' ;
         this.dataFattura = contocorrenteAddForm.dataFattura || '' ;
         this.dataMov = contocorrenteAddForm.dataMov || '' ;

@@ -25,10 +25,10 @@ export class ContoCorrenteUpdateModel {
 
      constructor(contocorrenteUpdate: any) {
         this.contoCorrenteId =  contocorrenteUpdate.contoCorrenteId || 0;
-        this.fornitoreId = contocorrenteUpdate.pianoId || 0;
-        this.clienteId = contocorrenteUpdate.mqCatastali || '' ;
-        this.tipoSpesaId = contocorrenteUpdate.millesimi || '' ;
-        this.pdf = contocorrenteUpdate.pianoId || '';
+        this.fornitoreId = contocorrenteUpdate.fornitoreId || 0;
+        this.clienteId = contocorrenteUpdate.clienteId || '' ;
+        this.tipoSpesaId = contocorrenteUpdate.tipoSpesaId || '' ;
+        this.pdf = contocorrenteUpdate.pdf || '';
         this.numFattura = contocorrenteUpdate.numFattura || '' ;
         this.dataFattura = contocorrenteUpdate.dataFattura || '' ;
         this.dataMov = contocorrenteUpdate.dataMov || '' ;
